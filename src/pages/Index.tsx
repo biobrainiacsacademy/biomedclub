@@ -1,12 +1,52 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Hero from "@/components/Hero";
+import NextSession from "@/components/NextSession";
+import BioGlancePreview from "@/components/BioGlancePreview";
+import PreviouslyTaught from "@/components/PreviouslyTaught";
+import StudentReviews from "@/components/StudentReviews";
+import UpcomingMeetings from "@/components/UpcomingMeetings";
+import RegistrationForm from "@/components/RegistrationForm";
+import RateUsForm from "@/components/RateUsForm";
 
 const Index = () => {
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showRateUs, setShowRateUs] = useState(false);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      <main className="max-w-7xl mx-auto">
+        <Hero />
+        
+        <div className="section-divider" />
+        
+        <NextSession onRegisterClick={() => setShowRegistration(true)} />
+        
+        <div className="section-divider" />
+        
+        <BioGlancePreview />
+        
+        <div className="section-divider" />
+        
+        <PreviouslyTaught />
+        
+        <div className="section-divider" />
+        
+        <StudentReviews onRateClick={() => setShowRateUs(true)} />
+        
+        <div className="section-divider" />
+        
+        <UpcomingMeetings />
+      </main>
+      
+      <RegistrationForm 
+        isOpen={showRegistration} 
+        onClose={() => setShowRegistration(false)} 
+      />
+      
+      <RateUsForm 
+        isOpen={showRateUs} 
+        onClose={() => setShowRateUs(false)} 
+      />
     </div>
   );
 };
