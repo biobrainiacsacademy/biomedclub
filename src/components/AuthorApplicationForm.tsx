@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AuthorApplicationFormProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface AuthorApplicationFormProps {
 
 const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -19,8 +21,31 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
     comments: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
+    const { error } = await supabase.from("author_applications").insert({
+      email: formData.email,
+      name: formData.name,
+      grade: formData.grade,
+      high_school: formData.highSchool,
+      introduction: formData.introduction,
+      how_heard: formData.howHeard,
+      comments: formData.comments || null,
+    });
+
+    setIsSubmitting(false);
+    
+    if (error) {
+      toast({
+        title: "Error submitting application",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Application Submitted!",
       description: "Thank you for applying to The Bio Glance. We'll review your application and get back to you soon.",
@@ -179,9 +204,10 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
           
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300"
+            disabled={isSubmitting}
+            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
           >
-            Submit Application
+            {isSubmitting ? "Submitting..." : "Submit Application"}
           </button>
         </form>
       </div>

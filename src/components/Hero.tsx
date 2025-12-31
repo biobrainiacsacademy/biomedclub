@@ -2,7 +2,7 @@ import biobrainiacsLogo from "@/assets/biobrainiacs-logo.png";
 
 const Hero = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-center py-16 px-4">
+    <section className="flex flex-col items-center justify-center text-center py-10 px-4">
       <img
         src={biobrainiacsLogo}
         alt="BioBrainiacs Academy Logo"

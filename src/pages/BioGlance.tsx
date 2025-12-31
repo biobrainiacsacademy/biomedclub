@@ -98,18 +98,18 @@ const BioGlance = () => {
       </header>
       
       {/* Hero Section */}
-      <section className="text-center py-12 px-4">
-        <div className="inline-flex items-center gap-2 bg-muted/50 border border-border px-4 py-2 rounded-full mb-6">
+      <section className="text-center py-8 px-4">
+        <div className="inline-flex items-center gap-2 bg-muted/50 border border-border px-4 py-2 rounded-full mb-4">
           <BookOpen className="w-4 h-4 text-accent" />
           <span className="text-sm text-muted-foreground">Research Publications</span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
+        <h1 className="text-4xl md:text-6xl font-bold mb-3">
           <span className="text-foreground">The </span>
           <span className="text-primary">BioGlance</span>
         </h1>
         
-        <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
           Explore cutting-edge research papers authored by BioBrainiacs students, 
           covering topics from genetic engineering to AI-driven medicine.
         </p>
@@ -132,13 +132,13 @@ const BioGlance = () => {
       </section>
       
       {/* Published Research */}
-      <section className="py-12 px-4 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">
+      <section className="py-8 px-4 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-6">
           <span className="text-primary">Published</span>
           <span className="text-foreground"> Research</span>
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4">
           {papers.map((paper, index) => (
             <article
               key={index}
@@ -183,11 +183,11 @@ const BioGlance = () => {
       </section>
       
       {/* Join Section */}
-      <section className="py-12 px-4 text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-4">
+      <section className="py-8 px-4 text-center">
+        <h2 className="text-2xl font-bold text-foreground mb-3">
           Want to Contribute?
         </h2>
-        <p className="text-muted-foreground max-w-md mx-auto mb-6">
+        <p className="text-muted-foreground max-w-md mx-auto mb-4">
           Join BioBrainiacs Academy and get the opportunity to publish your own research in The BioGlance.
         </p>
         <button
@@ -199,7 +199,7 @@ const BioGlance = () => {
       </section>
       
       {/* Rate Us Section */}
-      <section className="py-8 px-4 text-center">
+      <section className="py-6 px-4 text-center">
         <button
           onClick={() => setShowRateUs(true)}
           className="inline-flex items-center gap-2 border border-accent text-accent hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300"
@@ -209,9 +209,8 @@ const BioGlance = () => {
         </button>
       </section>
       
-      {/* Footer with Logo */}
-      <footer className="py-8 px-4 flex flex-col items-center justify-center gap-4">
-        <img src={biobrainiacsLogo} alt="BioBrainiacs Academy" className="w-16 h-16" />
+      <footer className="py-6 px-4 flex flex-col items-center justify-center gap-3">
+        <img src={biobrainiacsLogo} alt="BioBrainiacs Academy" className="w-12 h-12" />
         <p className="text-muted-foreground text-sm">© 2024 BioBrainiacs Academy</p>
       </footer>
       

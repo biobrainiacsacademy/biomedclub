@@ -29,13 +29,13 @@ const reviews = [
 
 const StudentReviews = ({ onRateClick }: StudentReviewsProps) => {
   return (
-    <section className="py-12 px-4">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+    <section className="py-8 px-4">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">
         <span className="text-primary">Student</span>
         <span className="text-foreground"> Reviews</span>
       </h2>
       
-      <div className="flex items-center justify-center gap-2 mb-8">
+      <div className="flex items-center justify-center gap-2 mb-6">
         <span className="text-4xl font-bold text-primary">5.0</span>
         <div className="flex gap-1">
           {[...Array(5)].map((_, i) => (
@@ -45,7 +45,7 @@ const StudentReviews = ({ onRateClick }: StudentReviewsProps) => {
         <span className="text-muted-foreground text-sm">(5 reviews)</span>
       </div>
       
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-8">
+      <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
         {reviews.map((review, index) => (
           <div
             key={index}
