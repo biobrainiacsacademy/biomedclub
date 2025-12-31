@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface RegistrationFormProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface RegistrationFormProps {
 
 const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,8 +23,33 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
     questions: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
+    const { error } = await supabase.from("registrations").insert({
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      grade: formData.grade,
+      school: formData.school,
+      parent_name: formData.parentName || null,
+      parent_email: formData.parentEmail || null,
+      how_heard: formData.howHeard || null,
+      questions: formData.questions || null,
+    });
+
+    setIsSubmitting(false);
+    
+    if (error) {
+      toast({
+        title: "Error submitting registration",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Registration Submitted!",
       description: "Thank you for registering. We'll be in touch soon.",
@@ -192,9 +219,10 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
           
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300"
+            disabled={isSubmitting}
+            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
           >
-            Submit Registration
+            {isSubmitting ? "Submitting..." : "Submit Registration"}
           </button>
         </form>
       </div>

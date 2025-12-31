@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface RateUsFormProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
   const { toast } = useToast();
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     feedback: "",
@@ -18,7 +20,7 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
     favoriteLesson: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (rating === 0) {
       toast({
@@ -27,6 +29,28 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
       });
       return;
     }
+    
+    setIsSubmitting(true);
+    
+    const { error } = await supabase.from("reviews").insert({
+      rating,
+      name: formData.name || null,
+      favorite_lesson: formData.favoriteLesson,
+      would_recommend: formData.wouldRecommend,
+      feedback: formData.feedback,
+    });
+
+    setIsSubmitting(false);
+    
+    if (error) {
+      toast({
+        title: "Error submitting review",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Thank you for your feedback!",
       description: "Your review has been submitted successfully.",
@@ -147,9 +171,10 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
           
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300"
+            disabled={isSubmitting}
+            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
           >
-            Submit Review
+            {isSubmitting ? "Submitting..." : "Submit Review"}
           </button>
         </form>
       </div>

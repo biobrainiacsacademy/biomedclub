@@ -14,7 +14,114 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      author_applications: {
+        Row: {
+          comments: string | null
+          created_at: string
+          email: string
+          grade: string
+          high_school: string
+          how_heard: string
+          id: string
+          introduction: string
+          name: string
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          email: string
+          grade: string
+          high_school: string
+          how_heard: string
+          id?: string
+          introduction: string
+          name: string
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          email?: string
+          grade?: string
+          high_school?: string
+          how_heard?: string
+          id?: string
+          introduction?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          grade: string
+          how_heard: string | null
+          id: string
+          last_name: string
+          parent_email: string | null
+          parent_name: string | null
+          questions: string | null
+          school: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name: string
+          grade: string
+          how_heard?: string | null
+          id?: string
+          last_name: string
+          parent_email?: string | null
+          parent_name?: string | null
+          questions?: string | null
+          school: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          grade?: string
+          how_heard?: string | null
+          id?: string
+          last_name?: string
+          parent_email?: string | null
+          parent_name?: string | null
+          questions?: string | null
+          school?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          created_at: string
+          favorite_lesson: string
+          feedback: string
+          id: string
+          name: string | null
+          rating: number
+          would_recommend: string
+        }
+        Insert: {
+          created_at?: string
+          favorite_lesson: string
+          feedback: string
+          id?: string
+          name?: string | null
+          rating: number
+          would_recommend: string
+        }
+        Update: {
+          created_at?: string
+          favorite_lesson?: string
+          feedback?: string
+          id?: string
+          name?: string | null
+          rating?: number
+          would_recommend?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

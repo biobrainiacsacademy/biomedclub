@@ -6,8 +6,8 @@ interface NextSessionProps {
 
 const NextSession = ({ onRegisterClick }: NextSessionProps) => {
   return (
-    <section className="py-12 px-4">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+    <section className="py-8 px-4">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
         <span className="text-primary">Next</span>
         <span className="text-foreground"> Session</span>
       </h2>

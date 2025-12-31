@@ -23,14 +23,14 @@ const lessons = [
 
 const PreviouslyTaught = () => {
   return (
-    <section className="py-12 px-4">
+    <section className="py-8 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
         <span className="text-primary">Previously</span>
         <span className="text-foreground"> Taught</span>
       </h2>
-      <p className="text-center text-muted-foreground mb-8">From most recent to oldest</p>
+      <p className="text-center text-muted-foreground mb-6">From most recent to oldest</p>
       
-      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-8">
+      <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto mb-6">
         {lessons.map((lesson, index) => (
           <a
             key={index}
