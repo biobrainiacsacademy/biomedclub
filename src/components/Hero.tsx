@@ -1,4 +1,4 @@
-import biobrainiacsLogo from "@/assets/biobrainiacs-logo.png";
+import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 
 const Hero = () => {
   return (

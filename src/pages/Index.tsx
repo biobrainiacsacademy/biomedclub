@@ -7,6 +7,7 @@ import StudentReviews from "@/components/StudentReviews";
 import UpcomingMeetings from "@/components/UpcomingMeetings";
 import RegistrationForm from "@/components/RegistrationForm";
 import RateUsForm from "@/components/RateUsForm";
+import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 
 const Index = () => {
   const [showRegistration, setShowRegistration] = useState(false);
@@ -37,6 +38,11 @@ const Index = () => {
         
         <UpcomingMeetings />
       </main>
+      
+      <footer className="py-6 px-4 flex flex-col items-center justify-center gap-3 max-w-7xl mx-auto">
+        <img src={biobrainiacsLogo} alt="BioBrainiacs Academy" className="w-12 h-12" />
+        <p className="text-muted-foreground text-sm">© 2026 BioBrainiacs Academy</p>
+      </footer>
       
       <RegistrationForm 
         isOpen={showRegistration} 
