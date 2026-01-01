@@ -64,7 +64,7 @@ const PreviouslyTaught = () => {
       
       <div className="text-center">
         <a
-          href="https://www.youtube.com/channel/UCiO9pf6IHYBW5cNboYqTuMg"
+          href="https://www.youtube.com/@BioBrainiacsAcademy"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 border border-border text-muted-foreground hover:text-foreground hover:border-accent px-6 py-3 rounded-lg font-medium transition-all duration-300"

@@ -17,8 +17,6 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
     email: "",
     grade: "",
     school: "",
-    parentName: "",
-    parentEmail: "",
     howHeard: "",
     questions: "",
   });
@@ -33,8 +31,6 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
       email: formData.email,
       grade: formData.grade,
       school: formData.school,
-      parent_name: formData.parentName || null,
-      parent_email: formData.parentEmail || null,
       how_heard: formData.howHeard || null,
       questions: formData.questions || null,
     });
@@ -61,8 +57,6 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
       email: "",
       grade: "",
       school: "",
-      parentName: "",
-      parentEmail: "",
       howHeard: "",
       questions: "",
     });
@@ -137,9 +131,6 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">Select grade</option>
-              <option value="6">6th Grade</option>
-              <option value="7">7th Grade</option>
-              <option value="8">8th Grade</option>
               <option value="9">9th Grade</option>
               <option value="10">10th Grade</option>
               <option value="11">11th Grade</option>
@@ -161,31 +152,6 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
             />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Parent/Guardian Name
-            </label>
-            <input
-              type="text"
-              value={formData.parentName}
-              onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-              className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Parent name"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Parent/Guardian Email
-            </label>
-            <input
-              type="email"
-              value={formData.parentEmail}
-              onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-              className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="parent@example.com"
-            />
-          </div>
           
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
