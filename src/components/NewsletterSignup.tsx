@@ -2,18 +2,42 @@ import { useState } from "react";
 import { Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { newsletterSchema, isBot, formatZodErrors } from "@/lib/validation";
 
 const NewsletterSignup = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Bot detection
+    if (isBot(honeypot)) {
+      toast({
+        title: "Subscribed!",
+        description: "You'll be the first to receive our newest research papers.",
+      });
+      setEmail("");
+      return;
+    }
+
+    // Validate email
+    const result = newsletterSchema.safeParse({ email });
+    if (!result.success) {
+      toast({
+        title: "Validation Error",
+        description: formatZodErrors(result.error),
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     const { error } = await supabase.from("newsletter_subscribers").insert({
-      email: email,
+      email: result.data.email,
     });
 
     setIsSubmitting(false);
@@ -56,9 +80,22 @@ const NewsletterSignup = () => {
           Be the first to receive our newest research papers and updates.
         </p>
         <form onSubmit={handleSubmit} className="flex gap-2">
+          {/* Honeypot field */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+          
           <input
             type="email"
             required
+            maxLength={255}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"

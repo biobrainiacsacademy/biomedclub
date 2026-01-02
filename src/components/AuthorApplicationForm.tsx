@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { authorApplicationSchema, isBot, formatZodErrors } from "@/lib/validation";
 
 interface AuthorApplicationFormProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface AuthorApplicationFormProps {
 const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -23,16 +25,38 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Bot detection
+    if (isBot(honeypot)) {
+      toast({
+        title: "Application Submitted!",
+        description: "Thank you for applying to The Bio Glance. We'll review your application and get back to you soon.",
+      });
+      onClose();
+      return;
+    }
+
+    // Validate form data
+    const result = authorApplicationSchema.safeParse(formData);
+    if (!result.success) {
+      toast({
+        title: "Validation Error",
+        description: formatZodErrors(result.error),
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     
     const { error } = await supabase.from("author_applications").insert({
-      email: formData.email,
-      name: formData.name,
-      grade: formData.grade,
-      high_school: formData.highSchool,
-      introduction: formData.introduction,
-      how_heard: formData.howHeard,
-      comments: formData.comments || null,
+      email: result.data.email,
+      name: result.data.name,
+      grade: result.data.grade,
+      high_school: result.data.highSchool,
+      introduction: result.data.introduction,
+      how_heard: result.data.howHeard,
+      comments: result.data.comments || null,
     });
 
     setIsSubmitting(false);
@@ -78,13 +102,25 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
         <p className="text-muted-foreground text-sm mb-6">
           At The Bio Glance, we bring a variety of STEM stories including biology, medicine, and biotechnology 
           to life through clear, credible, and compelling storytelling. We bridge the gap between cutting-edge 
-          research and everyday understanding, translating complex discoveries into insights that inform, 
+          research and translating complex discoveries into insights that inform, 
           inspire, and engage curious minds.
         </p>
         
         <p className="text-destructive text-xs mb-6">* Indicates required question</p>
         
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Honeypot field */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+          
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
               Email <span className="text-destructive">*</span>
@@ -92,6 +128,7 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
             <input
               type="email"
               required
+              maxLength={255}
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -106,6 +143,7 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
             <input
               type="text"
               required
+              maxLength={200}
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -142,6 +180,7 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
             <input
               type="text"
               required
+              maxLength={200}
               value={formData.highSchool}
               onChange={(e) => setFormData({ ...formData, highSchool: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -161,6 +200,7 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
             </p>
             <textarea
               required
+              maxLength={5000}
               value={formData.introduction}
               onChange={(e) => setFormData({ ...formData, introduction: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary min-h-[150px]"
@@ -195,6 +235,7 @@ const AuthorApplicationForm = ({ isOpen, onClose }: AuthorApplicationFormProps) 
               Comments and/or questions
             </label>
             <textarea
+              maxLength={2000}
               value={formData.comments}
               onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary min-h-[100px]"

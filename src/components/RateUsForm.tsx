@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { reviewSchema, isBot, formatZodErrors } from "@/lib/validation";
 
 interface RateUsFormProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     feedback: "",
@@ -22,9 +24,30 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (rating === 0) {
+    
+    // Bot detection
+    if (isBot(honeypot)) {
       toast({
-        title: "Please select a rating",
+        title: "Thank you for your feedback!",
+        description: "Your review has been submitted successfully.",
+      });
+      onClose();
+      return;
+    }
+
+    // Validate form data
+    const result = reviewSchema.safeParse({
+      rating,
+      name: formData.name,
+      favoriteLesson: formData.favoriteLesson,
+      wouldRecommend: formData.wouldRecommend,
+      feedback: formData.feedback,
+    });
+
+    if (!result.success) {
+      toast({
+        title: "Validation Error",
+        description: formatZodErrors(result.error),
         variant: "destructive",
       });
       return;
@@ -33,11 +56,11 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
     setIsSubmitting(true);
     
     const { error } = await supabase.from("reviews").insert({
-      rating,
-      name: formData.name || null,
-      favorite_lesson: formData.favoriteLesson,
-      would_recommend: formData.wouldRecommend,
-      feedback: formData.feedback,
+      rating: result.data.rating,
+      name: result.data.name || null,
+      favorite_lesson: result.data.favoriteLesson,
+      would_recommend: result.data.wouldRecommend,
+      feedback: result.data.feedback,
     });
 
     setIsSubmitting(false);
@@ -81,6 +104,18 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
         <p className="text-muted-foreground text-sm mb-6">We'd love to hear your feedback!</p>
         
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Honeypot field */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+          
           <div>
             <label className="block text-sm font-medium text-foreground mb-3">
               Overall Rating <span className="text-destructive">*</span>
@@ -113,6 +148,7 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
             </label>
             <input
               type="text"
+              maxLength={100}
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -127,6 +163,7 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
             <input
               type="text"
               required
+              maxLength={300}
               value={formData.favoriteLesson}
               onChange={(e) => setFormData({ ...formData, favoriteLesson: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -162,6 +199,7 @@ const RateUsForm = ({ isOpen, onClose }: RateUsFormProps) => {
             </label>
             <textarea
               required
+              maxLength={3000}
               value={formData.feedback}
               onChange={(e) => setFormData({ ...formData, feedback: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary min-h-[120px]"
