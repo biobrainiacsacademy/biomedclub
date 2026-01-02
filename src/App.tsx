@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BioGlance from "./pages/BioGlance";
 import ResearchPaper from "./pages/ResearchPaper";
+import CrisprResearchPaper from "./pages/CrisprResearchPaper";
+import Authors from "./pages/Authors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +22,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/bioglance" element={<BioGlance />} />
           <Route path="/research/nanoparticle-cancer-therapy" element={<ResearchPaper />} />
+          <Route path="/research/crispr-genetic-disorders" element={<CrisprResearchPaper />} />
+          <Route path="/authors" element={<Authors />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

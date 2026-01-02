@@ -4,10 +4,18 @@ import { ArrowLeft, BookOpen, Calendar, Users, FileText, Star } from "lucide-rea
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 import AuthorApplicationForm from "@/components/AuthorApplicationForm";
 import RateUsForm from "@/components/RateUsForm";
-import AuthorsSection from "@/components/AuthorsSection";
 import NewsletterSignup from "@/components/NewsletterSignup";
 
 const papers = [
+  {
+    category: "Genetics",
+    categoryColor: "bg-green-600",
+    date: "January 2026",
+    title: "CRISPR-Cas9 in Treating Genetic Disorders: Promise and Limitations",
+    authors: "Ali Yazdi",
+    description: "CRISPR-Cas9 shows strong potential as a treatment for genetic diseases, including conditions such as sickle cell disease. While this technology offers many benefits, it also has important limitations, including safety risks, ethical concerns, challenges in medical use, and unknown long-term effects.",
+    link: "/research/crispr-genetic-disorders",
+  },
   {
     category: "Nanomedicine",
     categoryColor: "bg-purple-600",
@@ -69,11 +77,11 @@ const BioGlance = () => {
         {/* Stats */}
         <div className="flex justify-center gap-12 md:gap-20">
           <div className="text-center">
-            <p className="text-3xl md:text-4xl font-bold text-accent">1</p>
+            <p className="text-3xl md:text-4xl font-bold text-accent">2</p>
             <p className="text-sm text-muted-foreground">Published Papers</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl md:text-4xl font-bold text-primary">1</p>
+            <p className="text-3xl md:text-4xl font-bold text-primary">2</p>
             <p className="text-sm text-muted-foreground">Research Areas</p>
           </div>
           <div className="text-center">
@@ -133,8 +141,22 @@ const BioGlance = () => {
         </div>
       </section>
       
-      {/* Authors Section */}
-      <AuthorsSection />
+      {/* Meet the Authors Button */}
+      <section className="py-8 px-4 text-center">
+        <h2 className="text-2xl font-bold text-foreground mb-3">
+          Get to Know Our Writers
+        </h2>
+        <p className="text-muted-foreground max-w-md mx-auto mb-4">
+          Learn about the talented students behind our research publications.
+        </p>
+        <Link
+          to="/authors"
+          className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-semibold px-6 py-3 rounded-lg hover:bg-accent/90 transition-all duration-300"
+        >
+          <Users className="w-5 h-5" />
+          Meet the Authors
+        </Link>
+      </section>
       
       {/* Join Section */}
       <section className="py-8 px-4 text-center">
