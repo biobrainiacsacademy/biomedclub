@@ -3,3 +3,15 @@
     { "source": "/(.*)", "destination": "/" }
   ]
 }
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "www.biobrainiacs.org" }
+      ],
+      "destination": "https://biobrainiacs.org/:1",
+      "permanent": true
+    }
+  ]
+}
