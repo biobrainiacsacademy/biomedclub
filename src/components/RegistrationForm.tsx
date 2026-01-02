@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { registrationSchema, isBot, formatZodErrors } from "@/lib/validation";
 
 interface RegistrationFormProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface RegistrationFormProps {
 const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,16 +25,39 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Bot detection
+    if (isBot(honeypot)) {
+      // Silently reject bot submissions
+      toast({
+        title: "Registration Submitted!",
+        description: "Thank you for registering. We'll be in touch soon.",
+      });
+      onClose();
+      return;
+    }
+
+    // Validate form data
+    const result = registrationSchema.safeParse(formData);
+    if (!result.success) {
+      toast({
+        title: "Validation Error",
+        description: formatZodErrors(result.error),
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     
     const { error } = await supabase.from("registrations").insert({
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      email: formData.email,
-      grade: formData.grade,
-      school: formData.school,
-      how_heard: formData.howHeard || null,
-      questions: formData.questions || null,
+      first_name: result.data.firstName,
+      last_name: result.data.lastName,
+      email: result.data.email,
+      grade: result.data.grade,
+      school: result.data.school,
+      how_heard: result.data.howHeard || null,
+      questions: result.data.questions || null,
     });
 
     setIsSubmitting(false);
@@ -77,6 +102,18 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
         <h2 className="text-2xl font-bold text-foreground mb-6">Register for Session</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Honeypot field - hidden from users, bots will fill it */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+          
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">
@@ -85,6 +122,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
               <input
                 type="text"
                 required
+                maxLength={100}
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -98,6 +136,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
               <input
                 type="text"
                 required
+                maxLength={100}
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -113,6 +152,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
             <input
               type="email"
               required
+              maxLength={255}
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -145,6 +185,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
             <input
               type="text"
               required
+              maxLength={200}
               value={formData.school}
               onChange={(e) => setFormData({ ...formData, school: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -177,6 +218,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
             </label>
             <textarea
               value={formData.questions}
+              maxLength={2000}
               onChange={(e) => setFormData({ ...formData, questions: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary min-h-[100px]"
               placeholder="Any questions or comments..."
