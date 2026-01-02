@@ -5,6 +5,7 @@ import BioGlancePreview from "@/components/BioGlancePreview";
 import PreviouslyTaught from "@/components/PreviouslyTaught";
 import StudentReviews from "@/components/StudentReviews";
 import UpcomingMeetings from "@/components/UpcomingMeetings";
+import ConnectWithUs from "@/components/ConnectWithUs";
 import RegistrationForm from "@/components/RegistrationForm";
 import RateUsForm from "@/components/RateUsForm";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
@@ -37,6 +38,10 @@ const Index = () => {
         <div className="section-divider" />
         
         <UpcomingMeetings />
+        
+        <div className="section-divider" />
+        
+        <ConnectWithUs />
       </main>
       
       <footer className="py-6 px-4 flex flex-col items-center justify-center gap-3 max-w-7xl mx-auto">
