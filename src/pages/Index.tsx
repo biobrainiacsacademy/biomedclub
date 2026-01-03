@@ -2,6 +2,7 @@ import { useState } from "react";
 import Hero from "@/components/Hero";
 import NextSession from "@/components/NextSession";
 import BioGlancePreview from "@/components/BioGlancePreview";
+import OurImpact from "@/components/OurImpact";
 import PreviouslyTaught from "@/components/PreviouslyTaught";
 import StudentReviews from "@/components/StudentReviews";
 import UpcomingMeetings from "@/components/UpcomingMeetings";
@@ -26,6 +27,10 @@ const Index = () => {
         <div className="section-divider" />
         
         <BioGlancePreview />
+        
+        <div className="section-divider" />
+        
+        <OurImpact />
         
         <div className="section-divider" />
         
