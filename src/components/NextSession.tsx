@@ -16,7 +16,7 @@ const NextSession = ({
           <span className="bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full">
             LAB
           </span>
-          <span className="text-muted-foreground text-xs">Details coming shor</span>
+          <span className="text-muted-foreground text-xs">Details coming shortly.</span>
         </div>
         
         <h3 className="text-xl md:text-2xl font-semibold text-foreground mt-8 mb-6 pr-24">Experimental Microbiology: Culturing Bacteria</h3>
