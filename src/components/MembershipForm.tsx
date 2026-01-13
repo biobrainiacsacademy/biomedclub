@@ -107,20 +107,6 @@ const MembershipForm = ({ isOpen, onClose }: MembershipFormProps) => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">
-                Last Name <span className="text-destructive">*</span>
-              </label>
-              <input
-                type="text"
-                required
-                maxLength={100}
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Doe"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
                 First Name <span className="text-destructive">*</span>
               </label>
               <input
@@ -131,6 +117,20 @@ const MembershipForm = ({ isOpen, onClose }: MembershipFormProps) => {
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="John"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1">
+                Last Name <span className="text-destructive">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                maxLength={100}
+                value={formData.lastName}
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="Doe"
               />
             </div>
           </div>
@@ -164,7 +164,7 @@ const MembershipForm = ({ isOpen, onClose }: MembershipFormProps) => {
               value={formData.schoolEmail}
               onChange={(e) => setFormData({ ...formData, schoolEmail: e.target.value })}
               className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="john@school.edu"
+              placeholder="123456@mcpsmd.net"
             />
           </div>
           
