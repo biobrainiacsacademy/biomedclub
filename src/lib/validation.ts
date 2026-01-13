@@ -34,6 +34,13 @@ export const newsletterSchema = z.object({
   email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
 });
 
+export const membershipSchema = z.object({
+  firstName: z.string().trim().min(1, "First name is required").max(100, "First name must be less than 100 characters"),
+  lastName: z.string().trim().min(1, "Last name is required").max(100, "Last name must be less than 100 characters"),
+  grade: z.enum(["9", "10", "11", "12"], { errorMap: () => ({ message: "Please select a valid grade" }) }),
+  schoolEmail: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+});
+
 // Honeypot field check - returns true if it's a bot
 export const isBot = (honeypotValue: string | undefined): boolean => {
   return !!honeypotValue && honeypotValue.length > 0;

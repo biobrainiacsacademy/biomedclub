@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
+import BecomeMember from "@/components/BecomeMember";
 import NextSession from "@/components/NextSession";
 import BioGlancePreview from "@/components/BioGlancePreview";
 import OurImpact from "@/components/OurImpact";
@@ -9,16 +10,22 @@ import UpcomingMeetings from "@/components/UpcomingMeetings";
 import ConnectWithUs from "@/components/ConnectWithUs";
 import RegistrationForm from "@/components/RegistrationForm";
 import RateUsForm from "@/components/RateUsForm";
+import MembershipForm from "@/components/MembershipForm";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 
 const Index = () => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [showRateUs, setShowRateUs] = useState(false);
+  const [showMembership, setShowMembership] = useState(false);
 
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto">
         <Hero />
+        
+        <div className="section-divider" />
+        
+        <BecomeMember onJoinClick={() => setShowMembership(true)} />
         
         <div className="section-divider" />
         
@@ -62,6 +69,11 @@ const Index = () => {
       <RateUsForm 
         isOpen={showRateUs} 
         onClose={() => setShowRateUs(false)} 
+      />
+      
+      <MembershipForm 
+        isOpen={showMembership} 
+        onClose={() => setShowMembership(false)} 
       />
     </div>
   );

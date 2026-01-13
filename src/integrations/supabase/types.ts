@@ -50,6 +50,33 @@ export type Database = {
         }
         Relationships: []
       }
+      memberships: {
+        Row: {
+          created_at: string
+          first_name: string
+          grade: string
+          id: string
+          last_name: string
+          school_email: string
+        }
+        Insert: {
+          created_at?: string
+          first_name: string
+          grade: string
+          id?: string
+          last_name: string
+          school_email: string
+        }
+        Update: {
+          created_at?: string
+          first_name?: string
+          grade?: string
+          id?: string
+          last_name?: string
+          school_email?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
