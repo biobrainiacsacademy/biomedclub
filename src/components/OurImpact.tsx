@@ -3,7 +3,8 @@ import { useEffect, useState, useRef } from "react";
 
 const stats = [{
   icon: Users,
-  value: 57,
+  value: 75,
+  suffix: "+",
   label: "Students Taught"
 }, {
   icon: BookOpen,
@@ -11,8 +12,8 @@ const stats = [{
   label: "Topics Covered"
 }, {
   icon: Eye,
-  value: 14600,
-  displayValue: "14.6K",
+  value: 16000,
+  displayValue: "16K+",
   label: "Online Audience"
 }];
 
@@ -49,9 +50,9 @@ const StatCard = ({ stat, isVisible }: { stat: typeof stats[0]; isVisible: boole
   const formatValue = () => {
     if (stat.displayValue) {
       const ratio = count / stat.value;
-      return `${(14.6 * ratio).toFixed(1)}K`;
+      return `${Math.round(16 * ratio)}K+`;
     }
-    return count.toString();
+    return count.toString() + (stat.suffix || "");
   };
 
   return (
