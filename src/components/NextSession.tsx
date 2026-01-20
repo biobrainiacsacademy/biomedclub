@@ -1,15 +1,14 @@
 import { Calendar, Clock, MapPin, Video } from "lucide-react";
-
 interface NextSessionProps {
   onRegisterClick: () => void;
 }
-
-const NextSession = ({ onRegisterClick }: NextSessionProps) => {
-  return (
-    <section className="py-8 px-4">
+const NextSession = ({
+  onRegisterClick
+}: NextSessionProps) => {
+  return <section className="py-8 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
         <span className="text-primary">Next</span>
-        <span className="text-foreground"> Session</span>
+        <span className="text-foreground"> Sessions</span>
       </h2>
       
       <div className="max-w-xl mx-auto space-y-4">
@@ -40,10 +39,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
             </div>
           </div>
           
-          <button
-            onClick={onRegisterClick}
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300"
-          >
+          <button onClick={onRegisterClick} className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300">
             Register Now
           </button>
         </div>
@@ -75,16 +71,11 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
             </div>
           </div>
           
-          <button
-            onClick={onRegisterClick}
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 animate-pulse-glow"
-          >
+          <button onClick={onRegisterClick} className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 animate-pulse-glow">
             Register Now
           </button>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default NextSession;
