@@ -13,6 +13,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState("");
+  const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -48,6 +49,16 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
       return;
     }
 
+    // Validate session selection
+    if (selectedSessions.length === 0) {
+      toast({
+        title: "Please select at least one session",
+        description: "Choose which meeting(s) you'd like to attend.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     
     const { error } = await supabase.from("registrations").insert({
@@ -57,7 +68,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
       grade: result.data.grade,
       school: result.data.school,
       how_heard: result.data.howHeard || null,
-      questions: result.data.questions || null,
+      questions: `Sessions: ${selectedSessions.join(", ")}${result.data.questions ? `\n\n${result.data.questions}` : ""}`,
     });
 
     setIsSubmitting(false);
@@ -85,6 +96,7 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
       howHeard: "",
       questions: "",
     });
+    setSelectedSessions([]);
   };
 
   if (!isOpen) return null;
@@ -113,11 +125,58 @@ const RegistrationForm = ({ isOpen, onClose }: RegistrationFormProps) => {
             autoComplete="off"
             aria-hidden="true"
           />
+
+          {/* Session Selection */}
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Select Session(s) <span className="text-destructive">*</span>
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
+                <input
+                  type="checkbox"
+                  checked={selectedSessions.includes("Virtual - Jan 31st")}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedSessions([...selectedSessions, "Virtual - Jan 31st"]);
+                    } else {
+                      setSelectedSessions(selectedSessions.filter(s => s !== "Virtual - Jan 31st"));
+                    }
+                  }}
+                  className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary"
+                />
+                <div>
+                  <span className="text-xs font-semibold text-secondary-foreground bg-secondary px-2 py-0.5 rounded-full">VIRTUAL</span>
+                  <p className="text-sm text-foreground mt-1">Culturing Bacteria 101: Concepts Behind the Experiment</p>
+                  <p className="text-xs text-muted-foreground">Jan 31st • 12:00 PM • via Zoom</p>
+                </div>
+              </label>
+              <label className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
+                <input
+                  type="checkbox"
+                  checked={selectedSessions.includes("Lab - Feb 2nd")}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedSessions([...selectedSessions, "Lab - Feb 2nd"]);
+                    } else {
+                      setSelectedSessions(selectedSessions.filter(s => s !== "Lab - Feb 2nd"));
+                    }
+                  }}
+                  className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary"
+                />
+                <div>
+                  <span className="text-xs font-semibold text-accent-foreground bg-accent px-2 py-0.5 rounded-full">LAB</span>
+                  <p className="text-sm text-foreground mt-1">Experimental Microbiology: Culturing Bacteria</p>
+                  <p className="text-xs text-muted-foreground">Feb 2nd • Lunch • Room 248</p>
+                </div>
+              </label>
+            </div>
+          </div>
           
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">
-                First Name <span className="text-destructive">*</span>
+                First Name (preferred) <span className="text-destructive">*</span>
               </label>
               <input
                 type="text"
