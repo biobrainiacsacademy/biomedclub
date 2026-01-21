@@ -25,6 +25,16 @@ const reviews = [
     name: "Viren",
     role: "BioBrainiacs Learner",
   },
+  {
+    text: "The club is very amazing because it has very hands-on labs. I learned so much about blood.",
+    name: "Shaun",
+    role: "BioBrainiacs Learner",
+  },
+  {
+    text: "I like how the organizers are very interactive with their members and include everyone in the labs.",
+    name: "Jeevesh",
+    role: "BioBrainiacs Learner",
+  },
 ];
 
 const StudentReviews = ({ onRateClick }: StudentReviewsProps) => {
@@ -42,7 +52,7 @@ const StudentReviews = ({ onRateClick }: StudentReviewsProps) => {
             <Star key={i} className="w-5 h-5 fill-primary text-primary" />
           ))}
         </div>
-        <span className="text-muted-foreground text-sm">(5 reviews)</span>
+        <span className="text-muted-foreground text-sm">(7 reviews)</span>
       </div>
       
       <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
