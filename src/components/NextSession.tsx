@@ -10,14 +10,15 @@ const getTimeRemaining = (targetDate: Date) => {
   const difference = targetDate.getTime() - now.getTime();
   
   if (difference <= 0) {
-    return { days: 0, hours: 0, minutes: 0 };
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   }
   
   const days = Math.floor(difference / (1000 * 60 * 60 * 24));
   const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000);
   
-  return { days, hours, minutes };
+  return { days, hours, minutes, seconds };
 };
 
 const CountdownTimer = ({ targetDate, label }: { targetDate: Date; label: string }) => {
@@ -26,7 +27,7 @@ const CountdownTimer = ({ targetDate, label }: { targetDate: Date; label: string
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeRemaining(getTimeRemaining(targetDate));
-    }, 60000); // Update every minute
+    }, 1000); // Update every second
     
     return () => clearInterval(timer);
   }, [targetDate]);
@@ -46,6 +47,10 @@ const CountdownTimer = ({ targetDate, label }: { targetDate: Date; label: string
         <div className="text-center">
           <span className="text-xl font-bold text-primary">{timeRemaining.minutes}</span>
           <p className="text-xs text-muted-foreground">min</p>
+        </div>
+        <div className="text-center">
+          <span className="text-xl font-bold text-primary">{timeRemaining.seconds}</span>
+          <p className="text-xs text-muted-foreground">sec</p>
         </div>
       </div>
     </div>
