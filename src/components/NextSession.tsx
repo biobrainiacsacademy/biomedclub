@@ -53,10 +53,10 @@ const CountdownTimer = ({ targetDate, label }: { targetDate: Date; label: string
 };
 
 const NextSession = ({ onRegisterClick }: NextSessionProps) => {
-  // Virtual meeting: Jan 31st, 2025 at 12:00 PM EST
-  const virtualMeetingDate = new Date('2025-01-31T12:00:00-05:00');
-  // Lab session: Feb 2nd, 2025 at 11:00 AM EST
-  const labSessionDate = new Date('2025-02-02T11:00:00-05:00');
+  // Virtual meeting: Jan 31st, 2026 at 12:00 PM EST
+  const virtualMeetingDate = new Date('2026-01-31T12:00:00-05:00');
+  // Lab session: Feb 2nd, 2026 at 11:00 AM EST
+  const labSessionDate = new Date('2026-02-02T11:00:00-05:00');
 
   return (
     <section className="py-8 px-4">
