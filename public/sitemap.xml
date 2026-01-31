@@ -3,7 +3,14 @@
 
   <url>
     <loc>https://biobrainiacs.org/</loc>
-    <priority>1.0</priority>
   </url>
 
+<url>
+    <loc>https://https://www.biobrainiacs.org/bioglance/</loc>
+  </url>
+
+<url>
+    <loc>https://https://www.biobrainiacs.org/authors/</loc>
+  </url>
+  
 </urlset>
