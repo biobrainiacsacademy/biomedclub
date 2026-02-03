@@ -36,11 +36,34 @@ const CountdownTimer = ({
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeRemaining(getTimeRemaining(targetDate));
-    }, 1000); // Update every second
+    }, 1000);
 
     return () => clearInterval(timer);
   }, [targetDate]);
-  return;
+
+  return (
+    <div className="mt-4 p-3 bg-background/50 rounded-lg">
+      <p className="text-xs text-muted-foreground mb-2">{label}</p>
+      <div className="flex gap-3 text-center">
+        <div className="flex-1">
+          <span className="text-xl font-bold text-primary">{timeRemaining.days}</span>
+          <p className="text-xs text-muted-foreground">Days</p>
+        </div>
+        <div className="flex-1">
+          <span className="text-xl font-bold text-primary">{timeRemaining.hours}</span>
+          <p className="text-xs text-muted-foreground">Hours</p>
+        </div>
+        <div className="flex-1">
+          <span className="text-xl font-bold text-primary">{timeRemaining.minutes}</span>
+          <p className="text-xs text-muted-foreground">Mins</p>
+        </div>
+        <div className="flex-1">
+          <span className="text-xl font-bold text-primary">{timeRemaining.seconds}</span>
+          <p className="text-xs text-muted-foreground">Secs</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 const NextSession = ({
   onRegisterClick
