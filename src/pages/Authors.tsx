@@ -18,6 +18,13 @@ const authors = [
     bio: "Hi! My name is David Choi. I was born in Paris, France, and moved to the United States when I was eight years old. Growing up between two cultures has given me a unique perspective on the world and a deep appreciation for learning about different people and ideas. I am currently a freshman in high school who loves to stay active and engaged, both inside and outside of school. I play pickleball competitively on my school team and often play outside of school as well - it is one of my favorite ways to challenge myself, meet new people, and have fun. I am also a proud member of BioBrainiacs Academy, where I get to explore my interest in biology and science. I love learning how the body and brain work, and I hope to keep building my knowledge through experiments, research, and collaboration with other students who share my curiosity.",
     email: "davidjchoi2@gmail.com",
   },
+  {
+    name: "Aryan Juneja",
+    role: "Author",
+    image: "",
+    bio: "Hi! My name is Aryan Juneja. I am a 9th grader at Winston Churchill High School. I am very interested in biology and science. Growing up, I discovered my curiosity for biology and living things through animals. At 9 years old, I set up my first fish tank and realized how interesting ecosystems are - how they maintain themselves and how a real natural environment can be replicated.",
+    email: "aryanjuneja2010@gmail.com",
+  },
 ];
 
 const Authors = () => {
@@ -66,11 +73,23 @@ const Authors = () => {
               className="card-gradient rounded-xl p-6"
             >
               <div className="flex flex-col md:flex-row gap-6 items-start">
-                <img
-                  src={author.image}
-                  alt={author.name}
-                  className="w-32 h-32 rounded-full object-cover flex-shrink-0 mx-auto md:mx-0"
-                />
+                {author.image ? (
+                  <img
+                    src={author.image}
+                    alt={author.name}
+                    className="w-32 h-32 rounded-full object-cover flex-shrink-0 mx-auto md:mx-0"
+                  />
+                ) : (
+                  <div className="w-32 h-32 rounded-full bg-muted flex items-center justify-center flex-shrink-0 mx-auto md:mx-0">
+                    <svg
+                      className="w-16 h-16 text-muted-foreground"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                  </div>
+                )}
                 <div className="flex-1">
                   <h2 className="text-2xl font-semibold text-foreground">{author.name}</h2>
                   <p className="text-accent text-sm mb-4">{author.role}</p>
