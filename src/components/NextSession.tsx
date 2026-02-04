@@ -1,78 +1,14 @@
 import { Calendar, Clock, MapPin, Video } from "lucide-react";
-import { useState, useEffect } from "react";
+
 interface NextSessionProps {
   onRegisterClick: () => void;
 }
-const getTimeRemaining = (targetDate: Date) => {
-  const now = new Date();
-  const difference = targetDate.getTime() - now.getTime();
-  if (difference <= 0) {
-    return {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0
-    };
-  }
-  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(difference % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
-  const minutes = Math.floor(difference % (1000 * 60 * 60) / (1000 * 60));
-  const seconds = Math.floor(difference % (1000 * 60) / 1000);
-  return {
-    days,
-    hours,
-    minutes,
-    seconds
-  };
-};
-const CountdownTimer = ({
-  targetDate,
-  label
-}: {
-  targetDate: Date;
-  label: string;
-}) => {
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(targetDate));
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeRemaining(getTimeRemaining(targetDate));
-    }, 1000);
 
-    return () => clearInterval(timer);
-  }, [targetDate]);
-
-  return (
-    <div className="mt-4 p-3 bg-background/50 rounded-lg">
-      <p className="text-xs text-muted-foreground mb-2">{label}</p>
-      <div className="flex gap-3 text-center">
-        <div className="flex-1">
-          <span className="text-xl font-bold text-primary">{timeRemaining.days}</span>
-          <p className="text-xs text-muted-foreground">Days</p>
-        </div>
-        <div className="flex-1">
-          <span className="text-xl font-bold text-primary">{timeRemaining.hours}</span>
-          <p className="text-xs text-muted-foreground">Hours</p>
-        </div>
-        <div className="flex-1">
-          <span className="text-xl font-bold text-primary">{timeRemaining.minutes}</span>
-          <p className="text-xs text-muted-foreground">Mins</p>
-        </div>
-        <div className="flex-1">
-          <span className="text-xl font-bold text-primary">{timeRemaining.seconds}</span>
-          <p className="text-xs text-muted-foreground">Secs</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 const NextSession = ({
   onRegisterClick
 }: NextSessionProps) => {
-  // Virtual meeting: Jan 31st, 2026 at 12:00 PM EST
-  const virtualMeetingDate = new Date('2026-01-31T12:00:00-05:00');
-  // Lab session: Feb 2nd, 2026 at 11:00 AM EST
-  const labSessionDate = new Date('2026-02-02T11:00:00-05:00');
-  return <section className="py-8 px-4">
+  return (
+    <section className="py-8 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
         <span className="text-primary">Upcoming</span>
         <span className="text-foreground"> Sessions</span>
@@ -104,7 +40,6 @@ const NextSession = ({
                 <span className="text-sm">via Zoom</span>
               </div>
             </div>
-            <CountdownTimer targetDate={virtualMeetingDate} label="Starts in:" />
           </div>
 
           {/* Lab Session */}
@@ -131,7 +66,6 @@ const NextSession = ({
                 <span className="text-sm">Room 248</span>
               </div>
             </div>
-            <CountdownTimer targetDate={labSessionDate} label="Starts in:" />
           </div>
         </div>
         
@@ -139,6 +73,8 @@ const NextSession = ({
           Register Now
         </button>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default NextSession;
