@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin, Video } from "lucide-react";
+import { Calendar, Clock, MapPin } from "lucide-react";
 
 interface NextSessionProps {
   onRegisterClick: () => void;
@@ -15,33 +15,7 @@ const NextSession = ({
       </h2>
       
       <div className="max-w-xl mx-auto card-gradient rounded-xl p-6">
-        <div className="space-y-6">
-          {/* Virtual Meeting */}
-          <div className="border-b border-border pb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                VIRTUAL
-              </span>
-            </div>
-            <h3 className="text-lg md:text-xl font-semibold text-foreground mb-4">
-              Culturing Bacteria 101: Concepts Behind the Experiment
-            </h3>
-            <div className="flex flex-wrap gap-4 text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-accent" />
-                <span className="text-sm">Feb 7th</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-accent" />
-                <span className="text-sm">12:00 PM</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Video className="w-4 h-4 text-accent" />
-                <span className="text-sm">via Zoom</span>
-              </div>
-            </div>
-          </div>
-
+        <div>
           {/* Lab Session */}
           <div>
             <div className="flex items-center gap-2 mb-3">
