@@ -22,7 +22,7 @@ const Index = () => {
         
         <div className="section-divider" />
         
-        <NextSession onRegisterClick={() => setShowRegistration(true)} />
+        <NextSession />
         
         <div className="section-divider" />
         
