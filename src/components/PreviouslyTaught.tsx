@@ -2,6 +2,12 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
+    title: "Culturing Bacteria: Experimental Microbiology",
+    date: "2/12",
+    thumbnail: "https://i.ytimg.com/vi_webp/dNn6nS_onQU/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=dNn6nS_onQU",
+  },
+  {
     title: "Blood Types Decoded: The Science Behind Who Can Donate to Who",
     date: "12/21",
     thumbnail: "https://i.ytimg.com/vi_webp/xo-3YKmxN2k/maxresdefault.webp",
