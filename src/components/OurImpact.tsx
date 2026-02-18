@@ -8,7 +8,7 @@ const stats = [{
   label: "Students Taught"
 }, {
   icon: BookOpen,
-  value: 21,
+  value: 23,
   label: "Topics Covered"
 }, {
   icon: Eye,
