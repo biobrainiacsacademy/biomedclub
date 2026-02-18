@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 const lessons = [
   {
     title: "Culturing Bacteria: Experimental Microbiology",
-    date: "2/12",
+    date: "2/7",
     thumbnail: "https://i.ytimg.com/vi_webp/dNn6nS_onQU/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=dNn6nS_onQU",
   },
@@ -18,12 +18,6 @@ const lessons = [
     date: "10/25",
     thumbnail: "https://i.ytimg.com/vi_webp/5N_uMvDQeQ0/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=5N_uMvDQeQ0",
-  },
-  {
-    title: "The Science of Bioelectronics: Merging Biology with Circuits",
-    date: "10/4",
-    thumbnail: "https://i.ytimg.com/vi_webp/mqqQOLYL2Rs/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=mqqQOLYL2Rs",
   },
 ];
 
