@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin } from "lucide-react";
+
 
 interface NextSessionProps {
   onRegisterClick: () => void;
@@ -20,26 +20,13 @@ const NextSession = ({
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                LAB
+                UPCOMING
               </span>
             </div>
-            <h3 className="text-lg md:text-xl font-semibold text-foreground mb-4">
+            <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
               Experimental Microbiology: Culturing Bacteria
             </h3>
-            <div className="flex flex-wrap gap-4 text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-accent" />
-                <span className="text-sm">Feb 9th</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-accent" />
-                <span className="text-sm">Lunch</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-accent" />
-                <span className="text-sm">Room 248</span>
-              </div>
-            </div>
+            <p className="text-muted-foreground text-sm">Coming Soon</p>
           </div>
         </div>
         
