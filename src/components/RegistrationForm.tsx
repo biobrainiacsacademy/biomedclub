@@ -121,11 +121,11 @@ const RegistrationForm = ({
             </label>
             <div className="space-y-2">
               <label className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                <input type="checkbox" checked={selectedSessions.includes("Anatomy Challenge - Mar 23rd")} onChange={e => {
+                <input type="checkbox" checked={selectedSessions.includes("Anatomy Challenge - Mar 27th")} onChange={e => {
                 if (e.target.checked) {
-                  setSelectedSessions([...selectedSessions, "Anatomy Challenge - Mar 23rd"]);
+                  setSelectedSessions([...selectedSessions, "Anatomy Challenge - Mar 27th"]);
                 } else {
-                  setSelectedSessions(selectedSessions.filter(s => s !== "Anatomy Challenge - Mar 23rd"));
+                  setSelectedSessions(selectedSessions.filter(s => s !== "Anatomy Challenge - Mar 27th"));
                 }
               }} className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary" />
                 <div>
