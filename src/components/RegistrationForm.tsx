@@ -131,7 +131,7 @@ const RegistrationForm = ({
                 <div>
                   <span className="text-xs font-semibold text-accent-foreground bg-accent px-2 py-0.5 rounded-full">HANDS-ON</span>
                   <p className="text-sm text-foreground mt-1">The Anatomy Challenge</p>
-                  <p className="text-xs text-muted-foreground">Mar 23rd • Lunch • Room 248</p>
+                  <p className="text-xs text-muted-foreground">Mar 27th • Lunch • Room 248</p>
                 </div>
               </label>
             </div>
