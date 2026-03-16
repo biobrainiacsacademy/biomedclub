@@ -21,7 +21,7 @@ const NextSession = ({
           <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 rounded">3/23</span>
         </div>
         <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
-          <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> Monday, March 23</span></span>
+          <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> Monday, March 23</span>
           <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> During Lunch</span>
           <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Room 248</span>
         </div>
