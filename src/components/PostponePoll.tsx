@@ -30,6 +30,7 @@ const PostponePoll = () => {
       return;
     }
 
+    localStorage.setItem(POLL_KEY, "true");
     setSubmitted(true);
     toast({
       title: "Thanks for your response!",
