@@ -21,6 +21,8 @@ const Index = () => {
       <main className="max-w-7xl mx-auto">
         <Hero />
         
+        <PostponePoll />
+        
         <div className="section-divider" />
         
         <NextSession onRegisterClick={() => setShowRegistration(true)} />
