@@ -2,10 +2,12 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
+const POLL_KEY = "postpone-poll-submitted";
+
 const PostponePoll = () => {
   const { toast } = useToast();
   const [selected, setSelected] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(() => localStorage.getItem(POLL_KEY) === "true");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
@@ -28,6 +30,7 @@ const PostponePoll = () => {
       return;
     }
 
+    localStorage.setItem(POLL_KEY, "true");
     setSubmitted(true);
     toast({
       title: "Thanks for your response!",
