@@ -95,6 +95,27 @@ export type Database = {
         }
         Relationships: []
       }
+      poll_responses: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          question: string
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          question: string
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          question?: string
+        }
+        Relationships: []
+      }
       registrations: {
         Row: {
           created_at: string
