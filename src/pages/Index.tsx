@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
+import PostponePoll from "@/components/PostponePoll";
 import NextSession from "@/components/NextSession";
 import BioGlancePreview from "@/components/BioGlancePreview";
 import OurImpact from "@/components/OurImpact";
@@ -19,6 +20,8 @@ const Index = () => {
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto">
         <Hero />
+        
+        <PostponePoll />
         
         <div className="section-divider" />
         
