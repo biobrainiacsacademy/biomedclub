@@ -11,18 +11,8 @@ const FadeIn = ({ children, delay = 0, className = "" }: FadeInProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    const timeout = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timeout);
   }, [delay]);
 
   return (

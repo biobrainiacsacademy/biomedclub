@@ -20,45 +20,45 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto">
-        <FadeIn>
+        <FadeIn delay={0}>
           <Hero />
         </FadeIn>
         
-        <FadeIn delay={150}>
+        <FadeIn delay={200}>
           <PostponePoll />
         </FadeIn>
         
-        <FadeIn delay={100}>
+        <FadeIn delay={400}>
           <div className="section-divider" />
           <NextSession onRegisterClick={() => setShowRegistration(true)} />
         </FadeIn>
         
-        <FadeIn>
+        <FadeIn delay={600}>
           <div className="section-divider" />
           <BioGlancePreview />
         </FadeIn>
         
-        <FadeIn>
+        <FadeIn delay={800}>
           <div className="section-divider" />
           <OurImpact />
         </FadeIn>
         
-        <FadeIn>
+        <FadeIn delay={1000}>
           <div className="section-divider" />
           <PreviouslyTaught />
         </FadeIn>
         
-        <FadeIn>
+        <FadeIn delay={1200}>
           <div className="section-divider" />
           <StudentReviews onRateClick={() => setShowRateUs(true)} />
         </FadeIn>
         
-        <FadeIn>
+        <FadeIn delay={1400}>
           <div className="section-divider" />
           <UpcomingMeetings />
         </FadeIn>
         
-        <FadeIn>
+        <FadeIn delay={1600}>
           <div className="section-divider" />
           <ConnectWithUs />
         </FadeIn>
