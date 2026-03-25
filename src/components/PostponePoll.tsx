@@ -6,9 +6,28 @@ const PostponePoll = () => {
   const { toast } = useToast();
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
     if (!selected) return;
+    setIsSubmitting(true);
+
+    const { error } = await supabase.from("poll_responses").insert({
+      question: "Should we postpone the Anatomy Challenge to after spring break?",
+      answer: selected,
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast({
+        title: "Error submitting vote",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSubmitted(true);
     toast({
       title: "Thanks for your response!",
@@ -56,10 +75,10 @@ const PostponePoll = () => {
         </div>
         <button
           onClick={handleSubmit}
-          disabled={!selected}
+          disabled={!selected || isSubmitting}
           className="w-full bg-primary text-primary-foreground font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50 text-sm"
         >
-          Submit
+          {isSubmitting ? "Submitting..." : "Submit"}
         </button>
       </div>
     </section>
