@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
+import FadeIn from "@/components/FadeIn";
 import PostponePoll from "@/components/PostponePoll";
 import NextSession from "@/components/NextSession";
 import BioGlancePreview from "@/components/BioGlancePreview";
@@ -19,43 +20,56 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto">
-        <Hero />
+        <FadeIn>
+          <Hero />
+        </FadeIn>
         
-        <PostponePoll />
+        <FadeIn delay={150}>
+          <PostponePoll />
+        </FadeIn>
         
-        <div className="section-divider" />
+        <FadeIn delay={100}>
+          <div className="section-divider" />
+          <NextSession onRegisterClick={() => setShowRegistration(true)} />
+        </FadeIn>
         
-        <NextSession onRegisterClick={() => setShowRegistration(true)} />
+        <FadeIn>
+          <div className="section-divider" />
+          <BioGlancePreview />
+        </FadeIn>
         
-        <div className="section-divider" />
+        <FadeIn>
+          <div className="section-divider" />
+          <OurImpact />
+        </FadeIn>
         
-        <BioGlancePreview />
+        <FadeIn>
+          <div className="section-divider" />
+          <PreviouslyTaught />
+        </FadeIn>
         
-        <div className="section-divider" />
+        <FadeIn>
+          <div className="section-divider" />
+          <StudentReviews onRateClick={() => setShowRateUs(true)} />
+        </FadeIn>
         
-        <OurImpact />
+        <FadeIn>
+          <div className="section-divider" />
+          <UpcomingMeetings />
+        </FadeIn>
         
-        <div className="section-divider" />
-        
-        <PreviouslyTaught />
-        
-        <div className="section-divider" />
-        
-        <StudentReviews onRateClick={() => setShowRateUs(true)} />
-        
-        <div className="section-divider" />
-        
-        <UpcomingMeetings />
-        
-        <div className="section-divider" />
-        
-        <ConnectWithUs />
+        <FadeIn>
+          <div className="section-divider" />
+          <ConnectWithUs />
+        </FadeIn>
       </main>
       
-      <footer className="py-6 px-4 flex flex-col items-center justify-center gap-3 max-w-7xl mx-auto">
-        <img src={biobrainiacsLogo} alt="BioBrainiacs Academy" className="w-12 h-12" />
-        <p className="text-muted-foreground text-sm">© 2026 BioBrainiacs Academy</p>
-      </footer>
+      <FadeIn>
+        <footer className="py-6 px-4 flex flex-col items-center justify-center gap-3 max-w-7xl mx-auto">
+          <img src={biobrainiacsLogo} alt="BioBrainiacs Academy" className="w-12 h-12" />
+          <p className="text-muted-foreground text-sm">© 2026 BioBrainiacs Academy</p>
+        </footer>
+      </FadeIn>
       
       <RegistrationForm 
         isOpen={showRegistration} 
