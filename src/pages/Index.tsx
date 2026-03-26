@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
 import FadeIn from "@/components/FadeIn";
-import PostponePoll from "@/components/PostponePoll";
+
 import NextSession from "@/components/NextSession";
 import BioGlancePreview from "@/components/BioGlancePreview";
 import OurImpact from "@/components/OurImpact";
@@ -25,10 +25,6 @@ const Index = () => {
         </FadeIn>
         
         <FadeIn delay={200}>
-          <PostponePoll />
-        </FadeIn>
-        
-        <FadeIn delay={400}>
           <div className="section-divider" />
           <NextSession onRegisterClick={() => setShowRegistration(true)} />
         </FadeIn>
