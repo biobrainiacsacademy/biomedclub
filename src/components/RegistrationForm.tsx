@@ -121,17 +121,17 @@ const RegistrationForm = ({
             </label>
             <div className="space-y-2">
               <label className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                <input type="checkbox" checked={selectedSessions.includes("Anatomy Challenge - TBD")} onChange={e => {
+                <input type="checkbox" checked={selectedSessions.includes("Anatomy Challenge - Apr 13")} onChange={e => {
                 if (e.target.checked) {
-                  setSelectedSessions([...selectedSessions, "Anatomy Challenge - TBD"]);
+                  setSelectedSessions([...selectedSessions, "Anatomy Challenge - Apr 13"]);
                 } else {
-                  setSelectedSessions(selectedSessions.filter(s => s !== "Anatomy Challenge - TBD"));
+                  setSelectedSessions(selectedSessions.filter(s => s !== "Anatomy Challenge - Apr 13"));
                 }
               }} className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary" />
                 <div>
                   <span className="text-xs font-semibold text-accent-foreground bg-accent px-2 py-0.5 rounded-full">HANDS-ON</span>
                   <p className="text-sm text-foreground mt-1">The Anatomy Challenge</p>
-                  <p className="text-xs text-muted-foreground">Date TBD • Lunch • Room 248</p>
+                  <p className="text-xs text-muted-foreground">Monday, April 13th • Lunch • Room 248</p>
                 </div>
               </label>
             </div>
