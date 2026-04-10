@@ -37,11 +37,13 @@ const ConnectWithUs = () => {
               href={link.href}
               target={link.name !== "Email" ? "_blank" : undefined}
               rel={link.name !== "Email" ? "noopener noreferrer" : undefined}
-              className="flex flex-col items-center gap-2 text-muted-foreground hover:text-accent transition-colors group"
+              className="flex flex-col items-center gap-2 text-muted-foreground hover:text-accent transition-all duration-300 group"
               aria-label={link.name}
             >
-              <Icon className="w-8 h-8 group-hover:scale-110 transition-transform" />
-              <span className="text-xs">{link.name}</span>
+              <div className="p-3 rounded-full border border-border group-hover:border-accent/50 group-hover:shadow-[0_0_20px_hsl(180,100%,50%,0.2)] transition-all duration-300 group-hover:scale-110 group-active:scale-95">
+                <Icon className="w-6 h-6" />
+              </div>
+              <span className="text-xs group-hover:text-accent transition-colors">{link.name}</span>
             </a>
           );
         })}

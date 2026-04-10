@@ -44,7 +44,7 @@ const useCountUp = (end: number, duration: number = 2000, shouldStart: boolean) 
   return count;
 };
 
-const StatCard = ({ stat, isVisible }: { stat: typeof stats[0]; isVisible: boolean }) => {
+const StatCard = ({ stat, isVisible, index }: { stat: typeof stats[0]; isVisible: boolean; index: number }) => {
   const count = useCountUp(stat.value, 2000, isVisible);
   
   const formatValue = () => {
@@ -56,9 +56,16 @@ const StatCard = ({ stat, isVisible }: { stat: typeof stats[0]; isVisible: boole
   };
 
   return (
-    <div className="flex flex-col items-center p-3 md:p-4 w-28 md:w-36 rounded-xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
-      <stat.icon className="w-6 h-6 text-primary mb-2" />
-      <span className="text-2xl md:text-3xl font-bold text-primary">
+    <div
+      className="flex flex-col items-center p-3 md:p-4 w-28 md:w-36 rounded-xl bg-card border border-border shadow-sm hover:shadow-[0_0_25px_hsl(180,100%,50%,0.15)] transition-all duration-500 hover:scale-105 hover:border-accent/50 group"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(20px)",
+        transition: `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 150}ms`,
+      }}
+    >
+      <stat.icon className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform duration-300" />
+      <span className="text-2xl md:text-3xl font-bold text-primary tabular-nums">
         {formatValue()}
       </span>
       <span className="text-xs md:text-sm text-muted-foreground text-center">
@@ -95,7 +102,7 @@ const OurImpact = () => {
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground">Our Impact So Far</h2>
       <div className="flex justify-center gap-4 md:gap-6">
         {stats.map((stat, index) => (
-          <StatCard key={index} stat={stat} isVisible={isVisible} />
+          <StatCard key={index} stat={stat} isVisible={isVisible} index={index} />
         ))}
       </div>
     </section>

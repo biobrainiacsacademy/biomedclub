@@ -1,12 +1,15 @@
 import { Calendar, Clock, MapPin } from "lucide-react";
+import { useRef } from "react";
+import { useMousePosition } from "@/hooks/use-mouse-position";
 
 interface NextSessionProps {
   onRegisterClick: () => void;
 }
 
-const NextSession = ({
-  onRegisterClick
-}: NextSessionProps) => {
+const NextSession = ({ onRegisterClick }: NextSessionProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
+
   return (
     <section className="py-8 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
@@ -15,7 +18,14 @@ const NextSession = ({
       </h2>
       <p className="text-center text-muted-foreground mb-6">Hands-On Meeting</p>
       
-      <div className="max-w-md mx-auto card-gradient rounded-xl p-6 space-y-3">
+      <div
+        ref={cardRef}
+        className="max-w-md mx-auto card-gradient rounded-xl p-6 space-y-3 interactive-card"
+        style={{
+          transform: `perspective(800px) rotateX(${mouse.y * -8}deg) rotateY(${mouse.x * 8}deg)`,
+          transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-foreground">The Anatomy Challenge</h3>
           <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 rounded">Apr 13</span>
@@ -27,7 +37,7 @@ const NextSession = ({
         </div>
         <button
           onClick={onRegisterClick}
-          className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 shadow-[0_0_15px_hsl(var(--primary)/0.5)] hover:shadow-[0_0_25px_hsl(var(--primary)/0.7)]"
+          className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 shadow-[0_0_15px_hsl(var(--primary)/0.5)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.7)] hover:scale-[1.02] active:scale-[0.98]"
         >
           Register Now
         </button>
