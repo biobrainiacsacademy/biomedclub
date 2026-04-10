@@ -2,9 +2,7 @@ import { Beaker, Bug, Dna, Heart, Users } from "lucide-react";
 
 const meetings = [
   { title: "DNA Extraction Lab", icon: Dna },
-  { title: "Growing Bacteria Lab", icon: Bug },
   { title: "Build Your Own DNA Double Helix", icon: Dna },
-  { title: "Biomedical Anatomy Challenge", icon: Heart },
   { title: "Guest Speaker Panel - Professional Biomedical Engineer", icon: Users },
 ];
 
