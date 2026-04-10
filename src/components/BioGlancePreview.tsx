@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight, BookOpen } from "lucide-react";
 
 const BioGlancePreview = () => {
@@ -24,11 +24,11 @@ const BioGlancePreview = () => {
       <div className="flex justify-center">
         <button
           onClick={handleNavigate}
-          className="inline-flex items-center gap-2 border border-accent text-accent hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300 group"
+          className="inline-flex items-center gap-2 border border-accent text-accent hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300 group hover:scale-105 hover:shadow-[0_0_25px_hsl(180,100%,50%,0.25)] active:scale-95"
         >
-          <BookOpen className="w-5 h-5" />
+          <BookOpen className="w-5 h-5 group-hover:rotate-[-5deg] transition-transform duration-300" />
           Visit The BioGlance
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
         </button>
       </div>
     </section>

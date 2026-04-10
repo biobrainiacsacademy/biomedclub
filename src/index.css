@@ -118,11 +118,11 @@
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   @keyframes fadeIn {
@@ -133,7 +133,7 @@
   @keyframes slideUp {
     from { 
       opacity: 0; 
-      transform: translateY(20px); 
+      transform: translateY(30px); 
     }
     to { 
       opacity: 1; 
@@ -141,9 +141,77 @@
     }
   }
 
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes starPop {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes pulseSlow {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, 0) scale(1); }
+    50% { opacity: 0.6; transform: translate(-50%, 0) scale(1.1); }
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, hsl(50 100% 50%) 0%, hsl(50 100% 70%) 25%, hsl(50 100% 50%) 50%, hsl(50 100% 70%) 75%, hsl(50 100% 50%) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+
+  .animate-star-pop {
+    animation: starPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  .animate-pulse-slow {
+    animation: pulseSlow 4s ease-in-out infinite;
+  }
+
+  .interactive-card {
+    @apply hover:shadow-[0_0_30px_hsl(180,100%,50%,0.12)];
+  }
+
   .section-divider {
     @apply w-full max-w-2xl mx-auto;
     height: 1px;
     background: linear-gradient(90deg, transparent, hsl(180 100% 40% / 0.5), transparent);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(192 80% 6%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(180 100% 40% / 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(180 100% 40% / 0.5);
+  }
+
+  /* Smooth selection */
+  ::selection {
+    background: hsl(180 100% 40% / 0.3);
+    color: hsl(180 100% 95%);
   }
 }
