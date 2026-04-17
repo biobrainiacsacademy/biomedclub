@@ -3,12 +3,12 @@ import { useEffect, useState, useRef } from "react";
 
 const stats = [{
   icon: Users,
-  value: 75,
+  value: 80,
   suffix: "+",
   label: "Students Taught"
 }, {
   icon: BookOpen,
-  value: 23,
+  value: 24,
   label: "Topics Covered"
 }, {
   icon: Eye,
