@@ -51,15 +51,15 @@ const RegistrationForm = ({
       return;
     }
 
-    // Validate session selection
-    if (selectedSessions.length === 0) {
-      toast({
-        title: "Please select at least one session",
-        description: "Choose which meeting(s) you'd like to attend.",
-        variant: "destructive"
-      });
-      return;
-    }
+    // Validate session selection - skip for now since no sessions available
+    // if (selectedSessions.length === 0) {
+    //   toast({
+    //     title: "Please select at least one session",
+    //     description: "Choose which meeting(s) you'd like to attend.",
+    //     variant: "destructive"
+    //   });
+    //   return;
+    // }
     setIsSubmitting(true);
     const {
       error
@@ -114,26 +114,14 @@ const RegistrationForm = ({
           opacity: 0
         }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-          {/* Session Selection */}
+          {/* Session Selection - Coming Soon */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
-              Select Session(s) <span className="text-destructive">*</span>
+              Sessions <span className="text-destructive">*</span>
             </label>
-            <div className="space-y-2">
-              <label className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                <input type="checkbox" checked={selectedSessions.includes("Anatomy Challenge - Apr 13")} onChange={e => {
-                if (e.target.checked) {
-                  setSelectedSessions([...selectedSessions, "Anatomy Challenge - Apr 13"]);
-                } else {
-                  setSelectedSessions(selectedSessions.filter(s => s !== "Anatomy Challenge - Apr 13"));
-                }
-              }} className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary" />
-                <div>
-                  <span className="text-xs font-semibold text-accent-foreground bg-accent px-2 py-0.5 rounded-full">HANDS-ON</span>
-                  <p className="text-sm text-foreground mt-1">The Anatomy Challenge</p>
-                  <p className="text-xs text-muted-foreground">Monday, April 13th • Lunch • Room 248</p>
-                </div>
-              </label>
+            <div className="p-4 bg-muted border border-border rounded-lg">
+              <p className="text-sm text-foreground font-medium">No upcoming sessions scheduled</p>
+              <p className="text-xs text-muted-foreground mt-1">Sign up to be notified when our next meeting is announced.</p>
             </div>
           </div>
           
