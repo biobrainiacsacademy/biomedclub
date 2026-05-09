@@ -10,10 +10,10 @@ const Achievement = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg md:text-xl font-bold text-primary mb-1">
-              Top 7% Globally — Blue Ocean Entrepreneurship Competition 📈
+              Top 7% Globally in the Blue Ocean Entrepreneurship Competition 📈
             </h3>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              Out of 23,000+ competitors worldwide, our team placed in the Global Top 500. One mission, global impact — fueling our drive to turn this vision into reality. 🚀
+              Out of 23,000+ competitors worldwide, our team placed in the Global Top 500. One mission, global impact, fueling our drive to turn this vision into reality. 🚀
             </p>
           </div>
         </div>
