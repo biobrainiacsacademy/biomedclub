@@ -6,6 +6,7 @@ import FloatingParticles from "@/components/FloatingParticles";
 import NextSession from "@/components/NextSession";
 import BioGlancePreview from "@/components/BioGlancePreview";
 import OurImpact from "@/components/OurImpact";
+import Achievement from "@/components/Achievement";
 import PreviouslyTaught from "@/components/PreviouslyTaught";
 import StudentReviews from "@/components/StudentReviews";
 import UpcomingMeetings from "@/components/UpcomingMeetings";
@@ -40,6 +41,11 @@ const Index = () => {
         <FadeIn delay={0}>
           <div className="section-divider" />
           <OurImpact />
+        </FadeIn>
+        
+        <FadeIn delay={0}>
+          <div className="section-divider" />
+          <Achievement />
         </FadeIn>
         
         <FadeIn delay={0}>
