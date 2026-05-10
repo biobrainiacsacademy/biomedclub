@@ -32,7 +32,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
         </div>
         <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
           <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> Coming Soon</span>
-          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> During Lunch</span>
+          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> TBD</span>
           <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Room 248</span>
         </div>
         <button
