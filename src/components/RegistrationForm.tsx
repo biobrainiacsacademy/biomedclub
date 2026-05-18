@@ -161,7 +161,7 @@ const RegistrationForm = ({
           
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
-              Email <span className="text-destructive">*</span>
+              Home Email <span className="text-destructive">*</span>
             </label>
             <input type="email" required maxLength={255} value={formData.email} onChange={e => setFormData({
             ...formData,
