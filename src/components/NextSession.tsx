@@ -39,7 +39,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
           onClick={onRegisterClick}
           className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 shadow-[0_0_15px_hsl(var(--primary)/0.5)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.7)] hover:scale-[1.02] active:scale-[0.98]"
         >
-          Notify Me
+          Register
         </button>
       </div>
     </section>
