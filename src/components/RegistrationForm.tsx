@@ -51,14 +51,15 @@ const RegistrationForm = ({
       return;
     }
 
-    if (selectedSessions.length === 0) {
-      toast({
-        title: "Please select at least one session",
-        description: "Choose which meeting(s) you'd like to attend.",
-        variant: "destructive"
-      });
-      return;
-    }
+    // Validate session selection - skip for now since no sessions available
+    // if (selectedSessions.length === 0) {
+    //   toast({
+    //     title: "Please select at least one session",
+    //     description: "Choose which meeting(s) you'd like to attend.",
+    //     variant: "destructive"
+    //   });
+    //   return;
+    // }
     setIsSubmitting(true);
     const {
       error
@@ -113,29 +114,15 @@ const RegistrationForm = ({
           opacity: 0
         }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-          {/* Session Selection */}
+          {/* Session Selection - Coming Soon */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Sessions <span className="text-destructive">*</span>
             </label>
-            <label className="flex items-start gap-3 p-4 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-              <input
-                type="checkbox"
-                checked={selectedSessions.includes("The DNA Challenge")}
-                onChange={(e) =>
-                  setSelectedSessions(
-                    e.target.checked
-                      ? [...selectedSessions, "The DNA Challenge"]
-                      : selectedSessions.filter((s) => s !== "The DNA Challenge")
-                  )
-                }
-                className="mt-1 w-4 h-4 accent-primary"
-              />
-              <div>
-                <p className="text-sm text-foreground font-medium">The DNA Challenge</p>
-                <p className="text-xs text-muted-foreground mt-1">5/20 · During Lunch · Room 248</p>
-              </div>
-            </label>
+            <div className="p-4 bg-muted border border-border rounded-lg">
+              <p className="text-sm text-foreground font-medium">No upcoming sessions scheduled</p>
+              <p className="text-xs text-muted-foreground mt-1">Sign up to be notified when our next meeting is announced.</p>
+            </div>
           </div>
           
           <div className="grid grid-cols-2 gap-4">
@@ -161,7 +148,7 @@ const RegistrationForm = ({
           
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
-              Home Email <span className="text-destructive">*</span>
+              Email <span className="text-destructive">*</span>
             </label>
             <input type="email" required maxLength={255} value={formData.email} onChange={e => setFormData({
             ...formData,
