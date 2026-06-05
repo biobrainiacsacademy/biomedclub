@@ -27,13 +27,20 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
         }}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Next Meeting</h3>
-          <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 rounded">TBD</span>
+          <h3 className="text-sm font-semibold text-foreground">DNA Extraction Lab</h3>
+          <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 rounded">In Person</span>
         </div>
         <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
-          <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> Coming Soon</span>
-          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> TBD</span>
-          <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> TBD</span>
+          <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> Friday, June 12</span>
+          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> During Lunch</span>
+          <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Room 248</span>
+        </div>
+        <div className="pt-2 border-t border-border/50">
+          <p className="text-xs font-semibold text-foreground mb-1">Also: The Blueprint Breakdown</p>
+          <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+            <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> Saturday, June 6 at 12:00 PM</span>
+            <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Virtual on Zoom</span>
+          </div>
         </div>
         <button
           onClick={onRegisterClick}
