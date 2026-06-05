@@ -51,15 +51,14 @@ const RegistrationForm = ({
       return;
     }
 
-    // Validate session selection - skip for now since no sessions available
-    // if (selectedSessions.length === 0) {
-    //   toast({
-    //     title: "Please select at least one session",
-    //     description: "Choose which meeting(s) you'd like to attend.",
-    //     variant: "destructive"
-    //   });
-    //   return;
-    // }
+    if (selectedSessions.length === 0) {
+      toast({
+        title: "Please select at least one session",
+        description: "Choose which meeting(s) you'd like to attend.",
+        variant: "destructive"
+      });
+      return;
+    }
     setIsSubmitting(true);
     const {
       error
