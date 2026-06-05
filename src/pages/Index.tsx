@@ -4,7 +4,7 @@ import FadeIn from "@/components/FadeIn";
 import FloatingParticles from "@/components/FloatingParticles";
 
 import NextSession from "@/components/NextSession";
-import BioGlancePreview from "@/components/BioGlancePreview";
+
 import OurImpact from "@/components/OurImpact";
 import Achievement from "@/components/Achievement";
 import PreviouslyTaught from "@/components/PreviouslyTaught";
@@ -33,10 +33,7 @@ const Index = () => {
           <NextSession onRegisterClick={() => setShowRegistration(true)} />
         </FadeIn>
         
-        <FadeIn delay={0}>
-          <div className="section-divider" />
-          <BioGlancePreview />
-        </FadeIn>
+        
         
         <FadeIn delay={0}>
           <div className="section-divider" />
