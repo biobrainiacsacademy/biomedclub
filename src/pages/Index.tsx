@@ -33,10 +33,7 @@ const Index = () => {
           <NextSession onRegisterClick={() => setShowRegistration(true)} />
         </FadeIn>
         
-        <FadeIn delay={0}>
-          <div className="section-divider" />
-          <BioGlancePreview />
-        </FadeIn>
+        
         
         <FadeIn delay={0}>
           <div className="section-divider" />
