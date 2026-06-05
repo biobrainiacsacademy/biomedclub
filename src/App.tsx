@@ -4,10 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import BioGlance from "./pages/BioGlance";
-import ResearchPaper from "./pages/ResearchPaper";
-import CrisprResearchPaper from "./pages/CrisprResearchPaper";
-import Authors from "./pages/Authors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
