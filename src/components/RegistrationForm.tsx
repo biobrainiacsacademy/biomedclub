@@ -119,9 +119,28 @@ const RegistrationForm = ({
             <label className="block text-sm font-medium text-foreground mb-2">
               Sessions <span className="text-destructive">*</span>
             </label>
-            <div className="p-4 bg-muted border border-border rounded-lg">
-              <p className="text-sm text-foreground font-medium">No upcoming sessions scheduled</p>
-              <p className="text-xs text-muted-foreground mt-1">Sign up to be notified when our next meeting is announced.</p>
+            <div className="space-y-2">
+              {[
+                { id: "blueprint", label: "The Blueprint Breakdown (Virtual Info Session)", details: "Saturday, June 6 at 12:00 PM on Zoom" },
+                { id: "dna", label: "DNA Extraction Lab", details: "Friday, June 12 in Room 248" },
+              ].map((s) => (
+                <label key={s.id} className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={selectedSessions.includes(s.label)}
+                    onChange={(e) => {
+                      setSelectedSessions((prev) =>
+                        e.target.checked ? [...prev, s.label] : prev.filter((x) => x !== s.label)
+                      );
+                    }}
+                    className="mt-1 accent-primary"
+                  />
+                  <div>
+                    <p className="text-sm text-foreground font-medium">{s.label}</p>
+                    <p className="text-xs text-muted-foreground">{s.details}</p>
+                  </div>
+                </label>
+              ))}
             </div>
           </div>
           
