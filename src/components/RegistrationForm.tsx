@@ -120,7 +120,6 @@ const RegistrationForm = ({
             </label>
             <div className="space-y-2">
               {[
-                { id: "blueprint", label: "The Blueprint Breakdown (Virtual Info Session)", details: "Saturday, June 6 at 12:00 PM on Zoom" },
                 { id: "dna", label: "DNA Extraction Lab", details: "Friday, June 12 in Room 248" },
               ].map((s) => (
                 <label key={s.id} className="flex items-start gap-3 p-3 bg-muted border border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
