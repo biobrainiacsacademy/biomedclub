@@ -2,6 +2,12 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
+    title: "The Blueprint Breakdown: DNA Extraction (Key Moments)",
+    date: "6/6",
+    thumbnail: "https://i.ytimg.com/vi_webp/pMD-5XF2gLc/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=pMD-5XF2gLc",
+  },
+  {
     title: "Culturing Bacteria: Experimental Microbiology",
     date: "2/7",
     thumbnail: "https://i.ytimg.com/vi_webp/dNn6nS_onQU/maxresdefault.webp",
@@ -12,12 +18,6 @@ const lessons = [
     date: "12/21",
     thumbnail: "https://i.ytimg.com/vi_webp/xo-3YKmxN2k/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=xo-3YKmxN2k",
-  },
-  {
-    title: "AI-Driven Drug Discovery - How Machine Learning Accelerates Medicine",
-    date: "10/25",
-    thumbnail: "https://i.ytimg.com/vi_webp/5N_uMvDQeQ0/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=5N_uMvDQeQ0",
   },
 ];
 
