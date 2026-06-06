@@ -12,8 +12,8 @@ const stats = [{
   label: "Topics Covered"
 }, {
   icon: Eye,
-  value: 16000,
-  displayValue: "16K+",
+  value: 20000,
+  displayValue: "20K+",
   label: "Online Audience"
 }];
 
