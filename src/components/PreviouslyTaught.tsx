@@ -2,7 +2,7 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
-    title: "The Blueprint Breakdown: DNA Extraction (Key Moments)",
+    title: "The Blueprint Breakdown: DNA Extraction",
     date: "6/6",
     thumbnail: "https://i.ytimg.com/vi_webp/pMD-5XF2gLc/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=pMD-5XF2gLc",
