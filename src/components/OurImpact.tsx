@@ -50,7 +50,7 @@ const StatCard = ({ stat, isVisible, index }: { stat: typeof stats[0]; isVisible
   const formatValue = () => {
     if (stat.displayValue) {
       const ratio = count / stat.value;
-      return `${Math.round(16 * ratio)}K+`;
+      return `${Math.round(20 * ratio)}K+`;
     }
     return count.toString() + (stat.suffix || "");
   };
