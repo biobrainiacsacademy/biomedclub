@@ -9,7 +9,7 @@ import OurImpact from "@/components/OurImpact";
 import Achievement from "@/components/Achievement";
 import PreviouslyTaught from "@/components/PreviouslyTaught";
 import StudentReviews from "@/components/StudentReviews";
-import UpcomingMeetings from "@/components/UpcomingMeetings";
+
 import ConnectWithUs from "@/components/ConnectWithUs";
 import RegistrationForm from "@/components/RegistrationForm";
 import RateUsForm from "@/components/RateUsForm";
@@ -53,11 +53,6 @@ const Index = () => {
         <FadeIn delay={0}>
           <div className="section-divider" />
           <StudentReviews onRateClick={() => setShowRateUs(true)} />
-        </FadeIn>
-        
-        <FadeIn delay={0}>
-          <div className="section-divider" />
-          <UpcomingMeetings />
         </FadeIn>
         
         <FadeIn delay={0}>
