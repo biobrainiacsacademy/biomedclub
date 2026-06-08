@@ -55,12 +55,6 @@ const Index = () => {
           <StudentReviews onRateClick={() => setShowRateUs(true)} />
         </FadeIn>
         
-        <FadeIn delay={0}>
-          <div className="section-divider" />
-          <UpcomingMeetings />
-        </FadeIn>
-        
-        <FadeIn delay={0}>
           <div className="section-divider" />
           <ConnectWithUs />
         </FadeIn>
