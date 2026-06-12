@@ -32,14 +32,14 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
         </div>
         <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
           <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> To Be Announced</span>
-          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> During Lunch</span>
-          <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Room 248</span>
+          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> TBD</span>
+          <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Virtual (on Zoom)</span>
         </div>
         <button
           onClick={onRegisterClick}
           className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 shadow-[0_0_15px_hsl(var(--primary)/0.5)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.7)] hover:scale-[1.02] active:scale-[0.98]"
         >
-          Register Now
+          Notify Me
         </button>
       </div>
     </section>
