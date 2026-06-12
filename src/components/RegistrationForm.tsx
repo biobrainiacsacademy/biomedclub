@@ -53,8 +53,8 @@ const RegistrationForm = ({
 
     if (selectedSessions.length === 0) {
       toast({
-        title: "Please select at least one session",
-        description: "Choose which meeting(s) you'd like to attend.",
+        title: "Coming Soon",
+        description: "No sessions available for registration yet. Check back later!",
         variant: "destructive"
       });
       return;
