@@ -213,6 +213,39 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
 
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
+              School Name <span className="text-destructive">*</span>
+            </label>
+            <input
+              type="text"
+              required
+              maxLength={200}
+              value={formData.school}
+              onChange={(e) => setFormData({ ...formData, school: e.target.value })}
+              className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Your school name"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-1">
+              Grade Level <span className="text-destructive">*</span>
+            </label>
+            <select
+              required
+              value={formData.grade}
+              onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
+              className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <option value="">Select grade</option>
+              <option value="9">9th Grade</option>
+              <option value="10">10th Grade</option>
+              <option value="11">11th Grade</option>
+              <option value="12">12th Grade</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-1">
               Home Email <span className="text-destructive">*</span>
             </label>
             <input
