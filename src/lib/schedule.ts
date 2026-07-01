@@ -6,14 +6,14 @@ export interface Meeting {
 }
 
 export const SUMMER_SCHEDULE: Meeting[] = [
-  { date: "2026-07-04", displayDate: "July 4", title: "The Human Microbiome: The Hidden Organ Inside You" },
-  { date: "2026-07-11", displayDate: "July 11", title: "Epigenetics: Why Your DNA Isn't Your Destiny" },
-  { date: "2026-07-18", displayDate: "July 18", title: "The Race to Build Artificial Organs" },
-  { date: "2026-07-25", displayDate: "July 25", title: "Pandemic Detectives: How Scientists Track New Diseases" },
-  { date: "2026-08-01", displayDate: "August 1", title: "Inside Clinical Trials: How Medicines Become Safe" },
-  { date: "2026-08-08", displayDate: "August 8", title: "Surgical Robots: Can Machines Save Lives?" },
-  { date: "2026-08-15", displayDate: "August 15", title: "Space Medicine: Keeping Humans Alive Beyond Earth" },
-  { date: "2026-08-22", displayDate: "August 22", title: "The Future of Medicine: 2050", isFinal: true },
+  { date: "2026-07-04", displayDate: "Saturday, July 4th", title: "The Human Microbiome: The Hidden Organ Inside You" },
+  { date: "2026-07-11", displayDate: "Saturday, July 11th", title: "Epigenetics: Why Your DNA Isn't Your Destiny" },
+  { date: "2026-07-18", displayDate: "Saturday, July 18th", title: "The Race to Build Artificial Organs" },
+  { date: "2026-07-25", displayDate: "Saturday, July 25th", title: "Pandemic Detectives: How Scientists Track New Diseases" },
+  { date: "2026-08-01", displayDate: "Saturday, August 1st", title: "Inside Clinical Trials: How Medicines Become Safe" },
+  { date: "2026-08-08", displayDate: "Saturday, August 8th", title: "Surgical Robots: Can Machines Save Lives?" },
+  { date: "2026-08-15", displayDate: "Saturday, August 15th", title: "Space Medicine: Keeping Humans Alive Beyond Earth" },
+  { date: "2026-08-22", displayDate: "Saturday, August 22nd", title: "The Future of Medicine: 2050", isFinal: true },
 ];
 
 export function getNextMeeting(now: Date = new Date()): Meeting | null {
