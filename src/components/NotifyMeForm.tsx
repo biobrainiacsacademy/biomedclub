@@ -46,10 +46,16 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
       return;
     }
 
-    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim()) {
+    if (
+      !formData.firstName.trim() ||
+      !formData.lastName.trim() ||
+      !formData.school.trim() ||
+      !formData.grade.trim() ||
+      !formData.email.trim()
+    ) {
       toast({
         title: "Please fill in all fields",
-        description: "Name and email are required.",
+        description: "Name, school, grade, and email are all required.",
         variant: "destructive",
       });
       return;
@@ -74,8 +80,8 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
       first_name: formData.firstName,
       last_name: formData.lastName,
       email: formData.email,
-      grade: null,
-      school: null,
+      grade: formData.grade,
+      school: formData.school,
       how_heard: null,
       questions: `Registered for:\n${meetingsSummary}`,
     });
@@ -95,7 +101,7 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
       description: "Thank you for registering. We will be in touch soon.",
     });
     onClose();
-    setFormData({ firstName: "", lastName: "", email: "" });
+    setFormData({ firstName: "", lastName: "", school: "", grade: "", email: "" });
     setSelectedMeetings([]);
   };
 
