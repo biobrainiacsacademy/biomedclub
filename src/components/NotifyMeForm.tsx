@@ -18,6 +18,8 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    school: "",
+    grade: "",
     email: "",
   });
 
