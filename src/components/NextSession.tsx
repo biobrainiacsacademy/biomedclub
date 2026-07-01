@@ -18,7 +18,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
         <span className="text-primary">Upcoming</span>
         <span className="text-foreground"> Sessions</span>
       </h2>
-      <p className="text-center text-muted-foreground mb-6">Stay tuned for our next hands-on meeting</p>
+      
 
       <div
         ref={cardRef}
