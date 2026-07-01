@@ -1,6 +1,7 @@
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { useRef } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
+import { getNextMeeting } from "@/lib/schedule";
 
 interface NextSessionProps {
   onRegisterClick: () => void;
@@ -9,6 +10,7 @@ interface NextSessionProps {
 const NextSession = ({ onRegisterClick }: NextSessionProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
+  const next = getNextMeeting();
 
   return (
     <section className="py-8 px-4">
@@ -17,7 +19,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
         <span className="text-foreground"> Sessions</span>
       </h2>
       <p className="text-center text-muted-foreground mb-6">Stay tuned for our next hands-on meeting</p>
-      
+
       <div
         ref={cardRef}
         className="max-w-md mx-auto card-gradient rounded-xl p-6 space-y-3 interactive-card"
@@ -26,12 +28,20 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
           transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Coming Soon</h3>
-          <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 rounded">TBD</span>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-sm font-semibold text-foreground">
+            {next ? next.title : "Coming Soon"}
+          </h3>
+          {next?.isFinal && (
+            <span className="text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-2 py-1 rounded whitespace-nowrap">
+              Final
+            </span>
+          )}
         </div>
         <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
-          <span className="flex items-center gap-2"><Calendar className="w-3 h-3 text-accent" /> To Be Announced</span>
+          <span className="flex items-center gap-2">
+            <Calendar className="w-3 h-3 text-accent" /> {next ? next.displayDate : "To Be Announced"}
+          </span>
           <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> TBD</span>
           <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Virtual (on Zoom)</span>
         </div>
@@ -39,7 +49,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
           onClick={onRegisterClick}
           className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 shadow-[0_0_15px_hsl(var(--primary)/0.5)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.7)] hover:scale-[1.02] active:scale-[0.98]"
         >
-          Notify Me
+          Register Now
         </button>
       </div>
     </section>
