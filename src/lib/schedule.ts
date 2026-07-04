@@ -6,7 +6,7 @@ export interface Meeting {
 }
 
 export const SUMMER_SCHEDULE: Meeting[] = [
-  { date: "2026-07-04", displayDate: "Saturday, July 4th", title: "The Human Microbiome: The Hidden Organ Inside You" },
+  
   { date: "2026-07-11", displayDate: "Saturday, July 11th", title: "Epigenetics: Why Your DNA Isn't Your Destiny" },
   { date: "2026-07-18", displayDate: "Saturday, July 18th", title: "The Race to Build Artificial Organs" },
   { date: "2026-07-25", displayDate: "Saturday, July 25th", title: "Pandemic Detectives: How Scientists Track New Diseases" },
