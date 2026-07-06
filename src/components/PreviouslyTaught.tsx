@@ -2,6 +2,12 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
+    title: "The Human Microbiome: The Hidden Organ Inside You (Independence Day Edition)",
+    date: "7/4",
+    thumbnail: "https://i.ytimg.com/vi_webp/Mv4r2PElIcE/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=Mv4r2PElIcE",
+  },
+  {
     title: "The Blueprint Breakdown: DNA Extraction",
     date: "6/6",
     thumbnail: "https://i.ytimg.com/vi_webp/pMD-5XF2gLc/maxresdefault.webp",
