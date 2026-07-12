@@ -4,7 +4,6 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { isBot } from "@/lib/validation";
 import { SUMMER_SCHEDULE } from "@/lib/schedule";
-import QAQuestions from "@/components/QAQuestions";
 
 interface NotifyMeFormProps {
   isOpen: boolean;
@@ -171,7 +170,6 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
                     <div className="flex-1">
                       <div className="text-xs font-semibold text-accent">
                         {m.displayDate}
-                        {m.time ? ` · ${m.time}` : ""}
                         {m.isFinal && " (final meeting)"}
                       </div>
                       <div className="text-sm text-foreground">{m.title}</div>
@@ -181,20 +179,6 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
               })}
             </div>
           </div>
-
-          {selectedMeetings.some(
-            (d) => SUMMER_SCHEDULE.find((m) => m.date === d)?.isQA,
-          ) && (
-            <div className="rounded-lg border border-primary/40 bg-primary/5 p-4">
-              <h3 className="text-sm font-semibold text-foreground mb-1">
-                Q&amp;A with Paeto Wangweera
-              </h3>
-              <p className="text-xs text-muted-foreground mb-3">
-                Submit a question ahead of time or like the ones you want answered most.
-              </p>
-              <QAQuestions />
-            </div>
-          )}
 
           <div className="grid grid-cols-2 gap-4">
             <div>

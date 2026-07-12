@@ -2,13 +2,10 @@ export interface Meeting {
   date: string; // ISO date YYYY-MM-DD
   displayDate: string;
   title: string;
-  time?: string; // display time, defaults to 12:00 PM EST
   isFinal?: boolean;
-  isQA?: boolean;
 }
 
 export const SUMMER_SCHEDULE: Meeting[] = [
-  { date: "2026-07-15", displayDate: "Wednesday, July 15th", title: "Biotech Q&A w/ Paeto Wangweera", time: "1:30 PM EST", isQA: true },
   { date: "2026-07-18", displayDate: "Saturday, July 18th", title: "The Race to Build Artificial Organs" },
   { date: "2026-07-25", displayDate: "Saturday, July 25th", title: "Pandemic Detectives: How Scientists Track New Diseases" },
   { date: "2026-08-01", displayDate: "Saturday, August 1st", title: "Inside Clinical Trials: How Medicines Become Safe" },

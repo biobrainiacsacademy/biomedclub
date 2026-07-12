@@ -116,27 +116,6 @@ export type Database = {
         }
         Relationships: []
       }
-      qa_questions: {
-        Row: {
-          created_at: string
-          id: string
-          likes: number
-          question: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          likes?: number
-          question: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          likes?: number
-          question?: string
-        }
-        Relationships: []
-      }
       registrations: {
         Row: {
           created_at: string
@@ -243,7 +222,6 @@ export type Database = {
         Returns: boolean
       }
       is_valid_email: { Args: { _email: string }; Returns: boolean }
-      like_qa_question: { Args: { _id: string }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
