@@ -2,6 +2,12 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
+    title: "Epigenetics: Why Your DNA Isn't Your Destiny (Key Moments)",
+    date: "7/11",
+    thumbnail: "https://i.ytimg.com/vi_webp/5U2YbbhO48g/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=5U2YbbhO48g",
+  },
+  {
     title: "The Human Microbiome: The Hidden Organ Inside You (Independence Day Edition)",
     date: "7/4",
     thumbnail: "https://i.ytimg.com/vi_webp/Mv4r2PElIcE/maxresdefault.webp",
@@ -12,12 +18,6 @@ const lessons = [
     date: "6/6",
     thumbnail: "https://i.ytimg.com/vi_webp/pMD-5XF2gLc/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=pMD-5XF2gLc",
-  },
-  {
-    title: "Culturing Bacteria: Experimental Microbiology",
-    date: "2/7",
-    thumbnail: "https://i.ytimg.com/vi_webp/dNn6nS_onQU/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=dNn6nS_onQU",
   },
 ];
 
