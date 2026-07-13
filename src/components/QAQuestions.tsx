@@ -141,9 +141,8 @@ const QAQuestions = () => {
                 >
                   <button
                     type="button"
-                    onClick={() => like(q.id)}
-                    disabled={hasLiked}
-                    aria-label="Like question"
+                    onClick={() => toggleLike(q.id)}
+                    aria-label={hasLiked ? "Unlike question" : "Like question"}
                     className={`flex flex-col items-center justify-center min-w-[44px] rounded-md px-2 py-1 border transition-colors ${
                       hasLiked
                         ? "border-primary bg-primary/20 text-primary cursor-default"
