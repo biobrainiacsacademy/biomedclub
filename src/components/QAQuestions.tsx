@@ -42,8 +42,8 @@ const QAQuestions = () => {
     load();
   }, []);
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const submit = async (e?: React.MouseEvent | React.FormEvent) => {
+    e?.preventDefault?.();
     const q = newQuestion.trim();
     if (q.length < 3 || q.length > 500) {
       toast({
