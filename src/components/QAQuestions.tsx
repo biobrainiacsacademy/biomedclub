@@ -92,7 +92,7 @@ const QAQuestions = () => {
         <label className="block text-sm font-medium text-foreground mb-1">
           Ask Paeto a question
         </label>
-        <form onSubmit={submit} className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <textarea
             value={newQuestion}
             onChange={(e) => setNewQuestion(e.target.value)}
@@ -101,13 +101,14 @@ const QAQuestions = () => {
             className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary min-h-[80px]"
           />
           <button
-            type="submit"
+            type="button"
+            onClick={submit}
             disabled={submitting}
             className="self-end bg-primary text-primary-foreground text-sm font-semibold py-2 px-4 rounded-lg hover:bg-primary/90 transition-all disabled:opacity-50"
           >
             {submitting ? "Submitting..." : "Submit question"}
           </button>
-        </form>
+        </div>
       </div>
 
       <div>
