@@ -43,7 +43,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
           <span className="flex items-center gap-2">
             <Calendar className="w-3 h-3 text-accent" /> {next ? next.displayDate : "To Be Announced"}
           </span>
-          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> 12:00 PM EST</span>
+          <span className="flex items-center gap-2"><Clock className="w-3 h-3 text-accent" /> {next?.time ?? "12:00 PM EST"}</span>
           <span className="flex items-center gap-2"><MapPin className="w-3 h-3 text-accent" /> Virtual (on Zoom)</span>
         </div>
         <button
