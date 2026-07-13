@@ -65,23 +65,30 @@ const QAQuestions = () => {
     load();
   };
 
-  const like = async (id: string) => {
-    if (liked.includes(id)) return;
+  const toggleLike = async (id: string) => {
+    const hasLiked = liked.includes(id);
+    const delta = hasLiked ? -1 : 1;
+    const rpc = hasLiked ? "unlike_qa_question" : "like_qa_question";
+
     // optimistic update
     setQuestions((prev) =>
       [...prev]
-        .map((q) => (q.id === id ? { ...q, likes: q.likes + 1 } : q))
+        .map((q) => (q.id === id ? { ...q, likes: Math.max(q.likes + delta, 0) } : q))
         .sort((a, b) => b.likes - a.likes || a.created_at.localeCompare(b.created_at)),
     );
-    const next = [...liked, id];
+    const next = hasLiked ? liked.filter((likedId) => likedId !== id) : [...liked, id];
     setLiked(next);
     localStorage.setItem(LIKED_KEY, JSON.stringify(next));
-    const { error } = await (supabase as any).rpc("like_qa_question", { _id: id });
+
+    const { error } = await (supabase as any).rpc(rpc, { _id: id });
     if (error) {
       // revert
       setLiked(liked);
       localStorage.setItem(LIKED_KEY, JSON.stringify(liked));
-      toast({ title: "Could not register like", variant: "destructive" });
+      toast({
+        title: hasLiked ? "Could not remove like" : "Could not register like",
+        variant: "destructive",
+      });
       load();
     }
   };
@@ -134,12 +141,11 @@ const QAQuestions = () => {
                 >
                   <button
                     type="button"
-                    onClick={() => like(q.id)}
-                    disabled={hasLiked}
-                    aria-label="Like question"
+                    onClick={() => toggleLike(q.id)}
+                    aria-label={hasLiked ? "Unlike question" : "Like question"}
                     className={`flex flex-col items-center justify-center min-w-[44px] rounded-md px-2 py-1 border transition-colors ${
                       hasLiked
-                        ? "border-primary bg-primary/20 text-primary cursor-default"
+                        ? "border-primary bg-primary/20 text-primary hover:bg-primary/30"
                         : "border-border hover:border-primary hover:text-primary"
                     }`}
                   >
