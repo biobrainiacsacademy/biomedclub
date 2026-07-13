@@ -23,7 +23,7 @@ const NextSession = ({ onRegisterClick }: NextSessionProps) => {
 
       <div
         ref={cardRef}
-        className="max-w-md mx-auto card-gradient rounded-xl p-6 space-y-3 interactive-card"
+        className={`max-w-md mx-auto rounded-xl p-6 space-y-3 interactive-card ${next?.isQA ? "qa-glow" : "card-gradient"}`}
         style={{
           transform: `perspective(800px) rotateX(${mouse.y * -8}deg) rotateY(${mouse.x * 8}deg)`,
           transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
