@@ -157,9 +157,11 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
                   <label
                     key={m.date}
                     className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
-                      checked
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-muted hover:border-primary/50"
+                      m.isQA
+                        ? "qa-glow-subtle"
+                        : checked
+                          ? "border-primary bg-primary/10"
+                          : "border-border bg-muted hover:border-primary/50"
                     }`}
                   >
                     <input
@@ -173,6 +175,11 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
                         {m.displayDate}
                         {m.time ? ` · ${m.time}` : ""}
                         {m.isFinal && " (final meeting)"}
+                        {m.isQA && (
+                          <span className="ml-2 inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase text-primary-foreground bg-primary rounded">
+                            Q&amp;A
+                          </span>
+                        )}
                       </div>
                       <div className="text-sm text-foreground">{m.title}</div>
                     </div>
