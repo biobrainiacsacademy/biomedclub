@@ -185,8 +185,13 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
           {selectedMeetings.some(
             (d) => SUMMER_SCHEDULE.find((m) => m.date === d)?.isQA,
           ) && (
-            <div className="rounded-lg border border-primary/40 bg-primary/5 p-4">
-              <h3 className="text-sm font-semibold text-foreground mb-1">
+            <div className="qa-glow rounded-xl p-4 relative overflow-hidden">
+              <div className="absolute top-0 right-0">
+                <span className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-semibold tracking-wide uppercase text-primary-foreground bg-primary rounded-bl-lg rounded-tr-lg">
+                  Featured Q&amp;A
+                </span>
+              </div>
+              <h3 className="text-sm font-semibold text-foreground mb-1 pr-24">
                 Q&amp;A with Paeto Wangweera
               </h3>
               <p className="text-xs text-muted-foreground mb-3">
