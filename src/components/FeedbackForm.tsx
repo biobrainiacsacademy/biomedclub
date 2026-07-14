@@ -258,8 +258,9 @@ const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
-      <div className="card-gradient rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm overflow-y-auto animate-fade-in">
+      <div className="card-gradient rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative my-auto shadow-[0_0_40px_hsl(50,100%,50%,0.35),0_0_80px_hsl(50,100%,50%,0.15)] ring-1 ring-primary/40 animate-scale-in">
+
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
