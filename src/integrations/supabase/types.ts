@@ -50,6 +50,39 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback_responses: {
+        Row: {
+          additional_feedback: string | null
+          attending_interest: string
+          cant_attend_reason: string | null
+          cant_attend_reason_other: string | null
+          created_at: string
+          id: string
+          reschedule_preference: string | null
+          topics_interest: string | null
+        }
+        Insert: {
+          additional_feedback?: string | null
+          attending_interest: string
+          cant_attend_reason?: string | null
+          cant_attend_reason_other?: string | null
+          created_at?: string
+          id?: string
+          reschedule_preference?: string | null
+          topics_interest?: string | null
+        }
+        Update: {
+          additional_feedback?: string | null
+          attending_interest?: string
+          cant_attend_reason?: string | null
+          cant_attend_reason_other?: string | null
+          created_at?: string
+          id?: string
+          reschedule_preference?: string | null
+          topics_interest?: string | null
+        }
+        Relationships: []
+      }
       memberships: {
         Row: {
           created_at: string

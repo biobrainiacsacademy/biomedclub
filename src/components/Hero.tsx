@@ -1,8 +1,11 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { MessageSquare } from "lucide-react";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
+import FeedbackForm from "./FeedbackForm";
 
 const Hero = () => {
   const logoRef = useRef<HTMLImageElement>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return (
     <section className="flex flex-col items-center justify-center text-center py-10 px-4 relative overflow-hidden">
@@ -30,6 +33,18 @@ const Hero = () => {
         This program takes young learners on an exciting journey through the basics of biomedicine, 
         helping them explore how science and technology work together to solve health challenges and improve lives.
       </p>
+
+      <button
+        type="button"
+        onClick={() => setShowFeedback(true)}
+        className="mt-8 inline-flex items-center gap-3 bg-primary text-primary-foreground font-bold text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl shadow-[0_0_30px_hsl(50,100%,50%,0.35)] hover:shadow-[0_0_50px_hsl(50,100%,50%,0.55)] hover:scale-[1.03] transition-all duration-300 animate-fade-in relative z-10"
+        style={{ animationDelay: "0.3s" }}
+      >
+        <MessageSquare className="w-5 h-5 md:w-6 md:h-6" />
+        Feedback Form
+      </button>
+
+      <FeedbackForm isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
     </section>
   );
 };
