@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { X, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,37 +17,78 @@ type Answers = {
   additional_feedback?: string;
 };
 
+type StepKey =
+  | "interest"
+  | "reason"
+  | "reschedule"
+  | "topics"
+  | "feedback";
+
+const FULL_ORDER: StepKey[] = [
+  "interest",
+  "reason",
+  "reschedule",
+  "topics",
+  "feedback",
+];
+
 const RESCHEDULE_OPTIONS = [
   "Later this summer (Weekday evening)",
   "Later this summer (Weekend)",
   "First meeting of the upcoming school year (Fall 2026)",
 ];
 
+const ABLE_BUT_UNREGISTERED =
+  "I am able to come, just haven't had a chance to register yet.";
+
 const REASON_OPTIONS = [
   "Work or internship conflict",
   "Travel or vacation",
   "Scheduling conflict (time of day)",
   "Other",
+  ABLE_BUT_UNREGISTERED,
 ];
 
 const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
   const { toast } = useToast();
   const [answers, setAnswers] = useState<Answers>({});
-  const [step, setStep] = useState(0);
+  const [stepKey, setStepKey] = useState<StepKey>("interest");
   const [submitting, setSubmitting] = useState(false);
 
   const steps = useMemo(() => {
     if (answers.attending_interest === "No") {
-      return ["interest", "topics", "feedback"] as const;
+      return ["interest", "topics", "feedback"] as StepKey[];
     }
-    return ["interest", "reason", "reschedule", "topics", "feedback"] as const;
-  }, [answers.attending_interest]);
+    if (answers.cant_attend_reason === ABLE_BUT_UNREGISTERED) {
+      return ["interest", "reason", "topics", "feedback"] as StepKey[];
+    }
+    return FULL_ORDER;
+  }, [answers.attending_interest, answers.cant_attend_reason]);
 
-  const currentKey = steps[step];
-  const isLast = step === steps.length - 1;
+  useEffect(() => {
+    if (steps.includes(stepKey)) return;
+
+    const currentFullIndex = FULL_ORDER.indexOf(stepKey);
+    const nextKey = FULL_ORDER.slice(currentFullIndex + 1).find((k) =>
+      steps.includes(k)
+    );
+    if (nextKey) {
+      setStepKey(nextKey);
+      return;
+    }
+
+    const prevKey = [...FULL_ORDER]
+      .slice(0, currentFullIndex)
+      .reverse()
+      .find((k) => steps.includes(k));
+    setStepKey(prevKey || steps[0]);
+  }, [steps, stepKey]);
+
+  const currentIndex = Math.max(0, steps.indexOf(stepKey));
+  const isLast = currentIndex === steps.length - 1;
 
   const canProceed = (): boolean => {
-    switch (currentKey) {
+    switch (stepKey) {
       case "interest":
         return !!answers.attending_interest;
       case "reason":
@@ -67,7 +108,7 @@ const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
 
   const reset = () => {
     setAnswers({});
-    setStep(0);
+    setStepKey("interest");
   };
 
   const handleClose = () => {
@@ -106,16 +147,18 @@ const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
     if (isLast) {
       submit();
     } else {
-      setStep((s) => s + 1);
+      setStepKey(steps[currentIndex + 1]);
     }
   };
 
-  const back = () => setStep((s) => Math.max(0, s - 1));
+  const back = () => {
+    setStepKey(steps[Math.max(0, currentIndex - 1)]);
+  };
 
   if (!isOpen) return null;
 
   const renderStep = () => {
-    switch (currentKey) {
+    switch (stepKey) {
       case "interest":
         return (
           <div>
@@ -149,7 +192,7 @@ const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
         return (
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-4">
-              What is your primary reason for being unable to attend this Wednesday at 1:30 PM?
+              What is your primary reason for not attending this Wednesday at 1:30 PM?
             </h3>
             <div className="space-y-2">
               {REASON_OPTIONS.map((opt) => {
@@ -270,13 +313,13 @@ const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
 
         <h2 className="text-2xl font-bold text-foreground mb-1">Feedback Form</h2>
         <p className="text-sm text-muted-foreground mb-4">
-          Question {step + 1} of {steps.length}
+          Question {currentIndex + 1} of {steps.length}
         </p>
 
         <div className="w-full h-1.5 bg-muted rounded-full mb-6 overflow-hidden">
           <div
             className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+            style={{ width: `${((currentIndex + 1) / steps.length) * 100}%` }}
           />
         </div>
 
@@ -286,7 +329,7 @@ const FeedbackForm = ({ isOpen, onClose }: FeedbackFormProps) => {
           <button
             type="button"
             onClick={back}
-            disabled={step === 0}
+            disabled={currentIndex === 0}
             className="flex items-center gap-1 px-4 py-2 rounded-lg border border-border text-foreground hover:border-primary/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ArrowLeft className="w-4 h-4" /> Back
