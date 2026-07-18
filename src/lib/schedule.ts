@@ -9,7 +9,6 @@ export interface Meeting {
 
 export const SUMMER_SCHEDULE: Meeting[] = [
   { date: "2026-07-14", displayDate: "Tuesday, July 14th", title: "Biotech Q&A w/ Paeto Wangweera", time: "1:30 PM EST", isQA: true },
-  { date: "2026-07-18", displayDate: "Saturday, July 18th", title: "The Race to Build Artificial Organs" },
   { date: "2026-07-25", displayDate: "Saturday, July 25th", title: "Pandemic Detectives: How Scientists Track New Diseases" },
   { date: "2026-08-01", displayDate: "Saturday, August 1st", title: "Inside Clinical Trials: How Medicines Become Safe" },
   { date: "2026-08-08", displayDate: "Saturday, August 8th", title: "Surgical Robots: Can Machines Save Lives?" },
