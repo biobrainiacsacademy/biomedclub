@@ -2,6 +2,12 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
+    title: "The Race To Build Artificial Organs (Key Moments)",
+    date: "7/18",
+    thumbnail: "https://i.ytimg.com/vi_webp/2wd2tDnCQxs/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=2wd2tDnCQxs",
+  },
+  {
     title: "Epigenetics: Why Your DNA Isn't Your Destiny (Key Moments)",
     date: "7/11",
     thumbnail: "https://i.ytimg.com/vi_webp/5U2YbbhO48g/maxresdefault.webp",
@@ -12,12 +18,6 @@ const lessons = [
     date: "7/4",
     thumbnail: "https://i.ytimg.com/vi_webp/Mv4r2PElIcE/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=Mv4r2PElIcE",
-  },
-  {
-    title: "The Blueprint Breakdown: DNA Extraction",
-    date: "6/6",
-    thumbnail: "https://i.ytimg.com/vi_webp/pMD-5XF2gLc/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=pMD-5XF2gLc",
   },
 ];
 
