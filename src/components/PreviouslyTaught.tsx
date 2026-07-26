@@ -1,10 +1,13 @@
 import { ExternalLink } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const lessons = [
   {
     title: "Pandemic Detectives: How Scientists Track New Diseases (Key Moments)",
     date: "7/25",
-    thumbnail: "https://i.ytimg.com/vi_webp/YVs6P0leYFk/maxresdefault.webp",
+    thumbnail: "https://i.ytimg.com/vi/YVs6P0leYFk/hqdefault.jpg",
+    fallbackThumbnail: "https://i.ytimg.com/vi/YVs6P0leYFk/hqdefault.jpg",
+    revealAt: "2026-07-26T08:00:00-04:00",
     url: "https://www.youtube.com/watch?v=YVs6P0leYFk",
   },
   {
