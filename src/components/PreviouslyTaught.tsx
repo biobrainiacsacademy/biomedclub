@@ -2,6 +2,12 @@ import { ExternalLink } from "lucide-react";
 
 const lessons = [
   {
+    title: "Pandemic Detectives: How Scientists Track New Diseases (Key Moments)",
+    date: "7/25",
+    thumbnail: "https://i.ytimg.com/vi_webp/YVs6P0leYFk/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=YVs6P0leYFk",
+  },
+  {
     title: "The Race To Build Artificial Organs (Key Moments)",
     date: "7/18",
     thumbnail: "https://i.ytimg.com/vi_webp/2wd2tDnCQxs/maxresdefault.webp",
@@ -12,12 +18,6 @@ const lessons = [
     date: "7/11",
     thumbnail: "https://i.ytimg.com/vi_webp/5U2YbbhO48g/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=5U2YbbhO48g",
-  },
-  {
-    title: "The Human Microbiome: The Hidden Organ Inside You (Independence Day Edition)",
-    date: "7/4",
-    thumbnail: "https://i.ytimg.com/vi_webp/Mv4r2PElIcE/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=Mv4r2PElIcE",
   },
 ];
 
