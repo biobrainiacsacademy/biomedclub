@@ -11,6 +11,12 @@ type Lesson = {
 
 const lessons: Lesson[] = [
   {
+    title: "Inside Clinical Trials: How Medicines Become Safe (Key Moments)",
+    date: "8/1",
+    thumbnail: "https://i.ytimg.com/vi_webp/ULNtz5JgGms/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=ULNtz5JgGms",
+  },
+  {
     title: "Pandemic Detectives: How Scientists Track New Diseases (Key Moments)",
     date: "7/25",
     thumbnail: "https://i.ytimg.com/vi/YVs6P0leYFk/hqdefault.jpg",
@@ -22,12 +28,6 @@ const lessons: Lesson[] = [
     date: "7/18",
     thumbnail: "https://i.ytimg.com/vi_webp/2wd2tDnCQxs/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=2wd2tDnCQxs",
-  },
-  {
-    title: "Epigenetics: Why Your DNA Isn't Your Destiny (Key Moments)",
-    date: "7/11",
-    thumbnail: "https://i.ytimg.com/vi_webp/5U2YbbhO48g/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=5U2YbbhO48g",
   },
 ];
 
