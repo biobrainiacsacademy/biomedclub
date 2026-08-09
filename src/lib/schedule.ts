@@ -8,7 +8,6 @@ export interface Meeting {
 }
 
 export const SUMMER_SCHEDULE: Meeting[] = [
-  { date: "2026-08-08", displayDate: "Saturday, August 8th", title: "Surgical Robots: Can Machines Save Lives?" },
   { date: "2026-08-15", displayDate: "Saturday, August 15th", title: "Space Medicine: Keeping Humans Alive Beyond Earth" },
   { date: "2026-08-22", displayDate: "Saturday, August 22nd", title: "The Future of Medicine: 2050", isFinal: true },
 ];
