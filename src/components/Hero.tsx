@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Brain } from "lucide-react";
+import { Link } from "react-router-dom";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 import FeedbackForm from "./FeedbackForm";
 
@@ -43,6 +44,15 @@ const Hero = () => {
         <MessageSquare className="w-5 h-5 md:w-6 md:h-6" />
         Feedback Form
       </button>
+
+      <Link
+        to="/quiz"
+        className="mt-4 inline-flex items-center gap-3 border-2 border-primary/60 text-foreground font-bold text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl bg-primary/10 shadow-[0_0_25px_hsl(180,100%,50%,0.2)] hover:shadow-[0_0_45px_hsl(180,100%,50%,0.35)] hover:scale-[1.03] transition-all duration-300 animate-fade-in relative z-10"
+        style={{ animationDelay: "0.35s" }}
+      >
+        <Brain className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+        Review Quiz
+      </Link>
 
       <FeedbackForm isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
     </section>
