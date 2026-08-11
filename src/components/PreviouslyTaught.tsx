@@ -1,5 +1,7 @@
-import { ExternalLink, Lock } from "lucide-react";
+import { ExternalLink, Lock, PlayCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+import VideoPlayerModal from "@/components/VideoPlayerModal";
+import { getYouTubeId } from "@/lib/youtube";
 
 type Lesson = {
   title: string;
@@ -33,6 +35,7 @@ const lessons: Lesson[] = [
 
 const PreviouslyTaught = () => {
   const [now, setNow] = useState(() => Date.now());
+  const [active, setActive] = useState<Lesson | null>(null);
 
   useEffect(() => {
     const pending = lessons
@@ -57,13 +60,13 @@ const PreviouslyTaught = () => {
           const isLocked =
             !!lesson.revealAt && new Date(lesson.revealAt).getTime() > now;
           return (
-            <a
+            <button
               key={index}
-              href={isLocked ? undefined : lesson.url}
-              onClick={isLocked ? (e) => e.preventDefault() : undefined}
-              target={isLocked ? undefined : "_blank"}
-              rel="noopener noreferrer"
-              className={`card-gradient rounded-xl overflow-hidden group transition-all duration-500 ${
+              type="button"
+              disabled={isLocked}
+              aria-label={isLocked ? "Video locked" : `Play ${lesson.title}`}
+              onClick={() => !isLocked && setActive(lesson)}
+              className={`w-full text-left card-gradient rounded-xl overflow-hidden group transition-all duration-500 ${
                 isLocked
                   ? "cursor-not-allowed opacity-90"
                   : "hover:scale-[1.03] hover:shadow-[0_0_30px_hsl(180,100%,50%,0.15)] hover:border-accent/30"
@@ -102,11 +105,11 @@ const PreviouslyTaught = () => {
                   {lesson.title}
                 </h3>
                 <span className="inline-flex items-center gap-1 text-accent text-xs font-medium group-hover:gap-2 transition-all duration-300">
-                  {isLocked ? "Available soon" : "Watch on YouTube"}
-                  {!isLocked && <ExternalLink className="w-3 h-3" />}
+                  {isLocked ? "Available soon" : "Watch now"}
+                  {!isLocked && <PlayCircle className="w-3.5 h-3.5" />}
                 </span>
               </div>
-            </a>
+            </button>
           );
         })}
       </div>
@@ -122,6 +125,14 @@ const PreviouslyTaught = () => {
           <ExternalLink className="w-4 h-4" />
         </a>
       </div>
+
+      {active && getYouTubeId(active.url) && (
+        <VideoPlayerModal
+          videoId={getYouTubeId(active.url) as string}
+          title={active.title}
+          onClose={() => setActive(null)}
+        />
+      )}
     </section>
   );
 };

@@ -1,3 +1,5 @@
+import { extraQuizQuestions } from "./quizQuestionsExtra";
+
 export type QuizQuestion = {
   id: string;
   topic: string;
@@ -8,8 +10,6 @@ export type QuizQuestion = {
   hint: string;
   explanation: string;
 };
-
-const CHANNEL = "https://www.youtube.com/@BioBrainiacsAcademy";
 
 const TOPICS = {
   dna: {
@@ -38,11 +38,11 @@ const TOPICS = {
   },
   robots: {
     name: "Surgical Robots: Can Machines Save Lives?",
-    url: CHANNEL,
+    url: "https://www.youtube.com/watch?v=b-b0jcy1QO0",
   },
   synthetic: {
     name: "The Science of Synthetic Organs: Building Life in the Lab",
-    url: "https://www.youtube.com/watch?v=2wd2tDnCQxs",
+    url: "https://www.youtube.com/watch?v=tPSC67jJ31s",
   },
 } as const;
 
@@ -523,7 +523,7 @@ const bank: Record<TopicKey, RawQ[]> = {
   ],
 };
 
-export const quizQuestions: QuizQuestion[] = Object.entries(bank).flatMap(([key, list]) =>
+const baseQuestions: QuizQuestion[] = Object.entries(bank).flatMap(([key, list]) =>
   list.map((item, i) => ({
     id: `${key}-${i}`,
     topic: TOPICS[key as TopicKey].name,
@@ -535,5 +535,7 @@ export const quizQuestions: QuizQuestion[] = Object.entries(bank).flatMap(([key,
     explanation: item.e,
   })),
 );
+
+export const quizQuestions: QuizQuestion[] = [...baseQuestions, ...extraQuizQuestions];
 
 export const totalQuestions = quizQuestions.length;
