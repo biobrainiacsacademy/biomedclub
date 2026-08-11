@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
-  ExternalLink,
+  PlayCircle,
   Lightbulb,
   SkipForward,
   CheckCircle2,
@@ -22,6 +22,8 @@ import {
 } from "@/lib/quizStorage";
 import QuizStatsPanel from "@/components/QuizStatsPanel";
 import FloatingParticles from "@/components/FloatingParticles";
+import VideoPlayerModal from "@/components/VideoPlayerModal";
+import { getYouTubeId } from "@/lib/youtube";
 
 const pickNext = (seen: string[]): QuizQuestion | null => {
   const pool = quizQuestions.filter((q) => !seen.includes(q.id));
@@ -39,6 +41,7 @@ const Quiz = () => {
   const [triesThisQ, setTriesThisQ] = useState(0);
   const [showStats, setShowStats] = useState(false);
   const [cycleNotice, setCycleNotice] = useState(false);
+  const [playing, setPlaying] = useState<QuizQuestion | null>(null);
 
   useEffect(() => {
     saveStats(stats);
@@ -186,16 +189,15 @@ const Quiz = () => {
             )}
             <div className="mb-4">
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Topic</p>
-              <a
-                href={current.lessonUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+              <button
+                type="button"
+                onClick={() => setPlaying(current)}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline text-left"
               >
                 {current.topic}
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-              <p className="text-xs text-muted-foreground mt-1">Watch the lesson on YouTube</p>
+                <PlayCircle className="w-4 h-4" />
+              </button>
+              <p className="text-xs text-muted-foreground mt-1">Watch the lesson right here</p>
             </div>
 
             <h2 className="text-lg md:text-xl font-semibold text-foreground mb-4">
@@ -253,14 +255,13 @@ const Quiz = () => {
                   Correct{triesThisQ === 0 ? ", first try!" : "!"}
                 </p>
                 <p className="text-sm text-foreground leading-relaxed">{current.explanation}</p>
-                <a
-                  href={current.lessonUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setPlaying(current)}
                   className="inline-flex items-center gap-1.5 text-xs text-accent mt-3 hover:underline"
                 >
-                  Review this lesson on YouTube <ExternalLink className="w-3 h-3" />
-                </a>
+                  Review this lesson <PlayCircle className="w-3.5 h-3.5" />
+                </button>
               </div>
             )}
 
@@ -307,6 +308,14 @@ const Quiz = () => {
           <p className="text-center text-muted-foreground">Loading question...</p>
         )}
       </main>
+
+      {playing && getYouTubeId(playing.lessonUrl) && (
+        <VideoPlayerModal
+          videoId={getYouTubeId(playing.lessonUrl) as string}
+          title={playing.topic}
+          onClose={() => setPlaying(null)}
+        />
+      )}
 
       <footer className="py-6 text-center text-muted-foreground text-sm relative z-10">
         © 2026 BioBrainiacs Academy
