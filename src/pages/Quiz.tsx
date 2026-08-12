@@ -30,10 +30,19 @@ import { getYouTubeId } from "@/lib/youtube";
 
 const ALL = "All units";
 
-const pickNext = (seen: string[], topic: string): QuizQuestion | null => {
+const pickNext = (
+  seen: string[],
+  topic: string,
+  avoidId?: string | null,
+): QuizQuestion | null => {
   const scope = topic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === topic);
-  const pool = scope.filter((q) => !seen.includes(q.id));
+  if (scope.length === 0) return null;
+  let pool = scope.filter((q) => !seen.includes(q.id));
   if (pool.length === 0) return null;
+  if (pool.length > 1 && avoidId) {
+    const filtered = pool.filter((q) => q.id !== avoidId);
+    if (filtered.length > 0) pool = filtered;
+  }
   return pool[Math.floor(Math.random() * pool.length)];
 };
 
