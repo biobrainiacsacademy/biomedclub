@@ -69,7 +69,8 @@ const Quiz = () => {
   }, [stats]);
 
   const startQuestion = (seen: string[], cycles: number, forTopic: string) => {
-    let next = pickNext(seen, forTopic);
+    const prevId = current?.id ?? null;
+    let next = pickNext(seen, forTopic, prevId);
     let nextSeen = seen;
     let nextCycles = cycles;
     if (!next) {
@@ -80,7 +81,14 @@ const Quiz = () => {
       nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
       nextCycles = cycles + 1;
       setCycleNotice(true);
-      next = pickNext(nextSeen, forTopic);
+      next = pickNext(nextSeen, forTopic, prevId);
+      // Absolute fallback so the quiz never runs out of questions.
+      if (!next) {
+        const scope =
+          forTopic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === forTopic);
+        const bank = scope.length > 0 ? scope : quizQuestions;
+        next = bank[Math.floor(Math.random() * bank.length)];
+      }
     } else {
       setCycleNotice(false);
     }
