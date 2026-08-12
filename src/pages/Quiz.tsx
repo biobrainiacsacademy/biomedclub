@@ -30,10 +30,19 @@ import { getYouTubeId } from "@/lib/youtube";
 
 const ALL = "All units";
 
-const pickNext = (seen: string[], topic: string): QuizQuestion | null => {
+const pickNext = (
+  seen: string[],
+  topic: string,
+  avoidId?: string | null,
+): QuizQuestion | null => {
   const scope = topic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === topic);
-  const pool = scope.filter((q) => !seen.includes(q.id));
+  if (scope.length === 0) return null;
+  let pool = scope.filter((q) => !seen.includes(q.id));
   if (pool.length === 0) return null;
+  if (pool.length > 1 && avoidId) {
+    const filtered = pool.filter((q) => q.id !== avoidId);
+    if (filtered.length > 0) pool = filtered;
+  }
   return pool[Math.floor(Math.random() * pool.length)];
 };
 
@@ -60,7 +69,8 @@ const Quiz = () => {
   }, [stats]);
 
   const startQuestion = (seen: string[], cycles: number, forTopic: string) => {
-    let next = pickNext(seen, forTopic);
+    const prevId = current?.id ?? null;
+    let next = pickNext(seen, forTopic, prevId);
     let nextSeen = seen;
     let nextCycles = cycles;
     if (!next) {
@@ -71,7 +81,14 @@ const Quiz = () => {
       nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
       nextCycles = cycles + 1;
       setCycleNotice(true);
-      next = pickNext(nextSeen, forTopic);
+      next = pickNext(nextSeen, forTopic, prevId);
+      // Absolute fallback so the quiz never runs out of questions.
+      if (!next) {
+        const scope =
+          forTopic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === forTopic);
+        const bank = scope.length > 0 ? scope : quizQuestions;
+        next = bank[Math.floor(Math.random() * bank.length)];
+      }
     } else {
       setCycleNotice(false);
     }
@@ -326,7 +343,7 @@ const Quiz = () => {
           <div className="rounded-2xl border border-border bg-card p-5 md:p-6 shadow-[0_0_40px_hsl(50,100%,50%,0.08)]">
             {cycleNotice && (
               <p className="text-xs text-accent mb-3">
-                You have answered every question here. Starting a fresh round.
+                Nice work, you cleared a full round. Round {stats.cycles + 1} starts now.
               </p>
             )}
             <div className="mb-4">
