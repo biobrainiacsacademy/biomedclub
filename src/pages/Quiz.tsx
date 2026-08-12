@@ -343,7 +343,7 @@ const Quiz = () => {
           <div className="rounded-2xl border border-border bg-card p-5 md:p-6 shadow-[0_0_40px_hsl(50,100%,50%,0.08)]">
             {cycleNotice && (
               <p className="text-xs text-accent mb-3">
-                You have answered every question here. Starting a fresh round.
+                Nice work, you cleared a full round. Round {stats.cycles + 1} starts now.
               </p>
             )}
             <div className="mb-4">
