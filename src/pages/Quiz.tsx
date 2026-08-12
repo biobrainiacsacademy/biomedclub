@@ -10,8 +10,11 @@ import {
   BarChart3,
   RotateCcw,
   Flame,
+  Layers,
+  Zap,
+  Check,
 } from "lucide-react";
-import { quizQuestions, type QuizQuestion } from "@/data/quizQuestions";
+import { quizQuestions, quizTopics, type QuizQuestion } from "@/data/quizQuestions";
 import {
   loadStats,
   saveStats,
@@ -25,14 +28,19 @@ import FloatingParticles from "@/components/FloatingParticles";
 import VideoPlayerModal from "@/components/VideoPlayerModal";
 import { getYouTubeId } from "@/lib/youtube";
 
-const pickNext = (seen: string[]): QuizQuestion | null => {
-  const pool = quizQuestions.filter((q) => !seen.includes(q.id));
+const ALL = "All units";
+
+const pickNext = (seen: string[], topic: string): QuizQuestion | null => {
+  const scope = topic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === topic);
+  const pool = scope.filter((q) => !seen.includes(q.id));
   if (pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 };
 
 const Quiz = () => {
   const [stats, setStats] = useState<QuizStats>(() => loadStats());
+  const [topic, setTopic] = useState<string>(ALL);
+  const [showTopics, setShowTopics] = useState(false);
   const [current, setCurrent] = useState<QuizQuestion | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const [wrongChoices, setWrongChoices] = useState<number[]>([]);
@@ -42,20 +50,30 @@ const Quiz = () => {
   const [showStats, setShowStats] = useState(false);
   const [cycleNotice, setCycleNotice] = useState(false);
   const [playing, setPlaying] = useState<QuizQuestion | null>(null);
+  const [sessionAnswered, setSessionAnswered] = useState(0);
+  const [sessionFirstTry, setSessionFirstTry] = useState(0);
+  const [run, setRun] = useState(0);
+  const [bestRun, setBestRun] = useState(0);
 
   useEffect(() => {
     saveStats(stats);
   }, [stats]);
 
-  const startQuestion = (seen: string[], cycles: number) => {
-    let next = pickNext(seen);
+  const startQuestion = (seen: string[], cycles: number, forTopic: string) => {
+    let next = pickNext(seen, forTopic);
     let nextSeen = seen;
     let nextCycles = cycles;
     if (!next) {
-      nextSeen = [];
+      const scopeIds =
+        forTopic === ALL
+          ? null
+          : new Set(quizQuestions.filter((q) => q.topic === forTopic).map((q) => q.id));
+      nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
       nextCycles = cycles + 1;
       setCycleNotice(true);
-      next = pickNext(nextSeen);
+      next = pickNext(nextSeen, forTopic);
+    } else {
+      setCycleNotice(false);
     }
     setStats((s) => ({ ...s, seen: nextSeen, cycles: nextCycles }));
     setCurrent(next);
@@ -69,15 +87,29 @@ const Quiz = () => {
   useEffect(() => {
     const s = touchDay(loadStats());
     setStats(s);
-    startQuestion(s.seen, s.cycles);
+    startQuestion(s.seen, s.cycles, ALL);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const chooseTopic = (name: string) => {
+    setTopic(name);
+    setShowTopics(false);
+    setShowStats(false);
+    startQuestion(stats.seen, stats.cycles, name);
+  };
 
   const submit = () => {
     if (selected === null || !current || solved) return;
     if (selected === current.correct) {
       const firstTry = triesThisQ === 0;
       setSolved(true);
+      setSessionAnswered((n) => n + 1);
+      setSessionFirstTry((n) => n + (firstTry ? 1 : 0));
+      setRun((r) => {
+        const nr = firstTry ? r + 1 : 0;
+        setBestRun((b) => Math.max(b, nr));
+        return nr;
+      });
       setStats((s) => {
         const t = s.byTopic[current.topic] || { answered: 0, firstTry: 0, attempts: 0 };
         const updated: QuizStats = {
@@ -99,25 +131,27 @@ const Quiz = () => {
     } else {
       setWrongChoices((w) => (w.includes(selected) ? w : [...w, selected]));
       setTriesThisQ((t) => t + 1);
+      setRun(0);
       setStats((s) => ({ ...s, wrongAttempts: s.wrongAttempts + 1 }));
     }
   };
 
   const skip = () => {
     if (!current) return;
+    setRun(0);
     setStats((s) => ({
       ...s,
       skipped: s.skipped + 1,
       seen: s.seen.includes(current.id) ? s.seen : [...s.seen, current.id],
     }));
     const seen = stats.seen.includes(current.id) ? stats.seen : [...stats.seen, current.id];
-    startQuestion(seen, stats.cycles);
+    startQuestion(seen, stats.cycles, topic);
   };
 
   const next = () => {
     if (!current) return;
     const seen = stats.seen.includes(current.id) ? stats.seen : [...stats.seen, current.id];
-    startQuestion(seen, stats.cycles);
+    startQuestion(seen, stats.cycles, topic);
   };
 
   const useHint = () => {
@@ -130,6 +164,13 @@ const Quiz = () => {
     () => (stats.answered ? Math.round((stats.correctFirstTry / stats.answered) * 100) : 0),
     [stats.answered, stats.correctFirstTry],
   );
+
+  const unitProgress = useMemo(() => {
+    const scope =
+      topic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === topic);
+    const done = scope.filter((q) => stats.seen.includes(q.id)).length;
+    return { done, total: scope.length, pct: Math.round((done / scope.length) * 100) };
+  }, [topic, stats.seen]);
 
   return (
     <div className="min-h-screen relative">
@@ -160,9 +201,106 @@ const Quiz = () => {
           <span className="text-primary">BioBrainiacs</span>
           <span className="text-foreground"> Review Quiz</span>
         </h1>
-        <p className="text-center text-muted-foreground text-sm mb-6">
+        <p className="text-center text-muted-foreground text-sm mb-5">
           Endless practice questions from every past lesson. Solved {stats.answered} · {accuracy}% first try accuracy
         </p>
+
+        {/* Unit picker */}
+        <div className="mb-5">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowTopics((v) => !v)}
+              className="inline-flex items-center gap-2 border border-primary/50 bg-primary/10 text-foreground rounded-lg px-4 py-2 text-sm font-semibold hover:border-primary transition-colors"
+            >
+              <Layers className="w-4 h-4 text-primary" />
+              {topic === ALL ? "Practice by unit" : topic}
+            </button>
+            {topic !== ALL && (
+              <button
+                type="button"
+                onClick={() => chooseTopic(ALL)}
+                className="text-xs text-muted-foreground hover:text-foreground underline"
+              >
+                Clear unit
+              </button>
+            )}
+          </div>
+
+          {showTopics && (
+            <div className="mt-3 rounded-xl border border-border bg-card p-3 max-h-72 overflow-y-auto space-y-1">
+              <button
+                type="button"
+                onClick={() => chooseTopic(ALL)}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  topic === ALL ? "bg-primary/15 text-foreground" : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                <span className="font-semibold">All units</span>{" "}
+                <span className="text-xs">({quizQuestions.length} questions)</span>
+                {topic === ALL && <Check className="inline w-4 h-4 ml-2 text-primary" />}
+              </button>
+              {quizTopics.map((t) => {
+                const done = quizQuestions.filter(
+                  (q) => q.topic === t.name && stats.seen.includes(q.id),
+                ).length;
+                return (
+                  <button
+                    key={t.name}
+                    type="button"
+                    onClick={() => chooseTopic(t.name)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                      topic === t.name
+                        ? "bg-primary/15 text-foreground"
+                        : "text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <span className="font-medium text-foreground">{t.name}</span>
+                    <span className="block text-xs">
+                      {done} of {t.count} practiced
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Progress bar for the selected unit */}
+          <div className="mt-3">
+            <div className="flex justify-between text-xs text-muted-foreground mb-1">
+              <span>{topic === ALL ? "Full question bank" : "Unit progress"}</span>
+              <span>
+                {unitProgress.done} / {unitProgress.total}
+              </span>
+            </div>
+            <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-primary transition-all duration-500"
+                style={{ width: `${unitProgress.pct}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Session scoreboard */}
+          <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+            <div className="rounded-lg border border-border bg-card py-2">
+              <p className="text-lg font-bold text-foreground">{sessionAnswered}</p>
+              <p className="text-[11px] text-muted-foreground">This session</p>
+            </div>
+            <div className="rounded-lg border border-border bg-card py-2">
+              <p className="text-lg font-bold text-foreground">
+                {sessionAnswered ? Math.round((sessionFirstTry / sessionAnswered) * 100) : 0}%
+              </p>
+              <p className="text-[11px] text-muted-foreground">Session accuracy</p>
+            </div>
+            <div className="rounded-lg border border-border bg-card py-2">
+              <p className="text-lg font-bold text-primary inline-flex items-center gap-1">
+                <Zap className="w-4 h-4" /> {run}
+              </p>
+              <p className="text-[11px] text-muted-foreground">Run, best {bestRun}</p>
+            </div>
+          </div>
+        </div>
 
         {showStats ? (
           <>
@@ -172,7 +310,11 @@ const Quiz = () => {
               onClick={() => {
                 const fresh = resetStats();
                 setStats(fresh);
-                startQuestion([], 0);
+                setSessionAnswered(0);
+                setSessionFirstTry(0);
+                setRun(0);
+                setBestRun(0);
+                startQuestion([], 0, topic);
                 setShowStats(false);
               }}
               className="mt-5 inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-destructive transition-colors"
@@ -184,7 +326,7 @@ const Quiz = () => {
           <div className="rounded-2xl border border-border bg-card p-5 md:p-6 shadow-[0_0_40px_hsl(50,100%,50%,0.08)]">
             {cycleNotice && (
               <p className="text-xs text-accent mb-3">
-                You have answered every question in the bank. Starting a fresh round.
+                You have answered every question here. Starting a fresh round.
               </p>
             )}
             <div className="mb-4">
