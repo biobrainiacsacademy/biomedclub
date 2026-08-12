@@ -536,6 +536,40 @@ const baseQuestions: QuizQuestion[] = Object.entries(bank).flatMap(([key, list])
   })),
 );
 
-export const quizQuestions: QuizQuestion[] = [...baseQuestions, ...extraQuizQuestions];
+/** Deterministic per question shuffle so the answer is not always option A. */
+const seededShuffle = (q: QuizQuestion): QuizQuestion => {
+  let h = 2166136261;
+  for (let i = 0; i < q.id.length; i++) {
+    h ^= q.id.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  const rand = () => {
+    h += 0x6d2b79f5;
+    let t = h;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const idx = [0, 1, 2, 3];
+  for (let i = idx.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [idx[i], idx[j]] = [idx[j], idx[i]];
+  }
+  const options = idx.map((i) => q.options[i]) as [string, string, string, string];
+  return { ...q, options, correct: idx.indexOf(q.correct) };
+};
+
+export const quizQuestions: QuizQuestion[] = [...baseQuestions, ...extraQuizQuestions].map(
+  seededShuffle,
+);
+
+export const quizTopics: { name: string; url: string; count: number }[] = Object.values(
+  quizQuestions.reduce<Record<string, { name: string; url: string; count: number }>>((acc, q) => {
+    if (!acc[q.topic]) acc[q.topic] = { name: q.topic, url: q.lessonUrl, count: 0 };
+    acc[q.topic].count += 1;
+    return acc;
+  }, {}),
+).sort((a, b) => a.name.localeCompare(b.name));
 
 export const totalQuestions = quizQuestions.length;
+
