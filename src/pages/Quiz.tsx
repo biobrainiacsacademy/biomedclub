@@ -297,9 +297,15 @@ const Quiz = () => {
           <span className="text-foreground"> Review Quiz</span>
         </h1>
         <p className="text-center text-muted-foreground text-sm mb-5">
-          Infinite practice. New questions keep generating, so the quiz never ends. Solved {stats.answered} · {accuracy}% first try accuracy
+          Infinite practice in every mode, all units or a single unit. Solved {stats.answered} · {accuracy}% first try accuracy
           {freshCount > 0 && <> · {freshCount} freshly written for you</>}
         </p>
+        {generating && (
+          <p className="text-center text-xs text-accent mb-4 animate-pulse">
+            Writing a brand new question for this unit...
+          </p>
+        )}
+
 
 
         {/* Unit picker */}
