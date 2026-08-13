@@ -182,7 +182,7 @@ const Quiz = () => {
   useEffect(() => {
     const s = touchDay(loadStats());
     setStats(s);
-    startQuestion(s.seen, s.cycles, ALL);
+    void startQuestion(s.seen, s.cycles, ALL);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -190,7 +190,7 @@ const Quiz = () => {
     setTopic(name);
     setShowTopics(false);
     setShowStats(false);
-    startQuestion(stats.seen, stats.cycles, name);
+    void startQuestion(stats.seen, stats.cycles, name);
   };
 
   const submit = () => {
@@ -240,13 +240,13 @@ const Quiz = () => {
       seen: s.seen.includes(current.id) ? s.seen : [...s.seen, current.id],
     }));
     const seen = stats.seen.includes(current.id) ? stats.seen : [...stats.seen, current.id];
-    startQuestion(seen, stats.cycles, topic);
+    void startQuestion(seen, stats.cycles, topic);
   };
 
   const next = () => {
     if (!current) return;
     const seen = stats.seen.includes(current.id) ? stats.seen : [...stats.seen, current.id];
-    startQuestion(seen, stats.cycles, topic);
+    void startQuestion(seen, stats.cycles, topic);
   };
 
   const useHint = () => {
@@ -411,7 +411,7 @@ const Quiz = () => {
                 setSessionFirstTry(0);
                 setRun(0);
                 setBestRun(0);
-                startQuestion([], 0, topic);
+                void startQuestion([], 0, topic);
                 setShowStats(false);
               }}
               className="mt-5 inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-destructive transition-colors"
