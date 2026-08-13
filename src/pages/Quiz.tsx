@@ -76,8 +76,9 @@ const Quiz = () => {
   }, [stats]);
 
   /** Pull brand new AI written questions so practice never runs out. */
-  const topUp = async (forTopic: string) => {
-    if (fetching.current || aiQueue.current.length >= 4) return;
+  const topUp = async (forTopic: string, force = false) => {
+    if (fetching.current) return;
+    if (!force && aiQueue.current.length >= 4) return;
     fetching.current = true;
     try {
       const pick =
@@ -105,42 +106,15 @@ const Quiz = () => {
     }
   };
 
-  const startQuestion = (seen: string[], cycles: number, forTopic: string) => {
-    const prevId = current?.id ?? null;
-    let next = pickNext(seen, forTopic, prevId);
-    let nextSeen = seen;
-    let nextCycles = cycles;
-    if (!next) {
-      // Bank is done for this scope, serve a freshly generated question.
-      const scoped = aiQueue.current.findIndex(
-        (q) => forTopic === ALL || q.topic === forTopic,
-      );
-      if (scoped >= 0) {
-        next = aiQueue.current[scoped];
-        aiQueue.current = aiQueue.current.filter((_, i) => i !== scoped);
-        setCycleNotice(false);
-        setFreshCount((n) => n + 1);
-      } else {
-        const scopeIds =
-          forTopic === ALL
-            ? null
-            : new Set(quizQuestions.filter((q) => q.topic === forTopic).map((q) => q.id));
-        nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
-        nextCycles = cycles + 1;
-        setCycleNotice(true);
-        next = pickNext(nextSeen, forTopic, prevId);
-        // Absolute fallback so the quiz never runs out of questions.
-        if (!next) {
-          const scope =
-            forTopic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === forTopic);
-          const bank = scope.length > 0 ? scope : quizQuestions;
-          next = bank[Math.floor(Math.random() * bank.length)];
-        }
-      }
-    } else {
-      setCycleNotice(false);
-    }
-    setStats((s) => ({ ...s, seen: nextSeen, cycles: nextCycles }));
+  const takeFromQueue = (forTopic: string): QuizQuestion | null => {
+    const i = aiQueue.current.findIndex((q) => forTopic === ALL || q.topic === forTopic);
+    if (i < 0) return null;
+    const q = aiQueue.current[i];
+    aiQueue.current = aiQueue.current.filter((_, idx) => idx !== i);
+    return q;
+  };
+
+  const applyQuestion = (next: QuizQuestion | null) => {
     setCurrent(next);
     setSelected(null);
     setWrongChoices([]);
@@ -148,8 +122,59 @@ const Quiz = () => {
     setShowHint(false);
     setTriesThisQ(0);
     if (next) askedTexts.current.push(next.question);
+  };
+
+  const startQuestion = async (seen: string[], cycles: number, forTopic: string) => {
+    const prevId = current?.id ?? null;
+    const banked = pickNext(seen, forTopic, prevId);
+    if (banked) {
+      setCycleNotice(false);
+      setStats((s) => ({ ...s, seen, cycles }));
+      applyQuestion(banked);
+      void topUp(forTopic);
+      return;
+    }
+
+    // Bank is done for this scope, serve freshly generated questions forever.
+    let fresh = takeFromQueue(forTopic);
+    if (!fresh) {
+      setGenerating(true);
+      // Wait for the writer, and retry so practice truly never ends.
+      for (let attempt = 0; attempt < 3 && !fresh; attempt++) {
+        await topUp(forTopic, true);
+        fresh = takeFromQueue(forTopic);
+      }
+      setGenerating(false);
+    }
+
+    if (fresh) {
+      setCycleNotice(false);
+      setFreshCount((n) => n + 1);
+      setStats((s) => ({ ...s, seen, cycles }));
+      applyQuestion(fresh);
+      void topUp(forTopic);
+      return;
+    }
+
+    // Offline or AI unavailable: recycle the bank so the quiz still never stops.
+    const scopeIds =
+      forTopic === ALL
+        ? null
+        : new Set(quizQuestions.filter((q) => q.topic === forTopic).map((q) => q.id));
+    const nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
+    setCycleNotice(true);
+    let next = pickNext(nextSeen, forTopic, prevId);
+    if (!next) {
+      const scope =
+        forTopic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === forTopic);
+      const bank = scope.length > 0 ? scope : quizQuestions;
+      next = bank[Math.floor(Math.random() * bank.length)];
+    }
+    setStats((s) => ({ ...s, seen: nextSeen, cycles: cycles + 1 }));
+    applyQuestion(next);
     void topUp(forTopic);
   };
+
 
 
   useEffect(() => {
