@@ -66,6 +66,8 @@ const Quiz = () => {
   const [run, setRun] = useState(0);
   const [bestRun, setBestRun] = useState(0);
   const [freshCount, setFreshCount] = useState(0);
+  const [generating, setGenerating] = useState(false);
+
 
   const aiQueue = useRef<QuizQuestion[]>([]);
   const fetching = useRef(false);
