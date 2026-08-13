@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -63,10 +65,45 @@ const Quiz = () => {
   const [sessionFirstTry, setSessionFirstTry] = useState(0);
   const [run, setRun] = useState(0);
   const [bestRun, setBestRun] = useState(0);
+  const [freshCount, setFreshCount] = useState(0);
+
+  const aiQueue = useRef<QuizQuestion[]>([]);
+  const fetching = useRef(false);
+  const askedTexts = useRef<string[]>([]);
 
   useEffect(() => {
     saveStats(stats);
   }, [stats]);
+
+  /** Pull brand new AI written questions so practice never runs out. */
+  const topUp = async (forTopic: string) => {
+    if (fetching.current || aiQueue.current.length >= 4) return;
+    fetching.current = true;
+    try {
+      const pick =
+        forTopic === ALL
+          ? quizTopics[Math.floor(Math.random() * quizTopics.length)]
+          : quizTopics.find((t) => t.name === forTopic) ?? quizTopics[0];
+      if (!pick) return;
+      const { data, error } = await supabase.functions.invoke("generate-quiz-question", {
+        body: {
+          topic: pick.name,
+          lessonUrl: pick.url,
+          avoid: askedTexts.current,
+          count: 3,
+        },
+      });
+      if (error) return;
+      const incoming: QuizQuestion[] = (data?.questions ?? []).filter(
+        (q: QuizQuestion) => !askedTexts.current.includes(q.question),
+      );
+      incoming.forEach((q) => askedTexts.current.push(q.question));
+      askedTexts.current = askedTexts.current.slice(-60);
+      aiQueue.current = [...aiQueue.current, ...incoming];
+    } finally {
+      fetching.current = false;
+    }
+  };
 
   const startQuestion = (seen: string[], cycles: number, forTopic: string) => {
     const prevId = current?.id ?? null;
@@ -74,20 +111,31 @@ const Quiz = () => {
     let nextSeen = seen;
     let nextCycles = cycles;
     if (!next) {
-      const scopeIds =
-        forTopic === ALL
-          ? null
-          : new Set(quizQuestions.filter((q) => q.topic === forTopic).map((q) => q.id));
-      nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
-      nextCycles = cycles + 1;
-      setCycleNotice(true);
-      next = pickNext(nextSeen, forTopic, prevId);
-      // Absolute fallback so the quiz never runs out of questions.
-      if (!next) {
-        const scope =
-          forTopic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === forTopic);
-        const bank = scope.length > 0 ? scope : quizQuestions;
-        next = bank[Math.floor(Math.random() * bank.length)];
+      // Bank is done for this scope, serve a freshly generated question.
+      const scoped = aiQueue.current.findIndex(
+        (q) => forTopic === ALL || q.topic === forTopic,
+      );
+      if (scoped >= 0) {
+        next = aiQueue.current[scoped];
+        aiQueue.current = aiQueue.current.filter((_, i) => i !== scoped);
+        setCycleNotice(false);
+        setFreshCount((n) => n + 1);
+      } else {
+        const scopeIds =
+          forTopic === ALL
+            ? null
+            : new Set(quizQuestions.filter((q) => q.topic === forTopic).map((q) => q.id));
+        nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
+        nextCycles = cycles + 1;
+        setCycleNotice(true);
+        next = pickNext(nextSeen, forTopic, prevId);
+        // Absolute fallback so the quiz never runs out of questions.
+        if (!next) {
+          const scope =
+            forTopic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === forTopic);
+          const bank = scope.length > 0 ? scope : quizQuestions;
+          next = bank[Math.floor(Math.random() * bank.length)];
+        }
       }
     } else {
       setCycleNotice(false);
@@ -99,7 +147,10 @@ const Quiz = () => {
     setSolved(false);
     setShowHint(false);
     setTriesThisQ(0);
+    if (next) askedTexts.current.push(next.question);
+    void topUp(forTopic);
   };
+
 
   useEffect(() => {
     const s = touchDay(loadStats());
@@ -219,8 +270,10 @@ const Quiz = () => {
           <span className="text-foreground"> Review Quiz</span>
         </h1>
         <p className="text-center text-muted-foreground text-sm mb-5">
-          Endless practice questions from every past lesson. Solved {stats.answered} · {accuracy}% first try accuracy
+          Infinite practice. New questions keep generating, so the quiz never ends. Solved {stats.answered} · {accuracy}% first try accuracy
+          {freshCount > 0 && <> · {freshCount} freshly written for you</>}
         </p>
+
 
         {/* Unit picker */}
         <div className="mb-5">
