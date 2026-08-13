@@ -270,8 +270,10 @@ const Quiz = () => {
           <span className="text-foreground"> Review Quiz</span>
         </h1>
         <p className="text-center text-muted-foreground text-sm mb-5">
-          Endless practice questions from every past lesson. Solved {stats.answered} · {accuracy}% first try accuracy
+          Infinite practice. New questions keep generating, so the quiz never ends. Solved {stats.answered} · {accuracy}% first try accuracy
+          {freshCount > 0 && <> · {freshCount} freshly written for you</>}
         </p>
+
 
         {/* Unit picker */}
         <div className="mb-5">
