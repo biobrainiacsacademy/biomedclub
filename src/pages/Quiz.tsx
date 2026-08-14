@@ -59,7 +59,6 @@ const Quiz = () => {
   const [showHint, setShowHint] = useState(false);
   const [triesThisQ, setTriesThisQ] = useState(0);
   const [showStats, setShowStats] = useState(false);
-  const [cycleNotice, setCycleNotice] = useState(false);
   const [playing, setPlaying] = useState<QuizQuestion | null>(null);
   const [sessionAnswered, setSessionAnswered] = useState(0);
   const [sessionFirstTry, setSessionFirstTry] = useState(0);
@@ -70,7 +69,7 @@ const Quiz = () => {
 
 
   const aiQueue = useRef<QuizQuestion[]>([]);
-  const fetching = useRef(false);
+  const pendingByTopic = useRef(new Map<string, Promise<void>>());
   const askedTexts = useRef<string[]>([]);
 
   useEffect(() => {
@@ -79,15 +78,24 @@ const Quiz = () => {
 
   /** Pull brand new AI written questions so practice never runs out. */
   const topUp = async (forTopic: string, force = false) => {
-    if (fetching.current) return;
-    if (!force && aiQueue.current.length >= 4) return;
-    fetching.current = true;
-    try {
-      const pick =
-        forTopic === ALL
-          ? quizTopics[Math.floor(Math.random() * quizTopics.length)]
-          : quizTopics.find((t) => t.name === forTopic) ?? quizTopics[0];
-      if (!pick) return;
+    const queuedForMode = aiQueue.current.filter(
+      (q) => forTopic === ALL || q.topic === forTopic,
+    ).length;
+    if (!force && queuedForMode >= 3) return;
+
+    const pick =
+      forTopic === ALL
+        ? quizTopics[Math.floor(Math.random() * quizTopics.length)]
+        : quizTopics.find((t) => t.name === forTopic) ?? quizTopics[0];
+    if (!pick) return;
+
+    const existing = pendingByTopic.current.get(pick.name);
+    if (existing) {
+      await existing;
+      return;
+    }
+
+    const request = (async () => {
       const { data, error } = await supabase.functions.invoke("generate-quiz-question", {
         body: {
           topic: pick.name,
@@ -97,14 +105,23 @@ const Quiz = () => {
         },
       });
       if (error) return;
+      const queuedTexts = new Set(aiQueue.current.map((q) => q.question));
       const incoming: QuizQuestion[] = (data?.questions ?? []).filter(
-        (q: QuizQuestion) => !askedTexts.current.includes(q.question),
+        (q: QuizQuestion) =>
+          !askedTexts.current.includes(q.question) && !queuedTexts.has(q.question),
       );
       incoming.forEach((q) => askedTexts.current.push(q.question));
       askedTexts.current = askedTexts.current.slice(-60);
       aiQueue.current = [...aiQueue.current, ...incoming];
+    })();
+
+    pendingByTopic.current.set(pick.name, request);
+    try {
+      await request;
     } finally {
-      fetching.current = false;
+      if (pendingByTopic.current.get(pick.name) === request) {
+        pendingByTopic.current.delete(pick.name);
+      }
     }
   };
 
@@ -130,7 +147,6 @@ const Quiz = () => {
     const prevId = current?.id ?? null;
     const banked = pickNext(seen, forTopic, prevId);
     if (banked) {
-      setCycleNotice(false);
       setStats((s) => ({ ...s, seen, cycles }));
       applyQuestion(banked);
       void topUp(forTopic);
@@ -150,7 +166,6 @@ const Quiz = () => {
     }
 
     if (fresh) {
-      setCycleNotice(false);
       setFreshCount((n) => n + 1);
       setStats((s) => ({ ...s, seen, cycles }));
       applyQuestion(fresh);
@@ -164,7 +179,6 @@ const Quiz = () => {
         ? null
         : new Set(quizQuestions.filter((q) => q.topic === forTopic).map((q) => q.id));
     const nextSeen = scopeIds ? seen.filter((id) => !scopeIds.has(id)) : [];
-    setCycleNotice(true);
     let next = pickNext(nextSeen, forTopic, prevId);
     if (!next) {
       const scope =
@@ -264,7 +278,7 @@ const Quiz = () => {
     const scope =
       topic === ALL ? quizQuestions : quizQuestions.filter((q) => q.topic === topic);
     const done = scope.filter((q) => stats.seen.includes(q.id)).length;
-    return { done, total: scope.length, pct: Math.round((done / scope.length) * 100) };
+    return { done };
   }, [topic, stats.seen]);
 
   return (
@@ -340,7 +354,7 @@ const Quiz = () => {
                 }`}
               >
                 <span className="font-semibold">All units</span>{" "}
-                <span className="text-xs">({quizQuestions.length} questions)</span>
+                <span className="text-xs">Unlimited practice</span>
                 {topic === ALL && <Check className="inline w-4 h-4 ml-2 text-primary" />}
               </button>
               {quizTopics.map((t) => {
@@ -360,7 +374,7 @@ const Quiz = () => {
                   >
                     <span className="font-medium text-foreground">{t.name}</span>
                     <span className="block text-xs">
-                      {done} of {t.count} practiced
+                      Unlimited practice, {done} completed
                     </span>
                   </button>
                 );
@@ -368,20 +382,9 @@ const Quiz = () => {
             </div>
           )}
 
-          {/* Progress bar for the selected unit */}
-          <div className="mt-3">
-            <div className="flex justify-between text-xs text-muted-foreground mb-1">
-              <span>{topic === ALL ? "Full question bank" : "Unit progress"}</span>
-              <span>
-                {unitProgress.done} / {unitProgress.total}
-              </span>
-            </div>
-            <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
-              <div
-                className="h-full bg-primary transition-all duration-500"
-                style={{ width: `${unitProgress.pct}%` }}
-              />
-            </div>
+          <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+            <span>{topic === ALL ? "All units" : "Selected unit"}</span>
+            <span>Unlimited practice, {unitProgress.done} bank questions completed</span>
           </div>
 
           {/* Session scoreboard */}
@@ -427,11 +430,6 @@ const Quiz = () => {
           </>
         ) : current ? (
           <div className="rounded-2xl border border-border bg-card p-5 md:p-6 shadow-[0_0_40px_hsl(50,100%,50%,0.08)]">
-            {cycleNotice && (
-              <p className="text-xs text-accent mb-3">
-                Nice work, you cleared a full round. Round {stats.cycles + 1} starts now.
-              </p>
-            )}
             <div className="mb-4">
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Topic</p>
               <button
