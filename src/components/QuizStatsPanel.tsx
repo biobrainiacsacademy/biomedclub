@@ -11,7 +11,6 @@ import {
   CartesianGrid,
 } from "recharts";
 import type { QuizStats } from "@/lib/quizStorage";
-import { totalQuestions } from "@/data/quizQuestions";
 
 const StatBox = ({ label, value }: { label: string; value: string | number }) => (
   <div className="rounded-xl border border-border bg-card p-3 text-center">
@@ -47,8 +46,6 @@ const QuizStatsPanel = ({ stats }: { stats: QuizStats }) => {
     [stats.history],
   );
 
-  const progress = Math.min(100, Math.round((stats.seen.length / totalQuestions) * 100));
-
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -63,18 +60,9 @@ const QuizStatsPanel = ({ stats }: { stats: QuizStats }) => {
       </div>
 
       <div className="rounded-xl border border-border bg-card p-4">
-        <div className="flex justify-between text-sm mb-2">
-          <span className="text-foreground font-medium">Question bank explored</span>
-          <span className="text-muted-foreground">
-            {stats.seen.length}/{totalQuestions} this round
-            {stats.cycles > 0 ? ` · ${stats.cycles} full rounds done` : ""}
-          </span>
-        </div>
-        <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
-          <div
-            className="h-full bg-primary transition-all duration-700"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="flex items-center justify-between gap-3 text-sm">
+          <span className="text-foreground font-medium">Unlimited practice</span>
+          <span className="text-muted-foreground">{stats.answered} questions solved</span>
         </div>
       </div>
 
