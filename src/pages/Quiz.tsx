@@ -88,13 +88,13 @@ const Quiz = () => {
   }, [stats, topic, sessionAnswered, sessionFirstTry, username]);
 
   /** Push a brief progress snapshot to the cloud so attempts are visible. */
-  const syncToCloud = async () => {
+  const syncToCloud = (immediate = false) => {
     const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name } =
       syncRef.current;
     if (!name) return;
-    if (s.answered === lastSynced.current) return;
+    if (s.answered === lastSynced.current && !immediate) return;
     lastSynced.current = s.answered;
-    await supabase.from("quiz_activity").insert({
+    const payload = {
       username: name,
       device_id: getDeviceId(),
       unit: t,
@@ -107,6 +107,22 @@ const Quiz = () => {
       best_streak: s.bestStreak,
       session_answered: sa,
       session_first_try: sf,
+    };
+    // keepalive so the snapshot still lands when the tab is closing
+    const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/quiz_activity`;
+    const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    void fetch(url, {
+      method: "POST",
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(payload),
+    }).catch(() => {
+      /* offline, progress stays saved locally */
     });
   };
 
