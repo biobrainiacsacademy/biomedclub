@@ -632,6 +632,42 @@ const Quiz = () => {
         />
       )}
 
+      {!username && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/85 backdrop-blur-sm">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const name = nameDraft.trim().slice(0, 40);
+              if (!name) return;
+              saveUsername(name);
+              setUsername(name);
+            }}
+            className="card-gradient rounded-xl p-6 w-full max-w-sm space-y-4"
+          >
+            <h2 className="text-xl font-bold text-foreground">Pick a username</h2>
+            <p className="text-sm text-muted-foreground">
+              Your username saves your quiz progress, streak, and stats so you can pick up right
+              where you left off.
+            </p>
+            <input
+              autoFocus
+              value={nameDraft}
+              onChange={(e) => setNameDraft(e.target.value)}
+              maxLength={40}
+              placeholder="Username"
+              className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:border-primary outline-none"
+            />
+            <button
+              type="submit"
+              disabled={!nameDraft.trim()}
+              className="w-full bg-primary text-primary-foreground rounded-lg py-3 font-semibold disabled:opacity-50"
+            >
+              Start practicing
+            </button>
+          </form>
+        </div>
+      )}
+
       <footer className="py-6 text-center text-muted-foreground text-sm relative z-10">
         © 2026 BioBrainiacs Academy
       </footer>
