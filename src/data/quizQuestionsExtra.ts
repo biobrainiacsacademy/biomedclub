@@ -69,6 +69,10 @@ const TOPICS = {
     name: "Brain Hacks: The Science of Neurotechnology",
     url: "https://www.youtube.com/watch?v=-uG2M3i8Zpo",
   },
+  spacemed: {
+    name: "Space Medicine: Keeping Humans Alive Beyond Earth",
+    url: "https://www.youtube.com/watch?v=grNMQxXClQA",
+  },
 } as const;
 
 type TopicKey = keyof typeof TOPICS;
