@@ -377,6 +377,11 @@ const Quiz = () => {
           <span className="text-primary">BioBrainiacs</span>
           <span className="text-foreground"> Review Quiz</span>
         </h1>
+        {username && showWelcome && (
+          <p className="text-center text-primary font-semibold mb-1">
+            Welcome back {username}!
+          </p>
+        )}
         <p className="text-center text-muted-foreground text-sm mb-5">
           Infinite practice in every mode, all units or a single unit. Solved {stats.answered} · {accuracy}% first try accuracy
           {freshCount > 0 && <> · {freshCount} freshly written for you</>}
