@@ -23,6 +23,9 @@ import {
   resetStats,
   touchDay,
   recordHistory,
+  loadUsername,
+  saveUsername,
+  getDeviceId,
   type QuizStats,
 } from "@/lib/quizStorage";
 import QuizStatsPanel from "@/components/QuizStatsPanel";
