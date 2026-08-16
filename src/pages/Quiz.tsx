@@ -128,31 +128,33 @@ const Quiz = () => {
 
   useEffect(() => {
     if (!username) return;
+    // log the visit right away so attempts show up in the cloud
+    syncToCloud(true);
     const flush = () => {
-      if (document.visibilityState === "hidden") void syncToCloud();
+      if (document.visibilityState === "hidden") syncToCloud(true);
     };
-    const onHide = () => void syncToCloud();
+    const onHide = () => syncToCloud(true);
     document.addEventListener("visibilitychange", flush);
     window.addEventListener("pagehide", onHide);
-    const interval = window.setInterval(() => void syncToCloud(), 60000);
+    const interval = window.setInterval(() => syncToCloud(), 60000);
     return () => {
       document.removeEventListener("visibilitychange", flush);
       window.removeEventListener("pagehide", onHide);
       window.clearInterval(interval);
-      void syncToCloud();
+      syncToCloud();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
   useEffect(() => {
-    if (username && sessionAnswered > 0 && sessionAnswered % 5 === 0) void syncToCloud();
+    if (username && sessionAnswered > 0 && sessionAnswered % 5 === 0) syncToCloud();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionAnswered]);
 
   useEffect(() => {
     if (username) {
       setShowWelcome(true);
-      const t = window.setTimeout(() => setShowWelcome(false), 6000);
+      const t = window.setTimeout(() => setShowWelcome(false), 10000);
       return () => window.clearTimeout(t);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
