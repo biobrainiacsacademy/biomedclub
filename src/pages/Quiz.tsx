@@ -23,6 +23,9 @@ import {
   resetStats,
   touchDay,
   recordHistory,
+  loadUsername,
+  saveUsername,
+  getDeviceId,
   type QuizStats,
 } from "@/lib/quizStorage";
 import QuizStatsPanel from "@/components/QuizStatsPanel";
@@ -66,15 +69,97 @@ const Quiz = () => {
   const [bestRun, setBestRun] = useState(0);
   const [freshCount, setFreshCount] = useState(0);
   const [generating, setGenerating] = useState(false);
-
+  const [username, setUsername] = useState<string | null>(() => loadUsername());
+  const [nameDraft, setNameDraft] = useState("");
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const aiQueue = useRef<QuizQuestion[]>([]);
   const pendingByTopic = useRef(new Map<string, Promise<void>>());
   const askedTexts = useRef<string[]>([]);
+  const syncRef = useRef({ stats, topic, sessionAnswered, sessionFirstTry, username });
+  const lastSynced = useRef(-1);
 
   useEffect(() => {
     saveStats(stats);
   }, [stats]);
+
+  useEffect(() => {
+    syncRef.current = { stats, topic, sessionAnswered, sessionFirstTry, username };
+  }, [stats, topic, sessionAnswered, sessionFirstTry, username]);
+
+  /** Push a brief progress snapshot to the cloud so attempts are visible. */
+  const syncToCloud = (immediate = false) => {
+    const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name } =
+      syncRef.current;
+    if (!name) return;
+    if (s.answered === lastSynced.current && !immediate) return;
+    lastSynced.current = s.answered;
+    const payload = {
+      username: name,
+      device_id: getDeviceId(),
+      unit: t,
+      answered: s.answered,
+      correct_first_try: s.correctFirstTry,
+      wrong_attempts: s.wrongAttempts,
+      hints_used: s.hintsUsed,
+      skipped: s.skipped,
+      streak: s.streak,
+      best_streak: s.bestStreak,
+      session_answered: sa,
+      session_first_try: sf,
+    };
+    // keepalive so the snapshot still lands when the tab is closing
+    const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/quiz_activity`;
+    const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    void fetch(url, {
+      method: "POST",
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(payload),
+    }).catch(() => {
+      /* offline, progress stays saved locally */
+    });
+  };
+
+  useEffect(() => {
+    if (!username) return;
+    // log the visit right away so attempts show up in the cloud
+    syncToCloud(true);
+    const flush = () => {
+      if (document.visibilityState === "hidden") syncToCloud(true);
+    };
+    const onHide = () => syncToCloud(true);
+    document.addEventListener("visibilitychange", flush);
+    window.addEventListener("pagehide", onHide);
+    const interval = window.setInterval(() => syncToCloud(), 60000);
+    return () => {
+      document.removeEventListener("visibilitychange", flush);
+      window.removeEventListener("pagehide", onHide);
+      window.clearInterval(interval);
+      syncToCloud();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username]);
+
+  useEffect(() => {
+    if (username && sessionAnswered > 0 && sessionAnswered % 5 === 0) syncToCloud();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionAnswered]);
+
+  useEffect(() => {
+    if (username) {
+      setShowWelcome(true);
+      const t = window.setTimeout(() => setShowWelcome(false), 10000);
+      return () => window.clearTimeout(t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   /** Pull brand new AI written questions so practice never runs out. */
   const topUp = async (forTopic: string, force = false) => {
@@ -310,6 +395,11 @@ const Quiz = () => {
           <span className="text-primary">BioBrainiacs</span>
           <span className="text-foreground"> Review Quiz</span>
         </h1>
+        {username && showWelcome && (
+          <p className="text-center text-primary font-semibold mb-1">
+            Welcome back {username}!
+          </p>
+        )}
         <p className="text-center text-muted-foreground text-sm mb-5">
           Infinite practice in every mode, all units or a single unit. Solved {stats.answered} · {accuracy}% first try accuracy
           {freshCount > 0 && <> · {freshCount} freshly written for you</>}
@@ -558,6 +648,42 @@ const Quiz = () => {
           title={playing.topic}
           onClose={() => setPlaying(null)}
         />
+      )}
+
+      {!username && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/85 backdrop-blur-sm">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const name = nameDraft.trim().slice(0, 40);
+              if (!name) return;
+              saveUsername(name);
+              setUsername(name);
+            }}
+            className="card-gradient rounded-xl p-6 w-full max-w-sm space-y-4"
+          >
+            <h2 className="text-xl font-bold text-foreground">Pick a username</h2>
+            <p className="text-sm text-muted-foreground">
+              Your username saves your quiz progress, streak, and stats so you can pick up right
+              where you left off.
+            </p>
+            <input
+              autoFocus
+              value={nameDraft}
+              onChange={(e) => setNameDraft(e.target.value)}
+              maxLength={40}
+              placeholder="Username"
+              className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:border-primary outline-none"
+            />
+            <button
+              type="submit"
+              disabled={!nameDraft.trim()}
+              className="w-full bg-primary text-primary-foreground rounded-lg py-3 font-semibold disabled:opacity-50"
+            >
+              Start practicing
+            </button>
+          </form>
+        </div>
       )}
 
       <footer className="py-6 text-center text-muted-foreground text-sm relative z-10">

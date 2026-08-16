@@ -13,6 +13,12 @@ type Lesson = {
 
 const lessons: Lesson[] = [
   {
+    title: "Space Medicine: Keeping Humans Alive Beyond Earth (Key Moments)",
+    date: "8/15",
+    thumbnail: "https://i.ytimg.com/vi_webp/grNMQxXClQA/maxresdefault.webp",
+    url: "https://www.youtube.com/watch?v=grNMQxXClQA",
+  },
+  {
     title: "Inside Clinical Trials: How Medicines Become Safe (Key Moments)",
     date: "8/1",
     thumbnail: "https://i.ytimg.com/vi_webp/ULNtz5JgGms/maxresdefault.webp",
@@ -23,13 +29,6 @@ const lessons: Lesson[] = [
     date: "7/25",
     thumbnail: "https://i.ytimg.com/vi/YVs6P0leYFk/hqdefault.jpg",
     url: "https://www.youtube.com/watch?v=YVs6P0leYFk",
-    revealAt: "2026-07-26T08:00:00-04:00",
-  },
-  {
-    title: "The Race To Build Artificial Organs (Key Moments)",
-    date: "7/18",
-    thumbnail: "https://i.ytimg.com/vi_webp/2wd2tDnCQxs/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=2wd2tDnCQxs",
   },
 ];
 

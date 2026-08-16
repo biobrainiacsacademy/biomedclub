@@ -170,6 +170,57 @@ export type Database = {
         }
         Relationships: []
       }
+      quiz_activity: {
+        Row: {
+          answered: number
+          best_streak: number
+          correct_first_try: number
+          created_at: string
+          device_id: string
+          hints_used: number
+          id: string
+          session_answered: number
+          session_first_try: number
+          skipped: number
+          streak: number
+          unit: string | null
+          username: string
+          wrong_attempts: number
+        }
+        Insert: {
+          answered?: number
+          best_streak?: number
+          correct_first_try?: number
+          created_at?: string
+          device_id: string
+          hints_used?: number
+          id?: string
+          session_answered?: number
+          session_first_try?: number
+          skipped?: number
+          streak?: number
+          unit?: string | null
+          username: string
+          wrong_attempts?: number
+        }
+        Update: {
+          answered?: number
+          best_streak?: number
+          correct_first_try?: number
+          created_at?: string
+          device_id?: string
+          hints_used?: number
+          id?: string
+          session_answered?: number
+          session_first_try?: number
+          skipped?: number
+          streak?: number
+          unit?: string | null
+          username?: string
+          wrong_attempts?: number
+        }
+        Relationships: []
+      }
       registrations: {
         Row: {
           created_at: string
