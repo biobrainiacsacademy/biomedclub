@@ -69,15 +69,79 @@ const Quiz = () => {
   const [bestRun, setBestRun] = useState(0);
   const [freshCount, setFreshCount] = useState(0);
   const [generating, setGenerating] = useState(false);
-
+  const [username, setUsername] = useState<string | null>(() => loadUsername());
+  const [nameDraft, setNameDraft] = useState("");
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const aiQueue = useRef<QuizQuestion[]>([]);
   const pendingByTopic = useRef(new Map<string, Promise<void>>());
   const askedTexts = useRef<string[]>([]);
+  const syncRef = useRef({ stats, topic, sessionAnswered, sessionFirstTry, username });
+  const lastSynced = useRef(-1);
 
   useEffect(() => {
     saveStats(stats);
   }, [stats]);
+
+  useEffect(() => {
+    syncRef.current = { stats, topic, sessionAnswered, sessionFirstTry, username };
+  }, [stats, topic, sessionAnswered, sessionFirstTry, username]);
+
+  /** Push a brief progress snapshot to the cloud so attempts are visible. */
+  const syncToCloud = async () => {
+    const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name } =
+      syncRef.current;
+    if (!name) return;
+    if (s.answered === lastSynced.current) return;
+    lastSynced.current = s.answered;
+    await supabase.from("quiz_activity").insert({
+      username: name,
+      device_id: getDeviceId(),
+      unit: t,
+      answered: s.answered,
+      correct_first_try: s.correctFirstTry,
+      wrong_attempts: s.wrongAttempts,
+      hints_used: s.hintsUsed,
+      skipped: s.skipped,
+      streak: s.streak,
+      best_streak: s.bestStreak,
+      session_answered: sa,
+      session_first_try: sf,
+    });
+  };
+
+  useEffect(() => {
+    if (!username) return;
+    const flush = () => {
+      if (document.visibilityState === "hidden") void syncToCloud();
+    };
+    const onHide = () => void syncToCloud();
+    document.addEventListener("visibilitychange", flush);
+    window.addEventListener("pagehide", onHide);
+    const interval = window.setInterval(() => void syncToCloud(), 60000);
+    return () => {
+      document.removeEventListener("visibilitychange", flush);
+      window.removeEventListener("pagehide", onHide);
+      window.clearInterval(interval);
+      void syncToCloud();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username]);
+
+  useEffect(() => {
+    if (username && sessionAnswered > 0 && sessionAnswered % 5 === 0) void syncToCloud();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionAnswered]);
+
+  useEffect(() => {
+    if (username) {
+      setShowWelcome(true);
+      const t = window.setTimeout(() => setShowWelcome(false), 6000);
+      return () => window.clearTimeout(t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   /** Pull brand new AI written questions so practice never runs out. */
   const topUp = async (forTopic: string, force = false) => {
