@@ -98,3 +98,39 @@ export const recordHistory = (s: QuizStats, firstTry: boolean): QuizStats => {
     };
   return { ...s, history: history.slice(-60) };
 };
+
+const NAME_KEY = "bb_quiz_username";
+const DEVICE_KEY = "bb_quiz_device";
+
+export const loadUsername = (): string | null => {
+  try {
+    const v = localStorage.getItem(NAME_KEY);
+    return v && v.trim() ? v : null;
+  } catch {
+    return null;
+  }
+};
+
+export const saveUsername = (name: string) => {
+  try {
+    localStorage.setItem(NAME_KEY, name.trim().slice(0, 40));
+  } catch {
+    /* storage unavailable */
+  }
+};
+
+export const getDeviceId = (): string => {
+  try {
+    let id = localStorage.getItem(DEVICE_KEY);
+    if (!id) {
+      id =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `d${Date.now()}${Math.random().toString(16).slice(2)}`;
+      localStorage.setItem(DEVICE_KEY, id);
+    }
+    return id;
+  } catch {
+    return "unknown";
+  }
+};
