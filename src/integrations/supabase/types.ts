@@ -50,39 +50,6 @@ export type Database = {
         }
         Relationships: []
       }
-      feedback_responses: {
-        Row: {
-          additional_feedback: string | null
-          attending_interest: string
-          cant_attend_reason: string | null
-          cant_attend_reason_other: string | null
-          created_at: string
-          id: string
-          reschedule_preference: string | null
-          topics_interest: string | null
-        }
-        Insert: {
-          additional_feedback?: string | null
-          attending_interest: string
-          cant_attend_reason?: string | null
-          cant_attend_reason_other?: string | null
-          created_at?: string
-          id?: string
-          reschedule_preference?: string | null
-          topics_interest?: string | null
-        }
-        Update: {
-          additional_feedback?: string | null
-          attending_interest?: string
-          cant_attend_reason?: string | null
-          cant_attend_reason_other?: string | null
-          created_at?: string
-          id?: string
-          reschedule_preference?: string | null
-          topics_interest?: string | null
-        }
-        Relationships: []
-      }
       memberships: {
         Row: {
           created_at: string
@@ -146,78 +113,6 @@ export type Database = {
           created_at?: string
           id?: string
           question?: string
-        }
-        Relationships: []
-      }
-      qa_questions: {
-        Row: {
-          created_at: string
-          id: string
-          likes: number
-          question: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          likes?: number
-          question: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          likes?: number
-          question?: string
-        }
-        Relationships: []
-      }
-      quiz_activity: {
-        Row: {
-          answered: number
-          best_streak: number
-          correct_first_try: number
-          created_at: string
-          device_id: string
-          hints_used: number
-          id: string
-          session_answered: number
-          session_first_try: number
-          skipped: number
-          streak: number
-          unit: string | null
-          username: string
-          wrong_attempts: number
-        }
-        Insert: {
-          answered?: number
-          best_streak?: number
-          correct_first_try?: number
-          created_at?: string
-          device_id: string
-          hints_used?: number
-          id?: string
-          session_answered?: number
-          session_first_try?: number
-          skipped?: number
-          streak?: number
-          unit?: string | null
-          username: string
-          wrong_attempts?: number
-        }
-        Update: {
-          answered?: number
-          best_streak?: number
-          correct_first_try?: number
-          created_at?: string
-          device_id?: string
-          hints_used?: number
-          id?: string
-          session_answered?: number
-          session_first_try?: number
-          skipped?: number
-          streak?: number
-          unit?: string | null
-          username?: string
-          wrong_attempts?: number
         }
         Relationships: []
       }
@@ -293,45 +188,15 @@ export type Database = {
         }
         Relationships: []
       }
-      user_roles: {
-        Row: {
-          created_at: string
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
-      is_valid_email: { Args: { _email: string }; Returns: boolean }
-      like_qa_question: { Args: { _id: string }; Returns: number }
-      unlike_qa_question: { Args: { _id: string }; Returns: number }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -458,8 +323,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["admin", "moderator", "user"],
-    },
+    Enums: {},
   },
 } as const

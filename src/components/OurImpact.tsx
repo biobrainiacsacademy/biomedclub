@@ -9,7 +9,6 @@ const stats = [{
 }, {
   icon: BookOpen,
   value: 25,
-  suffix: "+",
   label: "Topics Covered"
 }, {
   icon: Eye,

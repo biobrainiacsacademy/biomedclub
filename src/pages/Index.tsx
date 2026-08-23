@@ -11,12 +11,12 @@ import PreviouslyTaught from "@/components/PreviouslyTaught";
 import StudentReviews from "@/components/StudentReviews";
 
 import ConnectWithUs from "@/components/ConnectWithUs";
-import NotifyMeForm from "@/components/NotifyMeForm";
+import RegistrationForm from "@/components/RegistrationForm";
 import RateUsForm from "@/components/RateUsForm";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 
 const Index = () => {
-  const [showNotifyMe, setShowNotifyMe] = useState(false);
+  const [showRegistration, setShowRegistration] = useState(false);
   const [showRateUs, setShowRateUs] = useState(false);
 
   return (
@@ -30,7 +30,7 @@ const Index = () => {
         
         <FadeIn delay={100}>
           <div className="section-divider" />
-          <NextSession onRegisterClick={() => setShowNotifyMe(true)} />
+          <NextSession onRegisterClick={() => setShowRegistration(true)} />
         </FadeIn>
         
         
@@ -68,9 +68,9 @@ const Index = () => {
         </footer>
       </FadeIn>
       
-      <NotifyMeForm 
-        isOpen={showNotifyMe} 
-        onClose={() => setShowNotifyMe(false)} 
+      <RegistrationForm 
+        isOpen={showRegistration} 
+        onClose={() => setShowRegistration(false)} 
       />
       
       <RateUsForm 

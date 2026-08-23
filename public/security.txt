@@ -1,4 +1,0 @@
-Contact: mailto:Aliayazdi21@gmail.com
-Expires: 2027-07-08T00:00:00.000Z
-Preferred-Languages: en
-Canonical: https://biobrainiacs.org/.well-known/security.txt
