@@ -30,7 +30,7 @@ const Index = () => {
         
         <FadeIn delay={100}>
           <div className="section-divider" />
-          <NextSession onRegisterClick={() => setShowNotifyMe(true)} />
+          <NextSession />
         </FadeIn>
         
         

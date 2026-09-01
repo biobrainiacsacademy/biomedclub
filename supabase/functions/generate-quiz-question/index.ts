@@ -26,10 +26,14 @@ Lesson topic: "${topic}".
 Rules:
 - Each question is short and clear, with exactly 4 answer options.
 - Exactly one option is correct, and the correct option index must vary across questions.
+- Every wrong option must be realistic and genuinely tempting, a real biology idea that a student could believe.
+- All four options must be about the same length, within a few words of each other. Never make the correct option the longest or the most detailed one. Do not pad the correct option with extra explanation.
+- Keep every option short, roughly 4 to 9 words.
 - Add a one sentence hint that nudges without giving the answer.
 - Add a simple, in depth explanation that says why the right answer is right and why each wrong option is wrong.
 - Never use hyphens or em dashes anywhere in the text. Use commas or periods instead.
 - Do not repeat any of these already used questions: ${avoidList.join(" | ") || "none yet"}.`;
+
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.1"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
@@ -181,6 +181,7 @@ export type Database = {
           id: string
           session_answered: number
           session_first_try: number
+          share_stats: boolean
           skipped: number
           streak: number
           unit: string | null
@@ -197,6 +198,7 @@ export type Database = {
           id?: string
           session_answered?: number
           session_first_try?: number
+          share_stats?: boolean
           skipped?: number
           streak?: number
           unit?: string | null
@@ -213,6 +215,7 @@ export type Database = {
           id?: string
           session_answered?: number
           session_first_try?: number
+          share_stats?: boolean
           skipped?: number
           streak?: number
           unit?: string | null
@@ -319,6 +322,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_quiz_leaderboard: {
+        Args: never
+        Returns: {
+          answered: number
+          best_streak: number
+          correct_first_try: number
+          last_active: string
+          username: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
