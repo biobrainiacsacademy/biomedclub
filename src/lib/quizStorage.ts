@@ -101,6 +101,24 @@ export const recordHistory = (s: QuizStats, firstTry: boolean): QuizStats => {
 
 const NAME_KEY = "bb_quiz_username";
 const DEVICE_KEY = "bb_quiz_device";
+const SHARE_KEY = "bb_quiz_share";
+
+export const loadShareStats = (): boolean => {
+  try {
+    return localStorage.getItem(SHARE_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+export const saveShareStats = (share: boolean) => {
+  try {
+    localStorage.setItem(SHARE_KEY, share ? "1" : "0");
+  } catch {
+    /* storage unavailable */
+  }
+};
+
 
 export const loadUsername = (): string | null => {
   try {

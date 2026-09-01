@@ -71,12 +71,17 @@ const Quiz = () => {
   const [generating, setGenerating] = useState(false);
   const [username, setUsername] = useState<string | null>(() => loadUsername());
   const [nameDraft, setNameDraft] = useState("");
+  const [shareDraft, setShareDraft] = useState<boolean | null>(null);
+  const [shareStats, setShareStats] = useState<boolean>(() => loadShareStats());
   const [showWelcome, setShowWelcome] = useState(false);
+  const [showBoard, setShowBoard] = useState(false);
+  const [board, setBoard] = useState<LeaderRow[] | null>(null);
+  const [boardLoading, setBoardLoading] = useState(false);
 
   const aiQueue = useRef<QuizQuestion[]>([]);
   const pendingByTopic = useRef(new Map<string, Promise<void>>());
   const askedTexts = useRef<string[]>([]);
-  const syncRef = useRef({ stats, topic, sessionAnswered, sessionFirstTry, username });
+  const syncRef = useRef({ stats, topic, sessionAnswered, sessionFirstTry, username, shareStats });
   const lastSynced = useRef(-1);
 
   useEffect(() => {
@@ -84,8 +89,9 @@ const Quiz = () => {
   }, [stats]);
 
   useEffect(() => {
-    syncRef.current = { stats, topic, sessionAnswered, sessionFirstTry, username };
-  }, [stats, topic, sessionAnswered, sessionFirstTry, username]);
+    syncRef.current = { stats, topic, sessionAnswered, sessionFirstTry, username, shareStats };
+  }, [stats, topic, sessionAnswered, sessionFirstTry, username, shareStats]);
+
 
   /** Push a brief progress snapshot to the cloud so attempts are visible. */
   const syncToCloud = (immediate = false) => {
