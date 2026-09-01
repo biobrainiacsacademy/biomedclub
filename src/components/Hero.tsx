@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import { Brain } from "lucide-react";
+import { Link } from "react-router-dom";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 
 const Hero = () => {
@@ -30,6 +32,15 @@ const Hero = () => {
         This program takes young learners on an exciting journey through the basics of biomedicine, 
         helping them explore how science and technology work together to solve health challenges and improve lives.
       </p>
+
+      <Link
+        to="/quiz"
+        className="mt-8 inline-flex items-center gap-3 bg-primary text-primary-foreground font-bold text-base md:text-lg px-8 md:px-10 py-4 md:py-5 rounded-xl shadow-[0_0_30px_hsl(50,100%,50%,0.35)] hover:shadow-[0_0_50px_hsl(50,100%,50%,0.55)] hover:scale-[1.03] transition-all duration-300 animate-fade-in relative z-10"
+        style={{ animationDelay: "0.3s" }}
+      >
+        <Brain className="w-5 h-5 md:w-6 md:h-6" />
+        Review Quiz
+      </Link>
     </section>
   );
 };

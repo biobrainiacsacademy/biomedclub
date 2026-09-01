@@ -184,6 +184,27 @@
     animation: pulseSlow 4s ease-in-out infinite;
   }
 
+  @keyframes qaGlowPulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(180 100% 50% / 0.15), 0 0 40px hsl(180 100% 50% / 0.08), inset 0 0 0 1px hsl(180 100% 50% / 0.25);
+    }
+    50% {
+      box-shadow: 0 0 30px hsl(180 100% 50% / 0.25), 0 0 60px hsl(180 100% 50% / 0.12), inset 0 0 0 1px hsl(180 100% 50% / 0.4);
+    }
+  }
+
+  .qa-glow {
+    animation: qaGlowPulse 3s ease-in-out infinite;
+    background: linear-gradient(135deg, hsl(180 100% 50% / 0.08) 0%, hsl(192 70% 8% / 0.95) 100%);
+    border: 1px solid hsl(180 100% 50% / 0.35);
+  }
+
+  .qa-glow-subtle {
+    background: linear-gradient(135deg, hsl(180 100% 50% / 0.06) 0%, hsl(192 70% 8% / 0.5) 100%);
+    border: 1px solid hsl(180 100% 50% / 0.4);
+    box-shadow: 0 0 15px hsl(180 100% 50% / 0.15), inset 0 0 0 1px hsl(180 100% 50% / 0.1);
+  }
+
   .interactive-card {
     @apply hover:shadow-[0_0_30px_hsl(180,100%,50%,0.12)];
   }
