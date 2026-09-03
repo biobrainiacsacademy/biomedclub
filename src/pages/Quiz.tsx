@@ -15,6 +15,7 @@ import {
   Layers,
   Zap,
   Check,
+  Users,
 } from "lucide-react";
 import { quizQuestions, quizTopics, type QuizQuestion } from "@/data/quizQuestions";
 import {
@@ -26,8 +27,18 @@ import {
   loadUsername,
   saveUsername,
   getDeviceId,
+  loadShareStats,
+  saveShareStats,
   type QuizStats,
 } from "@/lib/quizStorage";
+
+type LeaderRow = {
+  username: string;
+  answered: number;
+  correct_first_try: number;
+  best_streak: number;
+  last_active: string;
+};
 import QuizStatsPanel from "@/components/QuizStatsPanel";
 import FloatingParticles from "@/components/FloatingParticles";
 import VideoPlayerModal from "@/components/VideoPlayerModal";
@@ -95,7 +106,7 @@ const Quiz = () => {
 
   /** Push a brief progress snapshot to the cloud so attempts are visible. */
   const syncToCloud = (immediate = false) => {
-    const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name } =
+    const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name, shareStats: share } =
       syncRef.current;
     if (!name) return;
     if (s.answered === lastSynced.current && !immediate) return;
@@ -113,6 +124,7 @@ const Quiz = () => {
       best_streak: s.bestStreak,
       session_answered: sa,
       session_first_try: sf,
+      share_stats: share,
     };
     // keepalive so the snapshot still lands when the tab is closing
     const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/quiz_activity`;
@@ -372,6 +384,23 @@ const Quiz = () => {
     return { done };
   }, [topic, stats.seen]);
 
+  /** Fetch the opt in leaderboard so students can compare stats. */
+  const loadBoard = async () => {
+    setBoardLoading(true);
+    const { data } = await supabase.rpc("get_quiz_leaderboard");
+    setBoard((data as LeaderRow[] | null) ?? []);
+    setBoardLoading(false);
+  };
+
+  const toggleBoard = () => {
+    const nextOpen = !showBoard;
+    setShowBoard(nextOpen);
+    if (nextOpen) {
+      setShowStats(false);
+      void loadBoard();
+    }
+  };
+
   return (
     <div className="min-h-screen relative">
       <FloatingParticles />
@@ -389,7 +418,17 @@ const Quiz = () => {
             </span>
             <button
               type="button"
-              onClick={() => setShowStats((v) => !v)}
+              onClick={toggleBoard}
+              className="inline-flex items-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:border-accent transition-colors"
+            >
+              <Users className="w-4 h-4" /> {showBoard ? "Back to quiz" : "Compare"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowBoard(false);
+                setShowStats((v) => !v);
+              }}
               className="inline-flex items-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:border-accent transition-colors"
             >
               <BarChart3 className="w-4 h-4" /> {showStats ? "Back to quiz" : "My stats"}
@@ -504,7 +543,81 @@ const Quiz = () => {
           </div>
         </div>
 
-        {showStats ? (
+        {showBoard ? (
+          <div className="rounded-2xl border border-border bg-card p-5 md:p-6">
+            <h2 className="text-lg font-bold text-foreground mb-1">Compare with others</h2>
+            <p className="text-xs text-muted-foreground mb-4">
+              Only students who chose to share their stats appear here.
+            </p>
+            {!shareStats && username && (
+              <div className="mb-4 rounded-lg border border-accent/40 bg-accent/10 p-3 text-sm">
+                <p className="text-foreground mb-2">
+                  You are currently anonymous. Want to appear on this board with your username?
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    saveShareStats(true);
+                    setShareStats(true);
+                    syncToCloud(true);
+                    void loadBoard();
+                  }}
+                  className="text-xs font-semibold bg-primary text-primary-foreground px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors"
+                >
+                  Share my stats
+                </button>
+              </div>
+            )}
+            {boardLoading ? (
+              <p className="text-sm text-muted-foreground">Loading leaderboard...</p>
+            ) : !board || board.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                No shared stats yet. Be the first to share yours.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {board.map((row, i) => {
+                  const isMe = username && row.username === username;
+                  const acc = row.answered
+                    ? Math.round((row.correct_first_try / row.answered) * 100)
+                    : 0;
+                  return (
+                    <div
+                      key={`${row.username}-${i}`}
+                      className={`flex items-center justify-between rounded-xl border px-4 py-3 ${
+                        isMe
+                          ? "border-primary bg-primary/10"
+                          : "border-border bg-muted"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="text-sm font-bold text-primary w-7 shrink-0">
+                          {i + 1}.
+                        </span>
+                        <span className="text-sm font-semibold text-foreground truncate">
+                          {row.username}
+                          {isMe && <span className="text-xs text-primary ml-1">(you)</span>}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground shrink-0">
+                        <span>
+                          <span className="text-foreground font-semibold">{row.answered}</span> solved
+                        </span>
+                        <span>
+                          <span className="text-foreground font-semibold">{acc}%</span> accuracy
+                        </span>
+                        <span className="hidden sm:inline-flex items-center gap-1">
+                          <Flame className="w-3.5 h-3.5 text-primary" />
+                          <span className="text-foreground font-semibold">{row.best_streak}</span>
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ) : showStats ? (
           <>
             <QuizStatsPanel stats={stats} />
             <button
@@ -662,8 +775,10 @@ const Quiz = () => {
             onSubmit={(e) => {
               e.preventDefault();
               const name = nameDraft.trim().slice(0, 40);
-              if (!name) return;
+              if (!name || shareDraft === null) return;
               saveUsername(name);
+              saveShareStats(shareDraft);
+              setShareStats(shareDraft);
               setUsername(name);
             }}
             className="card-gradient rounded-xl p-6 w-full max-w-sm space-y-4"
@@ -681,9 +796,36 @@ const Quiz = () => {
               placeholder="Username"
               className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:border-primary outline-none"
             />
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-foreground">
+                Can other studiers see your stats with your username?
+              </p>
+              <button
+                type="button"
+                onClick={() => setShareDraft(true)}
+                className={`w-full rounded-lg border px-4 py-2.5 text-sm text-left transition-colors ${
+                  shareDraft === true
+                    ? "border-primary bg-primary/15 text-foreground"
+                    : "border-border bg-muted text-muted-foreground hover:border-primary/60"
+                }`}
+              >
+                Yes, show my username on the leaderboard
+              </button>
+              <button
+                type="button"
+                onClick={() => setShareDraft(false)}
+                className={`w-full rounded-lg border px-4 py-2.5 text-sm text-left transition-colors ${
+                  shareDraft === false
+                    ? "border-primary bg-primary/15 text-foreground"
+                    : "border-border bg-muted text-muted-foreground hover:border-primary/60"
+                }`}
+              >
+                No, keep me anonymous
+              </button>
+            </div>
             <button
               type="submit"
-              disabled={!nameDraft.trim()}
+              disabled={!nameDraft.trim() || shareDraft === null}
               className="w-full bg-primary text-primary-foreground rounded-lg py-3 font-semibold disabled:opacity-50"
             >
               Start practicing
