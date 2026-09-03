@@ -26,8 +26,18 @@ import {
   loadUsername,
   saveUsername,
   getDeviceId,
+  loadShareStats,
+  saveShareStats,
   type QuizStats,
 } from "@/lib/quizStorage";
+
+type LeaderRow = {
+  username: string;
+  answered: number;
+  correct_first_try: number;
+  best_streak: number;
+  last_played: string;
+};
 import QuizStatsPanel from "@/components/QuizStatsPanel";
 import FloatingParticles from "@/components/FloatingParticles";
 import VideoPlayerModal from "@/components/VideoPlayerModal";
@@ -95,7 +105,7 @@ const Quiz = () => {
 
   /** Push a brief progress snapshot to the cloud so attempts are visible. */
   const syncToCloud = (immediate = false) => {
-    const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name } =
+    const { stats: s, topic: t, sessionAnswered: sa, sessionFirstTry: sf, username: name, shareStats: share } =
       syncRef.current;
     if (!name) return;
     if (s.answered === lastSynced.current && !immediate) return;
@@ -113,6 +123,7 @@ const Quiz = () => {
       best_streak: s.bestStreak,
       session_answered: sa,
       session_first_try: sf,
+      share_stats: share,
     };
     // keepalive so the snapshot still lands when the tab is closing
     const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/quiz_activity`;
