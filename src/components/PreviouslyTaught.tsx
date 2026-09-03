@@ -13,6 +13,12 @@ type Lesson = {
 
 const lessons: Lesson[] = [
   {
+    title: "The Future of Medicine: 2050 (Key Moments)",
+    date: "8/22",
+    thumbnail: "https://i.ytimg.com/vi/QUbmiBLY9pw/hqdefault.jpg",
+    url: "https://www.youtube.com/watch?v=QUbmiBLY9pw",
+  },
+  {
     title: "Space Medicine: Keeping Humans Alive Beyond Earth (Key Moments)",
     date: "8/15",
     thumbnail: "https://i.ytimg.com/vi_webp/grNMQxXClQA/maxresdefault.webp",
@@ -23,12 +29,6 @@ const lessons: Lesson[] = [
     date: "8/1",
     thumbnail: "https://i.ytimg.com/vi_webp/ULNtz5JgGms/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=ULNtz5JgGms",
-  },
-  {
-    title: "Pandemic Detectives: How Scientists Track New Diseases (Key Moments)",
-    date: "7/25",
-    thumbnail: "https://i.ytimg.com/vi/YVs6P0leYFk/hqdefault.jpg",
-    url: "https://www.youtube.com/watch?v=YVs6P0leYFk",
   },
 ];
 
