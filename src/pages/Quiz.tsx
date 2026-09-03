@@ -383,6 +383,23 @@ const Quiz = () => {
     return { done };
   }, [topic, stats.seen]);
 
+  /** Fetch the opt in leaderboard so students can compare stats. */
+  const loadBoard = async () => {
+    setBoardLoading(true);
+    const { data } = await supabase.rpc("quiz_leaderboard");
+    setBoard((data as LeaderRow[] | null) ?? []);
+    setBoardLoading(false);
+  };
+
+  const toggleBoard = () => {
+    const nextOpen = !showBoard;
+    setShowBoard(nextOpen);
+    if (nextOpen) {
+      setShowStats(false);
+      void loadBoard();
+    }
+  };
+
   return (
     <div className="min-h-screen relative">
       <FloatingParticles />
@@ -400,7 +417,17 @@ const Quiz = () => {
             </span>
             <button
               type="button"
-              onClick={() => setShowStats((v) => !v)}
+              onClick={toggleBoard}
+              className="inline-flex items-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:border-accent transition-colors"
+            >
+              <Users className="w-4 h-4" /> {showBoard ? "Back to quiz" : "Compare"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowBoard(false);
+                setShowStats((v) => !v);
+              }}
               className="inline-flex items-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:border-accent transition-colors"
             >
               <BarChart3 className="w-4 h-4" /> {showStats ? "Back to quiz" : "My stats"}
