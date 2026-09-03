@@ -15,6 +15,7 @@ import {
   Layers,
   Zap,
   Check,
+  Users,
 } from "lucide-react";
 import { quizQuestions, quizTopics, type QuizQuestion } from "@/data/quizQuestions";
 import {
@@ -36,7 +37,7 @@ type LeaderRow = {
   answered: number;
   correct_first_try: number;
   best_streak: number;
-  last_played: string;
+  last_active: string;
 };
 import QuizStatsPanel from "@/components/QuizStatsPanel";
 import FloatingParticles from "@/components/FloatingParticles";
@@ -386,7 +387,7 @@ const Quiz = () => {
   /** Fetch the opt in leaderboard so students can compare stats. */
   const loadBoard = async () => {
     setBoardLoading(true);
-    const { data } = await supabase.rpc("quiz_leaderboard");
+    const { data } = await supabase.rpc("get_quiz_leaderboard");
     setBoard((data as LeaderRow[] | null) ?? []);
     setBoardLoading(false);
   };
