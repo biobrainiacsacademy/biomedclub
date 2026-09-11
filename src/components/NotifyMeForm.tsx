@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { isBot } from "@/lib/validation";
@@ -287,6 +288,19 @@ const NotifyMeForm = ({ isOpen, onClose }: NotifyMeFormProps) => {
           >
             {isSubmitting ? "Submitting..." : "Register Now"}
           </button>
+
+          <p className="text-xs text-muted-foreground text-center">
+            We use your details only to run this session and send club updates. By registering you
+            agree to our{" "}
+            <Link to="/terms" className="text-accent hover:underline" target="_blank">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link to="/privacy" className="text-accent hover:underline" target="_blank">
+              Privacy Policy
+            </Link>
+            . Students under 18 should have a parent or guardian review them.
+          </p>
         </form>
       </div>
     </div>
