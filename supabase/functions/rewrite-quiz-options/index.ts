@@ -20,6 +20,18 @@ Rules:
 - Never use hyphens or em dashes. Use commas or periods instead.
 - Return the same ids.`;
 
+const REVIEW_PROMPT = `You are proofreading and fact checking high school biomedical quiz questions.
+For each item you get the id, topic, question, four options, the index of the correct option, hint, and explanation.
+Check for: factual accuracy, a single clearly correct answer, wrong options that are plausible but definitely wrong, correct grammar, spelling, capitalization, and clear wording.
+Rules:
+- If the item is already accurate and well written, return it with changed set to false and repeat the original fields.
+- If anything is inaccurate, ambiguous, ungrammatical, or confusing, fix it and set changed to true.
+- Keep the same subject matter and difficulty. Keep all four options within about three words of each other in length, and never make the correct option the longest.
+- Questions end with a question mark. Options are short noun phrases or clauses, roughly 4 to 9 words, with consistent style and no trailing periods.
+- The hint is one sentence that nudges without giving away the answer. The explanation says why the correct option is right and briefly why each other option is wrong.
+- Never use hyphens or em dashes. Use commas or periods instead.
+- Always return every id you were given.`;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -36,7 +48,8 @@ Deno.serve(async (req) => {
     }
 
     const explain = mode === "explain";
-    const prompt = `${explain ? EXPLAIN_PROMPT : OPTION_PROMPT}
+    const review = mode === "review";
+    const prompt = `${review ? REVIEW_PROMPT : explain ? EXPLAIN_PROMPT : OPTION_PROMPT}
 
 Items:
 ${JSON.stringify(items)}`;
