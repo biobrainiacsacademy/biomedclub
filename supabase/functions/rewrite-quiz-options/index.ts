@@ -54,7 +54,35 @@ Deno.serve(async (req) => {
 Items:
 ${JSON.stringify(items)}`;
 
-    const schema = explain
+    const reviewSchema = {
+      type: "object",
+      properties: {
+        items: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              id: { type: "string" },
+              changed: { type: "boolean" },
+              question: { type: "string" },
+              options: { type: "array", items: { type: "string" }, minItems: 4, maxItems: 4 },
+              correct: { type: "integer", minimum: 0, maximum: 3 },
+              hint: { type: "string" },
+              explanation: { type: "string" },
+              note: { type: "string" },
+            },
+            required: ["id", "changed", "question", "options", "correct", "hint", "explanation", "note"],
+            additionalProperties: false,
+          },
+        },
+      },
+      required: ["items"],
+      additionalProperties: false,
+    };
+
+    const schema = review
+      ? reviewSchema
+      : explain
       ? {
           type: "object",
           properties: {
