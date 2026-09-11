@@ -830,12 +830,31 @@ const Quiz = () => {
             >
               Start practicing
             </button>
+            <p className="text-xs text-muted-foreground text-center">
+              By continuing you agree to our{" "}
+              <Link to="/terms" className="text-accent hover:underline">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link to="/privacy" className="text-accent hover:underline">
+                Privacy Policy
+              </Link>
+              . Please pick a username that is not your full real name.
+            </p>
           </form>
         </div>
       )}
 
-      <footer className="py-6 text-center text-muted-foreground text-sm relative z-10">
-        © 2026 BioBrainiacs Academy
+      <footer className="py-6 text-center text-muted-foreground text-sm relative z-10 space-y-2">
+        <div className="flex items-center justify-center gap-4">
+          <Link to="/privacy" className="hover:text-accent transition-colors">
+            Privacy Policy
+          </Link>
+          <Link to="/terms" className="hover:text-accent transition-colors">
+            Terms of Service
+          </Link>
+        </div>
+        <p>© 2026 BioBrainiacs Academy</p>
       </footer>
     </div>
   );

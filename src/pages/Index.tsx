@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Hero from "@/components/Hero";
 import FadeIn from "@/components/FadeIn";
 import FloatingParticles from "@/components/FloatingParticles";
@@ -64,6 +65,14 @@ const Index = () => {
       <FadeIn>
         <footer className="py-6 px-4 flex flex-col items-center justify-center gap-3 max-w-7xl mx-auto relative z-10">
           <img src={biobrainiacsLogo} alt="BioBrainiacs Academy" className="w-12 h-12 hover:scale-110 transition-transform duration-300" />
+          <div className="flex items-center gap-4 text-sm">
+            <Link to="/privacy" className="text-muted-foreground hover:text-accent transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-muted-foreground hover:text-accent transition-colors">
+              Terms of Service
+            </Link>
+          </div>
           <p className="text-muted-foreground text-sm">© 2026 BioBrainiacs Academy</p>
         </footer>
       </FadeIn>
