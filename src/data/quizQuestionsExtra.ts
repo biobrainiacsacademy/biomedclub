@@ -342,10 +342,10 @@ const bank: Record<TopicKey, RawQ[]> = {
     },
     {
       q: "What do mitochondria have to do with aging?",
-      o: ["They store all genetic code", "Damage reduces energy, increases byproducts", "They control your blood type", "They produce immune antibodies"],
+      o: ["They store all genetic code", "Damage lowers cell energy output", "They control your blood type", "They produce immune antibodies"],
       c: 1,
       h: "Consider the primary function of mitochondria within cells and how their health relates to cellular function over time.",
-      e: "Mitochondria are crucial for cellular energy production, and Damage reduces energy, increases byproducts, which contributes to the aging process. This makes 'Damage reduces energy, increases byproducts' the correct answer. They do not store all genetic code, as most genetic material is in the nucleus. They do not control your blood type, which is determined by specific genes and antigens on red blood cells. Lastly, they do not produce immune antibodies, a function performed by B cells.",
+      e: "Damage lowers cell energy output is correct. Mitochondria make most of a cell's energy, and as damage builds up with age they supply less energy and release more harmful byproducts, which stresses tissues. They store all genetic code is wrong because almost all DNA sits in the nucleus, and mitochondria carry only a tiny genome. They control your blood type is wrong because blood type comes from genes for antigens on red blood cells. They produce immune antibodies is wrong because antibodies are made by B cells.",
     },
   ],
   biometrics: [
@@ -441,10 +441,10 @@ const bank: Record<TopicKey, RawQ[]> = {
   stemcells: [
     {
       q: "What makes stem cells special?",
-      o: ["They never die", "Self renew, become other cells", "They have extra genes", "They only live in brain"],
+      o: ["They can never die naturally", "They become many cell types", "They carry extra sets of genes", "They exist only in the brain"],
       c: 1,
       h: "Consider the unique capabilities that make these cells so valuable for research and potential therapies.",
-      e: "Stem cells are special because they have two key properties, they can 'Self renew, become other cells'. This means they can divide and produce more stem cells, and they can differentiate into specialized cell types. They do not 'Never die', 'They have extra genes', or 'They only live in brain', though some types of stem cells are found in the brain.",
+      e: "They become many cell types is correct. Stem cells can copy themselves and can also specialize into other kinds of cells, such as muscle, nerve, or blood cells. They can never die naturally is wrong because stem cells age and die like other cells. They carry extra sets of genes is wrong because they hold the same genome as every other body cell, they simply use it differently. They exist only in the brain is wrong because stem cells are found in bone marrow, skin, gut, and many other tissues.",
     },
     {
       q: "What does pluripotent mean?",

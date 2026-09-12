@@ -399,10 +399,10 @@ const bank: Record<TopicKey, RawQ[]> = {
     },
     {
       q: "What is the purpose of Phase IV studies?",
-      o: ["Monitor long term safety, post approval", "Test drug in animals", "Determine initial human dose", "Create trial protocol early"],
+      o: ["Track safety after approval", "Test the drug in animals", "Find the first human dose", "Write the trial protocol"],
       c: 0,
       h: "Consider what happens to a drug after it has been approved and released to the general public.",
-      e: "The correct answer is Monitor long term safety, post approval. Phase IV studies, also known as post marketing surveillance, occur after a drug has been approved and is available for public use. Their primary purpose is to monitor the drug's long term safety, identify rare side effects, and gather more information on its effectiveness in diverse populations. Test drug in animals is incorrect, as animal testing is part of preclinical research. Determine initial human dose is incorrect, as this is the goal of Phase I trials. Create trial protocol early is incorrect, as protocol creation happens before any human trials begin.",
+      e: "The correct answer is Track safety after approval. Phase IV studies, also called post marketing surveillance, happen once a drug is approved and in public use, and they look for rare side effects and long term risks in much larger groups of patients. Test the drug in animals is wrong because animal work belongs to preclinical research, long before approval. Find the first human dose is wrong because that is the goal of a Phase I trial. Write the trial protocol is wrong because the protocol is written before any human testing begins.",
     },
   ],
   robots: [
