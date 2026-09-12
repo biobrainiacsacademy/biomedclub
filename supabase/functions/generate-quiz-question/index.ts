@@ -31,6 +31,8 @@ Rules:
 - Keep every option short, roughly 4 to 9 words.
 - Add a one sentence hint that nudges without giving the answer.
 - Add a simple, in depth explanation that says why the right answer is right and why each wrong option is wrong.
+- Every question must be factually accurate high school level biology, with exactly one defensible correct answer and no ambiguity.
+- Use correct grammar, spelling, and capitalization. End each question with a question mark. Options are short phrases with no trailing periods and a consistent style.
 - Never use hyphens or em dashes anywhere in the text. Use commas or periods instead.
 - Do not repeat any of these already used questions: ${avoidList.join(" | ") || "none yet"}.`;
 
