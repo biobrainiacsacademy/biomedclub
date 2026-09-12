@@ -95,10 +95,10 @@ const bank: Record<TopicKey, RawQ[]> = {
     },
     {
       q: "Why are plates incubated around 37 degrees Celsius?",
-      o: ["It makes the agar melt", "It kills some microbes quickly", "It quickly sterilizes the plates", "It matches our body temperature"],
+      o: ["It makes the agar melt", "It kills some microbes quickly", "It quickly sterilizes plates", "It matches human body temperature"],
       c: 3,
       h: "Consider the optimal conditions for most human associated microbial growth.",
-      e: "The correct option is It matches our body temperature because many bacteria that are commonly studied in labs, especially those that can affect humans, grow best at temperatures close to human body temperature. It makes the agar melt is incorrect because agar typically melts at much higher temperatures. It kills some microbes quickly is incorrect, as this temperature is often ideal for microbial growth, not for killing them. It quickly sterilizes the plates is also incorrect, as sterilization requires much higher temperatures or specific chemical treatments.",
+      e: "The correct option is 'It matches human body temperature' because many bacteria that are commonly studied in labs, especially those that can affect humans, grow best at temperatures close to human body temperature. 'It makes the agar melt' is incorrect because agar typically melts at much higher temperatures. 'It kills some microbes quickly' is incorrect, as this temperature is often ideal for microbial growth, not for killing them. 'It quickly sterilizes plates' is also incorrect, as sterilization requires much higher temperatures or specific chemical treatments.",
     },
     {
       q: "Why should you work near a flame or in a clean hood?",
@@ -171,10 +171,10 @@ const bank: Record<TopicKey, RawQ[]> = {
   bioelectronics: [
     {
       q: "What is bioelectronics?",
-      o: ["Electronics power biological systems", "Circuits connect with living tissue", "Studying cell electrical activity", "Designing synthetic organic devices"],
+      o: ["Electronics power biological systems", "Circuits interact with living tissue", "Studying cell electrical activity", "Designing synthetic organic devices"],
       c: 1,
       h: "Focus on the definition that combines electronic components directly with biological systems.",
-      e: "The correct answer is 'Circuits connect with living tissue'. Bioelectronics is an interdisciplinary field that involves merging electronic devices with biological systems, often by having circuits interact directly with living tissue. 'Electronics power biological systems' is too broad, as this could simply mean powering a microscope. 'Studying cell electrical activity' is a part of neurophysiology or electrophysiology, but not the definition of bioelectronics itself. 'Designing synthetic organic devices' relates more to organic electronics or synthetic biology, not the core of bioelectronics.",
+      e: "The correct answer is 'Circuits interact with living tissue'. Bioelectronics is an interdisciplinary field that involves merging electronic devices with biological systems, often by having circuits interact directly with living tissue. 'Electronics power biological systems' is too broad, as this could simply mean powering a microscope. 'Studying cell electrical activity' is a part of neurophysiology or electrophysiology, but not the definition of bioelectronics itself. 'Designing synthetic organic devices' relates more to organic electronics or synthetic biology, not the core of bioelectronics.",
     },
     {
       q: "Which is a widely used bioelectronic implant?",
@@ -195,7 +195,7 @@ const bank: Record<TopicKey, RawQ[]> = {
       o: ["Replaces entire bone structure", "Changes thoughts into proteins", "Connects with nerve signals", "Provides energy for brain cells"],
       c: 2,
       h: "Consider the primary function of the nervous system and how a device might interact with it.",
-      e: "A neural interface connects with nerve signals, allowing for direct communication between the nervous system and an external device. This technology aims to restore or enhance neurological function. Replaces entire bone structure is incorrect, as this is related to orthopedic implants, not neural interfaces. Changes thoughts into proteins is not what a neural interface does, as proteins are complex molecules, not directly formed from thoughts via an interface. Provides energy for brain cells is incorrect, as neural interfaces focus on signal transmission, not direct energy provision.",
+      e: "The correct answer is 'Connects with nerve signals', allowing for direct communication between the nervous system and an external device. This technology aims to restore or enhance neurological function. 'Replaces entire bone structure' is incorrect, as this is related to orthopedic implants, not neural interfaces. 'Changes thoughts into proteins' is not what a neural interface does, as proteins are complex molecules, not directly formed from thoughts via an interface. 'Provides energy for brain cells' is incorrect, as neural interfaces focus on signal transmission, not direct energy provision.",
     },
   ],
   imaging: [
@@ -291,10 +291,10 @@ const bank: Record<TopicKey, RawQ[]> = {
   sleep: [
     {
       q: "What happens during REM sleep?",
-      o: ["Brain activity rises. Dreaming occurs", "Brain activity slows greatly", "Body temperature rises sharply", "Muscles work more intensely"],
+      o: ["brain activity rises, dreaming occurs", "Brain activity slows greatly", "Body temperature rises sharply", "Muscles work more intensely"],
       c: 0,
       h: "Recall the characteristics of brain activity and dreams during this sleep stage.",
-      e: "During REM (Rapid Eye Movement) sleep, brain activity increases, becoming similar to waking states, and this is when most dreaming occurs. Thus, \"Brain activity rises. Dreaming occurs\" is the correct answer. \"Brain activity slows greatly\" is incorrect, as this describes deep non REM sleep. \"Body temperature rises sharply\" is incorrect, as body temperature regulation is often less stable during REM sleep, but it does not necessarily rise sharply. \"Muscles work more intensely\" is incorrect, as most voluntary muscles are paralyzed during REM sleep to prevent acting out dreams.",
+      e: "During REM (Rapid Eye Movement) sleep, brain activity increases, becoming similar to waking states, and this is when most dreaming occurs. Thus, \"Brain activity rises, dreaming occurs\" is the correct answer. \"Brain activity slows greatly\" is incorrect, as this describes deep non REM sleep. \"Body temperature rises sharply\" is incorrect, as body temperature regulation is often less stable during REM sleep, but it does not necessarily rise sharply. \"Muscles work more intensely\" is incorrect, as most voluntary muscles are paralyzed during REM sleep to prevent acting out dreams.",
     },
     {
       q: "Which hormone signals the body that it is time to sleep?",
@@ -402,10 +402,10 @@ const bank: Record<TopicKey, RawQ[]> = {
     },
     {
       q: "Why is contamination a serious risk in DNA evidence?",
-      o: ["DNA degrades into RNA", "Stray cells produce a profile", "Contamination makes DNA glow", "It changes blood type results"],
+      o: ["DNA degrades into RNA", "Stray cells yield a profile", "Contamination makes DNA glow", "It changes blood type results"],
       c: 1,
       h: "Imagine what happens if foreign biological material mixes with a crime scene sample.",
-      e: "Contamination is a serious risk in DNA evidence because stray cells from investigators or other sources can mix with the crime scene DNA, producing a mixed or incorrect profile that could lead to misidentification or inconclusive results, so 'Stray cells produce a profile' is the correct answer. DNA degrades over time but does not typically turn into RNA due to contamination. Contamination does not make 'DNA glow' or 'change blood type results.'",
+      e: "Contamination is a serious risk in DNA evidence because stray cells from investigators or other sources can mix with the crime scene DNA, producing a mixed or incorrect profile that could lead to misidentification or inconclusive results. Therefore, 'Stray cells yield a profile' is the correct answer. DNA degrades over time but does not typically turn into RNA due to contamination. Contamination does not make 'DNA glow' or 'change blood type results.'",
     },
   ],
   forensics: [
@@ -455,17 +455,17 @@ const bank: Record<TopicKey, RawQ[]> = {
     },
     {
       q: "What are induced pluripotent stem cells?",
-      o: ["Embryo cells. not adult cells", "Cells from cultured bacteria", "Adult cells become stem cell like", "Cells found in marrow only"],
+      o: ["Embryo cells, not adult cells", "Cells from cultured bacteria", "Adult cells become stem cell like", "Cells found in marrow only"],
       c: 2,
       h: "Consider the meaning of 'induced pluripotent' and how it relates to cell differentiation.",
-      e: "The correct answer is Adult cells become stem cell like. Induced pluripotent stem cells, often called iPSCs, are adult cells that have been reprogrammed to an embryonic stem cell like state, meaning they can differentiate into many different cell types. Embryo cells. not adult cells is incorrect because iPSCs start as adult cells, not embryonic cells, though they achieve an embryonic like state. Cells from cultured bacteria is incorrect because iPSCs are human or animal cells, not bacteria. Cells found in marrow only is incorrect as iPSCs are not limited to bone marrow, and their 'induced' nature means they are created in a lab from various adult cells, not just found in specific locations.",
+      e: "Induced pluripotent stem cells, often called iPSCs, are adult cells that have been reprogrammed to an embryonic stem cell like state, meaning they can differentiate into many different cell types. Therefore, the correct answer is 'Adult cells become stem cell like'. 'Embryo cells, not adult cells' is incorrect because iPSCs start as adult cells, not embryonic cells, though they achieve an embryonic like state. 'Cells from cultured bacteria' is incorrect because iPSCs are human or animal cells, not bacteria. 'Cells found in marrow only' is incorrect as iPSCs are not limited to bone marrow, and their 'induced' nature means they are created in a lab from various adult cells, not just found in specific locations.",
     },
     {
-      q: "Which stem cell therapy is already standard clinical care?",
-      o: ["Lab grown organ transplants", "Regrown human limbs, new tech", "Anti aging therapies, future hope", "Bone marrow transplants, blood cancer"],
+      q: "Which stem cell therapy is standard clinical care?",
+      o: ["Lab grown organ transplants", "Regrown human limbs, new tech", "Anti aging therapies, future hope", "Bone marrow transplants for cancer"],
       c: 3,
       h: "Think about common medical procedures that involve replacing diseased tissue with healthy, similar tissue.",
-      e: "The correct answer is Bone marrow transplants, blood cancer. Bone marrow transplantation is a well established and standard clinical therapy for various blood cancers and other blood disorders, effectively using stem cells found in bone marrow. Lab grown organ transplants is incorrect because while promising, this is largely still in experimental or early clinical trial stages and not standard clinical care. Regrown human limbs, new tech is incorrect as regrowing entire human limbs is currently beyond standard medical capabilities. Anti aging therapies, future hope is incorrect because most anti aging therapies involving stem cells are speculative or in very early research, not standard clinical practice.",
+      e: "Bone marrow transplantation is a well established and standard clinical therapy for various blood cancers and other blood disorders, effectively using stem cells found in bone marrow. Therefore, the correct answer is 'Bone marrow transplants for cancer'. 'Lab grown organ transplants' is incorrect because while promising, this is largely still in experimental or early clinical trial stages and not standard clinical care. 'Regrown human limbs, new tech' is incorrect as regrowing entire human limbs is currently beyond standard medical capabilities. 'Anti aging therapies, future hope' is incorrect because most anti aging therapies involving stem cells are speculative or in very early research, not standard clinical practice.",
     },
   ],
   superbugs: [
@@ -495,7 +495,7 @@ const bank: Record<TopicKey, RawQ[]> = {
       o: ["A virus causing skin rashes", "A vaccine for drug bugs", "Staph resistant to many drugs", "A type of blood cell"],
       c: 2,
       h: "Consider the full name of MRSA, particularly the 'R' and 'SA' components, and what they signify about the bacteria.",
-      e: "The correct answer is Staph resistant to many drugs. MRSA stands for Methicillin resistant Staphylococcus aureus. It is a type of staph infection that is resistant to several common antibiotics, making it difficult to treat. A virus causing skin rashes is incorrect because MRSA is a bacterium, not a virus, although it can cause skin infections. A vaccine for drug bugs is incorrect as MRSA is a bacterium, not a vaccine. A type of blood cell is incorrect because MRSA is a bacterium, not a component of human blood.",
+      e: "The correct answer is 'Staph resistant to many drugs'. MRSA stands for Methicillin resistant Staphylococcus aureus. It is a type of staph infection that is resistant to several common antibiotics, making it difficult to treat. 'A virus causing skin rashes' is incorrect because MRSA is a bacterium, not a virus, although it can cause skin infections. 'A vaccine for drug bugs' is incorrect as MRSA is a bacterium, not a vaccine. 'A type of blood cell' is incorrect because MRSA is a bacterium, not a component of human blood.",
     },
   ],
   neurotech: [
@@ -559,24 +559,24 @@ const bank: Record<TopicKey, RawQ[]> = {
     },
     {
       q: "What is a closed loop life support system?",
-      o: ["A sealed room with no air", "A backup radio channel, secure", "Recycles water, oxygen, waste", "A locked storage for medicine"],
+      o: ["A sealed space with no air", "A secure backup radio channel", "Recycles water, oxygen, waste", "A storage for medical supplies"],
       c: 2,
       h: "Consider the concept of self sufficiency in an isolated environment.",
-      e: "A closed loop life support system recycles water, oxygen, waste, aiming to reuse and regenerate essential resources to minimize the need for resupply. A sealed room with no air is incorrect, as this would be a lethal environment rather than a life support system. A backup radio channel, secure is incorrect, as this describes a communication system, not a life support system. A locked storage for medicine is incorrect, as this describes a storage method, not a system for sustaining life processes.",
+      e: "A closed loop life support system recycles water, oxygen, and waste, aiming to reuse and regenerate essential resources to minimize the need for resupply. A storage for medical supplies describes a storage method, not a system for sustaining life processes. A sealed space with no air would be a lethal environment, not life support. A secure backup radio channel describes a communication system, not a life support system.",
     },
     {
-      q: "Why is treating a medical emergency hard on a Mars mission?",
-      o: ["Illness does not occur in space", "Crew treats itself due to delay", "No medicines carried on rockets", "Doctors cannot wear gloves then"],
+      q: "Why is treating a medical emergency difficult on a Mars mission?",
+      o: ["Illness does not happen in space", "Crew treats itself due to delay", "No medicines are carried on rockets", "Doctors cannot wear gloves then"],
       c: 1,
       h: "Consider the practical challenges of medical response over vast distances.",
-      e: "Treating a medical emergency is hard on a Mars mission because crew treats itself due to delay. The significant communication delay between Mars and Earth makes real time guidance from ground based doctors impractical, requiring the crew to be self sufficient in medical care. Illness does not occur in space is incorrect; astronauts can and do experience illnesses in space. No medicines carried on rockets is incorrect, as missions do carry medical supplies. Doctors cannot wear gloves then is incorrect; this is not a factor hindering emergency treatment.",
+      e: "Treating a medical emergency is difficult on a Mars mission because the crew treats itself due to communication delays. The significant time delay between Mars and Earth makes real time guidance from ground based doctors impractical, requiring the crew to be self sufficient in medical care. Illness does not happen in space is incorrect; astronauts can and do experience illnesses in space. No medicines are carried on rockets is incorrect, as missions do carry medical supplies. Doctors cannot wear gloves then is incorrect; this is not a factor hindering emergency treatment.",
     },
     {
       q: "What causes space motion sickness in the first days of a mission?",
       o: ["Low cabin pressure is a cause", "Eating only freeze dried food", "Loud rocket engines are a factor", "Inner ear conflicts with eyes"],
       c: 3,
       h: "Focus on the sensory systems responsible for balance and orientation.",
-      e: "Space motion sickness in the first days of a mission is caused by inner ear conflicts with eyes. In microgravity, the inner ear's balance organs no longer receive gravitational cues, creating a mismatch with visual information, which can lead to disorientation and nausea. Low cabin pressure is a cause is incorrect, as cabin pressure is typically regulated to a safe level to prevent issues like altitude sickness. Eating only freeze dried food is incorrect, as food type is not the primary cause of motion sickness. Loud rocket engines are a factor is incorrect, as the engines are only loud during launch and do not contribute to motion sickness experienced days into a mission.",
+      e: "Space motion sickness in the first days of a mission is caused by inner ear conflicts with eyes. In microgravity, the inner ear's balance organs no longer receive gravitational cues, creating a mismatch with visual information, which can lead to disorientation and nausea. Low cabin pressure is a cause is incorrect, as cabin pressure is typically regulated to a safe level. Eating only freeze dried food is incorrect, as food type is not the primary cause of motion sickness. Loud rocket engines are a factor is incorrect, as engines are only loud during launch and do not contribute to motion sickness experienced days into a mission.",
     },
     {
       q: "How does microgravity affect the immune system?",
