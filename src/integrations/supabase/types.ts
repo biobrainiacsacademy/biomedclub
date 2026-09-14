@@ -50,6 +50,33 @@ export type Database = {
         }
         Relationships: []
       }
+      club_day_signups: {
+        Row: {
+          created_at: string
+          first_name: string
+          grade: string
+          id: string
+          last_name: string
+          school_id: string
+        }
+        Insert: {
+          created_at?: string
+          first_name: string
+          grade: string
+          id?: string
+          last_name: string
+          school_id: string
+        }
+        Update: {
+          created_at?: string
+          first_name?: string
+          grade?: string
+          id?: string
+          last_name?: string
+          school_id?: string
+        }
+        Relationships: []
+      }
       feedback_responses: {
         Row: {
           additional_feedback: string | null
