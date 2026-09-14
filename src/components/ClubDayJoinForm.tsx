@@ -35,7 +35,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
     if (isBot(honeypot)) {
       toast({
         title: "You're In!",
-        description: "Thanks for joining BioBrainiacs. See you at Club Day!",
+        description: "Thanks for joining BioMed Club. See you at Club Day!",
       });
       onClose();
       return;
@@ -71,7 +71,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
 
     toast({
       title: "You're In!",
-      description: "Thanks for joining BioBrainiacs. See you at Club Day!",
+      description: "Thanks for joining BioMed Club. See you at Club Day!",
     });
     onClose();
     setFormData({ firstName: "", lastName: "", grade: "", schoolId: "" });
@@ -89,7 +89,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
           <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-2xl font-bold text-foreground mb-2">Join BioBrainiacs</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Join BioMed Club</h2>
         <p className="text-sm text-muted-foreground mb-6">Sign up for Club Day on Tuesday, September 15th.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -173,8 +173,8 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
             disabled={isSubmitting}
             className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
           >
-            {isSubmitting ? "Submitting..." : "Join BioBrainiacs"}
-          </button>
+          {isSubmitting ? "Submitting..." : "Join BioMed Club"}
+        </button>
 
           <p className="text-xs text-muted-foreground text-center">
             We use your details only to run club events. By joining you agree to our{" "}
