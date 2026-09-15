@@ -16,7 +16,7 @@ const clubDaySchema = z.object({
 
 interface ClubDayJoinFormProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (submitted?: boolean) => void;
 }
 
 const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
@@ -35,10 +35,10 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
 
     if (isBot(honeypot)) {
       toast({
-        title: "You're In!",
-        description: "Thanks for joining BioMed Club. See you at Club Day!",
+        title: "Thank you for joining!",
+        description: "",
       });
-      onClose();
+      onClose(true);
       return;
     }
 
@@ -71,10 +71,10 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
     }
 
     toast({
-      title: "You're In!",
-      description: "Thanks for joining BioMed Club. See you at Club Day!",
+      title: "Thank you for joining!",
+      description: "",
     });
-    onClose();
+    onClose(true);
     setFormData({ firstName: "", lastName: "", grade: "", schoolId: "" });
   };
 
@@ -84,7 +84,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background backdrop-blur-sm">
       <div className="card-gradient rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
         <button
-          onClick={onClose}
+          onClick={() => onClose()}
           className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
         >
           <X className="w-6 h-6" />
@@ -117,7 +117,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="John"
+                
               />
             </div>
             <div>
@@ -131,7 +131,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Doe"
+                
               />
             </div>
           </div>
