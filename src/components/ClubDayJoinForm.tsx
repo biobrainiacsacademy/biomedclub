@@ -84,7 +84,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background backdrop-blur-sm">
       <div className="card-gradient rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
         <button
-          onClick={onClose}
+          onClick={() => onClose()}
           className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
         >
           <X className="w-6 h-6" />
