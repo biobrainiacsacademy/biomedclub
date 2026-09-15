@@ -102,6 +102,7 @@ export const recordHistory = (s: QuizStats, firstTry: boolean): QuizStats => {
 const NAME_KEY = "bb_quiz_username";
 const DEVICE_KEY = "bb_quiz_device";
 const SHARE_KEY = "bb_quiz_share";
+const DISMISS_KEY = "bb_quiz_username_dismissed";
 
 export const loadShareStats = (): boolean => {
   try {
