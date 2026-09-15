@@ -30,6 +30,8 @@ import {
   getDeviceId,
   loadShareStats,
   saveShareStats,
+  loadUsernameDismissed,
+  saveUsernameDismissed,
   type QuizStats,
 } from "@/lib/quizStorage";
 
