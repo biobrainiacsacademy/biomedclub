@@ -16,6 +16,7 @@ import {
   Zap,
   Check,
   Users,
+  X,
 } from "lucide-react";
 import { quizQuestions, quizTopics, type QuizQuestion } from "@/data/quizQuestions";
 import {
