@@ -773,7 +773,7 @@ const Quiz = () => {
         />
       )}
 
-      {!username && (
+      {!username && !usernameDismissed && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/85 backdrop-blur-sm">
           <form
             onSubmit={(e) => {
@@ -785,8 +785,20 @@ const Quiz = () => {
               setShareStats(shareDraft);
               setUsername(name);
             }}
-            className="card-gradient rounded-xl p-6 w-full max-w-sm space-y-4"
+            className="card-gradient rounded-xl p-6 w-full max-w-sm space-y-4 relative"
           >
+            <button
+              type="button"
+              onClick={() => {
+                saveUsernameDismissed(true);
+                setUsernameDismissed(true);
+              }}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Close username prompt"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
             <h2 className="text-xl font-bold text-foreground">Pick a username</h2>
             <p className="text-sm text-muted-foreground">
               Your username saves your quiz progress, streak, and stats so you can pick up right
