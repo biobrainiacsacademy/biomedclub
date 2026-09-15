@@ -102,6 +102,7 @@ export const recordHistory = (s: QuizStats, firstTry: boolean): QuizStats => {
 const NAME_KEY = "bb_quiz_username";
 const DEVICE_KEY = "bb_quiz_device";
 const SHARE_KEY = "bb_quiz_share";
+const DISMISS_KEY = "bb_quiz_username_dismissed";
 
 export const loadShareStats = (): boolean => {
   try {
@@ -132,6 +133,22 @@ export const loadUsername = (): string | null => {
 export const saveUsername = (name: string) => {
   try {
     localStorage.setItem(NAME_KEY, name.trim().slice(0, 40));
+  } catch {
+    /* storage unavailable */
+  }
+};
+
+export const loadUsernameDismissed = (): boolean => {
+  try {
+    return localStorage.getItem(DISMISS_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+export const saveUsernameDismissed = (dismissed: boolean) => {
+  try {
+    localStorage.setItem(DISMISS_KEY, dismissed ? "1" : "0");
   } catch {
     /* storage unavailable */
   }
