@@ -2,13 +2,12 @@ import { Calendar, Clock, MapPin, UserPlus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
-import NotifyMeForm from "@/components/NotifyMeForm";
 
 const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
   const [showJoin, setShowJoin] = useState(false);
-  const [showNotify, setShowNotify] = useState(false);
+  const [joinKey, setJoinKey] = useState(0);
 
   return (
     <section className="py-8 px-4">
@@ -49,13 +48,16 @@ const NextSession = () => {
       </div>
 
       <ClubDayJoinForm
+        key={joinKey}
         isOpen={showJoin}
         onClose={(submitted) => {
-          setShowJoin(false);
-          if (submitted) setShowNotify(true);
+          if (submitted) {
+            setJoinKey((k) => k + 1);
+          } else {
+            setShowJoin(false);
+          }
         }}
       />
-      <NotifyMeForm isOpen={showNotify} onClose={() => setShowNotify(false)} />
     </section>
   );
 };
