@@ -87,6 +87,7 @@ const Quiz = () => {
   const [nameDraft, setNameDraft] = useState("");
   const [shareDraft, setShareDraft] = useState<boolean | null>(null);
   const [shareStats, setShareStats] = useState<boolean>(() => loadShareStats());
+  const [usernameDismissed, setUsernameDismissed] = useState(() => loadUsernameDismissed());
   const [showWelcome, setShowWelcome] = useState(false);
   const [showBoard, setShowBoard] = useState(false);
   const [board, setBoard] = useState<LeaderRow[] | null>(null);
