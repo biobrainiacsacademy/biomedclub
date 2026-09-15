@@ -138,6 +138,22 @@ export const saveUsername = (name: string) => {
   }
 };
 
+export const loadUsernameDismissed = (): boolean => {
+  try {
+    return localStorage.getItem(DISMISS_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+export const saveUsernameDismissed = (dismissed: boolean) => {
+  try {
+    localStorage.setItem(DISMISS_KEY, dismissed ? "1" : "0");
+  } catch {
+    /* storage unavailable */
+  }
+};
+
 export const getDeviceId = (): string => {
   try {
     let id = localStorage.getItem(DEVICE_KEY);
