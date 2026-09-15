@@ -16,7 +16,7 @@ const clubDaySchema = z.object({
 
 interface ClubDayJoinFormProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (submitted?: boolean) => void;
 }
 
 const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
@@ -35,10 +35,10 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
 
     if (isBot(honeypot)) {
       toast({
-        title: "You're In!",
-        description: "Thanks for joining BioMed Club. See you at Club Day!",
+        title: "Thank you for joining!",
+        description: "",
       });
-      onClose();
+      onClose(true);
       return;
     }
 
@@ -71,10 +71,10 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
     }
 
     toast({
-      title: "You're In!",
-      description: "Thanks for joining BioMed Club. See you at Club Day!",
+      title: "Thank you for joining!",
+      description: "",
     });
-    onClose();
+    onClose(true);
     setFormData({ firstName: "", lastName: "", grade: "", schoolId: "" });
   };
 
