@@ -2,7 +2,7 @@ import { Calendar, Clock, Video, UserPlus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
-import paetoAsset from "@/assets/paeto.png.asset.json";
+import paetoAsset from "@/assets/paeto-mobile.jpg.asset.json";
 
 const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
