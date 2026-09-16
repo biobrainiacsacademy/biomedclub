@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { isBot } from "@/lib/validation";
+import QAQuestions from "@/components/QAQuestions";
 import { z } from "zod";
 
-const clubDaySchema = z.object({
+const registerSchema = z.object({
   firstName: z.string().trim().min(1, "First name is required").max(100),
   lastName: z.string().trim().min(1, "Last name is required").max(100),
-  grade: z.enum(["9", "10", "11", "12"], { errorMap: () => ({ message: "Please select a valid grade" }) }),
-  schoolId: z.string().trim().min(1, "School ID is required").max(50),
+  email: z.string().trim().email("Please enter a valid email").max(255),
+  comments: z.string().trim().max(2000).optional().or(z.literal("")),
 });
 
 interface ClubDayJoinFormProps {
@@ -26,23 +27,20 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    grade: "",
-    schoolId: "",
+    email: "",
+    comments: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (isBot(honeypot)) {
-      toast({
-        title: "Thank you for joining!",
-        description: "",
-      });
+      toast({ title: "Thank you for registering!", description: "" });
       onClose(true);
       return;
     }
 
-    const result = clubDaySchema.safeParse(formData);
+    const result = registerSchema.safeParse(formData);
     if (!result.success) {
       toast({
         title: "Validation Error",
@@ -53,11 +51,16 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
     }
 
     setIsSubmitting(true);
-    const { error } = await supabase.from("club_day_signups").insert({
+    const { error } = await supabase.from("registrations").insert({
       first_name: result.data.firstName,
       last_name: result.data.lastName,
-      grade: result.data.grade,
-      school_id: result.data.schoolId,
+      email: result.data.email,
+      grade: "N/A",
+      school: "N/A",
+      how_heard: null,
+      questions: result.data.comments
+        ? `Guest Speaker Q&A signup. Comments: ${result.data.comments}`
+        : "Guest Speaker Q&A signup",
     });
     setIsSubmitting(false);
 
@@ -70,19 +73,19 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
       return;
     }
 
-    toast({
-      title: "Thank you for joining!",
-      description: "",
-    });
+    toast({ title: "Thank you for registering!", description: "" });
+    setFormData({ firstName: "", lastName: "", email: "", comments: "" });
     onClose(true);
-    setFormData({ firstName: "", lastName: "", grade: "", schoolId: "" });
   };
 
   if (!isOpen) return null;
 
+  const inputClass =
+    "w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary";
+
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background backdrop-blur-sm">
-      <div className="card-gradient rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
+      <div className="card-gradient rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
         <button
           onClick={() => onClose()}
           className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
@@ -90,8 +93,12 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
           <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-2xl font-bold text-foreground mb-2">Join BioMed Club</h2>
-        <p className="text-sm text-muted-foreground mb-6">Sign up for Club Day on Tuesday, September 15th.</p>
+        <h2 className="text-2xl font-bold text-foreground mb-2 pr-10">
+          Register: Guest Speaker Q&amp;A
+        </h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Paeto Wangweera. Sunday, September 20th at 2:00 PM, via Zoom.
+        </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -116,8 +123,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
                 maxLength={100}
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                
+                className={inputClass}
               />
             </div>
             <div>
@@ -130,43 +136,46 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
                 maxLength={100}
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                
+                className={inputClass}
               />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
-              Grade Level <span className="text-destructive">*</span>
+              Home (Personal) Email <span className="text-destructive">*</span>
             </label>
-            <select
+            <input
+              type="email"
               required
-              value={formData.grade}
-              onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-              className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="">Select grade</option>
-              <option value="9">9th Grade</option>
-              <option value="10">10th Grade</option>
-              <option value="11">11th Grade</option>
-              <option value="12">12th Grade</option>
-            </select>
+              maxLength={255}
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className={inputClass}
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">
-              School ID <span className="text-destructive">*</span>
+              Any comments or concerns?
             </label>
-            <input
-              type="text"
-              required
-              maxLength={50}
-              value={formData.schoolId}
-              onChange={(e) => setFormData({ ...formData, schoolId: e.target.value })}
-              className="w-full bg-muted border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Your school ID"
+            <textarea
+              maxLength={2000}
+              value={formData.comments}
+              onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
+              className={`${inputClass} min-h-[70px]`}
             />
+          </div>
+
+          <div className="qa-glow rounded-xl p-4">
+            <h3 className="text-sm font-semibold text-foreground mb-1">
+              Questions for Paeto
+            </h3>
+            <p className="text-xs text-muted-foreground mb-3">
+              Submit a question you would like him to answer. You can also like other members
+              questions to move the ones you care about toward the top.
+            </p>
+            <QAQuestions />
           </div>
 
           <button
@@ -174,11 +183,11 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
             disabled={isSubmitting}
             className="w-full bg-primary text-primary-foreground font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
           >
-          {isSubmitting ? "Submitting..." : "Join BioMed Club"}
-        </button>
+            {isSubmitting ? "Submitting..." : "Register Now"}
+          </button>
 
           <p className="text-xs text-muted-foreground text-center">
-            We use your details only to run club events. By joining you agree to our{" "}
+            We use your details only to run this event. By registering you agree to our{" "}
             <Link to="/terms" className="text-accent hover:underline" target="_blank">
               Terms of Service
             </Link>{" "}

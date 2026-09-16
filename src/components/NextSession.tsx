@@ -1,13 +1,13 @@
-import { Calendar, Clock, MapPin, UserPlus } from "lucide-react";
+import { Calendar, Clock, Video, UserPlus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
+import paetoAsset from "@/assets/paeto.png.asset.json";
 
 const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
   const [showJoin, setShowJoin] = useState(false);
-  const [joinKey, setJoinKey] = useState(0);
 
   return (
     <section className="py-8 px-4">
@@ -24,18 +24,26 @@ const NextSession = () => {
           transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div className="flex items-center justify-between gap-3">
-          <h3 className="text-sm font-semibold text-foreground">Club Day</h3>
+        <div className="flex items-center gap-4">
+          <img
+            src={paetoAsset.url}
+            alt="Paeto Wangweera, guest speaker"
+            className="w-16 h-16 rounded-full object-cover object-top ring-2 ring-primary/40 shadow-lg opacity-95"
+            loading="lazy"
+          />
+          <h3 className="text-sm font-semibold text-foreground leading-snug">
+            Guest Speaker Q&amp;A: Paeto Wangweera
+          </h3>
         </div>
         <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
           <span className="flex items-center gap-2">
-            <Calendar className="w-3 h-3 text-accent" /> Tuesday, September 15th
+            <Calendar className="w-3 h-3 text-accent" /> Sunday, September 20th
           </span>
           <span className="flex items-center gap-2">
-            <Clock className="w-3 h-3 text-accent" /> 11:00 AM to 12:00 PM
+            <Clock className="w-3 h-3 text-accent" /> 2:00 PM
           </span>
           <span className="flex items-center gap-2">
-            <MapPin className="w-3 h-3 text-accent" /> WCHS Main Gym
+            <Video className="w-3 h-3 text-accent" /> Via Zoom
           </span>
         </div>
         <button
@@ -43,21 +51,11 @@ const NextSession = () => {
           className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 text-sm shadow-lg hover:shadow-xl hover:scale-[1.02]"
         >
           <UserPlus className="w-4 h-4" />
-          Join BioMed Club
+          Register Now
         </button>
       </div>
 
-      <ClubDayJoinForm
-        key={joinKey}
-        isOpen={showJoin}
-        onClose={(submitted) => {
-          if (submitted) {
-            setJoinKey((k) => k + 1);
-          } else {
-            setShowJoin(false);
-          }
-        }}
-      />
+      <ClubDayJoinForm isOpen={showJoin} onClose={() => setShowJoin(false)} />
     </section>
   );
 };
