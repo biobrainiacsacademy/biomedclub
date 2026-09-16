@@ -150,7 +150,9 @@ const QAQuestions = () => {
                     }`}
                   >
                     <ThumbsUp className="w-4 h-4" />
-                    <span className="text-xs font-semibold mt-0.5">{q.likes}</span>
+                    <span className="text-xs font-semibold mt-0.5">
+                      {q.likes < 0 ? "<0" : q.likes}
+                    </span>
                   </button>
                   <p className="flex-1 text-sm text-foreground whitespace-pre-wrap break-words">
                     {q.question}
