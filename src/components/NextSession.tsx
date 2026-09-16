@@ -2,7 +2,10 @@ import { Calendar, Clock, Video, UserPlus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
-import paetoAsset from "@/assets/paeto-mobile.jpg.asset.json";
+import paetoAsset from "@/assets/paeto-speaker-2026.jpg.asset.json";
+import paetoBackupAsset from "@/assets/paeto-mobile.jpg.asset.json";
+
+const LIVE_SITE = "https://biobrainiacs.org";
 
 const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -26,10 +29,15 @@ const NextSession = () => {
       >
         <div className="flex items-center gap-4">
           <img
-            src={paetoAsset.url}
+            src={`${LIVE_SITE}${paetoAsset.url}`}
             alt="Paeto Wangweera, guest speaker"
             className="w-16 h-16 rounded-full object-cover object-top ring-2 ring-primary/40 shadow-lg opacity-95"
-            loading="lazy"
+            loading="eager"
+            decoding="sync"
+            onError={(event) => {
+              if (event.currentTarget.src.endsWith(paetoBackupAsset.url)) return;
+              event.currentTarget.src = `${LIVE_SITE}${paetoBackupAsset.url}`;
+            }}
           />
           <h3 className="text-sm font-semibold text-foreground leading-snug">
             Guest Speaker Q&amp;A: Paeto Wangweera
