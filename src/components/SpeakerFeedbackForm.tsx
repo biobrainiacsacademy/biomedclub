@@ -264,20 +264,20 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
             </div>
             <div className="space-y-2">
               {[...postponeOptions, "Other"].map((option) => (
-                <label key={option} className={optionClass(postpone === option)}>
+                <label key={option} className={optionClass(postpone.includes(option))}>
                   <input
-                    type="radio"
+                    type="checkbox"
                     name="postpone"
                     value={option}
-                    checked={postpone === option}
-                    onChange={() => setPostpone(option)}
+                    checked={postpone.includes(option)}
+                    onChange={() => togglePostpone(option)}
                     className="w-4 h-4 text-primary border-border focus:ring-primary"
                   />
                   <span className="text-sm text-foreground">{option}</span>
                 </label>
               ))}
             </div>
-            {postpone === "Other" && (
+            {postpone.includes("Other") && (
               <input
                 type="text"
                 maxLength={500}
