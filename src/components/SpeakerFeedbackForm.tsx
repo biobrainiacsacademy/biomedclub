@@ -8,9 +8,9 @@ import { z } from "zod";
 
 const INTERESTED = "Are you interested in attending the Guest Speaker Q&A?";
 const HOLDING_UP = "What is the main reason you are unable to attend?";
-const POSTPONE = "If we moved the event, which option would work best for you?";
+const POSTPONE = "If we moved the event, which options would work for you? Select all that apply.";
 
-const holdingUpOptions = ["Scheduling conflict", "It is just this week, I am busy"];
+const holdingUpOptions = ["Scheduling conflict", "Unavailable this week only"];
 
 const postponeOptions = [
   "Saturday morning",
@@ -34,7 +34,7 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
   const [interested, setInterested] = useState<string | null>(null);
   const [holdingUp, setHoldingUp] = useState<string | null>(null);
   const [holdingUpOther, setHoldingUpOther] = useState("");
-  const [postpone, setPostpone] = useState<string | null>(null);
+  const [postpone, setPostpone] = useState<string[]>([]);
   const [postponeOther, setPostponeOther] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -108,20 +108,30 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
     setStep(2);
   };
 
+  const togglePostpone = (option: string) => {
+    setPostpone((prev) =>
+      prev.includes(option) ? prev.filter((o) => o !== option) : [...prev, option]
+    );
+  };
+
   const handleSubmit = async () => {
-    if (!postpone) return;
+    if (postpone.length === 0) return;
+    if (postpone.includes("Other")) {
+      const parsed = otherSchema.safeParse(postponeOther);
+      if (!parsed.success || parsed.data.length === 0) {
+        toast({
+          title: "Please tell us more",
+          description: "Enter a short answer for Other.",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
     const holdingAnswer =
       holdingUp === "Other" ? `Other: ${otherSchema.parse(holdingUpOther)}` : holdingUp!;
-    const postponeAnswer =
-      postpone === "Other" ? `Other: ${otherSchema.parse(postponeOther)}` : postpone!;
-    if (postpone === "Other" && otherSchema.parse(postponeOther).length === 0) {
-      toast({
-        title: "Please tell us more",
-        description: "Enter a short answer for Other.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const postponeAnswer = postpone
+      .map((option) => (option === "Other" ? `Other: ${otherSchema.parse(postponeOther)}` : option))
+      .join(", ");
     await finish([
       { question: INTERESTED, answer: "Yes" },
       { question: HOLDING_UP, answer: holdingAnswer },
@@ -254,20 +264,20 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
             </div>
             <div className="space-y-2">
               {[...postponeOptions, "Other"].map((option) => (
-                <label key={option} className={optionClass(postpone === option)}>
+                <label key={option} className={optionClass(postpone.includes(option))}>
                   <input
-                    type="radio"
+                    type="checkbox"
                     name="postpone"
                     value={option}
-                    checked={postpone === option}
-                    onChange={() => setPostpone(option)}
+                    checked={postpone.includes(option)}
+                    onChange={() => togglePostpone(option)}
                     className="w-4 h-4 text-primary border-border focus:ring-primary"
                   />
                   <span className="text-sm text-foreground">{option}</span>
                 </label>
               ))}
             </div>
-            {postpone === "Other" && (
+            {postpone.includes("Other") && (
               <input
                 type="text"
                 maxLength={500}
@@ -279,7 +289,7 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
             )}
             <button
               onClick={handleSubmit}
-              disabled={!postpone || isSubmitting}
+              disabled={postpone.length === 0 || isSubmitting}
               className="w-full bg-primary text-primary-foreground font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50 text-sm"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
