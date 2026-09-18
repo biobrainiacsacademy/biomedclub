@@ -1,7 +1,8 @@
-import { Calendar, Clock, Video, UserPlus } from "lucide-react";
+import { Calendar, Clock, Video, UserPlus, MessageSquare } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
+import SpeakerFeedbackForm from "@/components/SpeakerFeedbackForm";
 import paetoAsset from "@/assets/paeto-speaker-2026.jpg.asset.json";
 import paetoBackupAsset from "@/assets/paeto-mobile.jpg.asset.json";
 
