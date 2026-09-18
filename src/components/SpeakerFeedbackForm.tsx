@@ -289,7 +289,7 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
             )}
             <button
               onClick={handleSubmit}
-              disabled={!postpone || isSubmitting}
+              disabled={postpone.length === 0 || isSubmitting}
               className="w-full bg-primary text-primary-foreground font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50 text-sm"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
