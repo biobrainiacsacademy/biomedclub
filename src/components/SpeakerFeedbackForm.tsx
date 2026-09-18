@@ -108,20 +108,30 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
     setStep(2);
   };
 
+  const togglePostpone = (option: string) => {
+    setPostpone((prev) =>
+      prev.includes(option) ? prev.filter((o) => o !== option) : [...prev, option]
+    );
+  };
+
   const handleSubmit = async () => {
-    if (!postpone) return;
+    if (postpone.length === 0) return;
+    if (postpone.includes("Other")) {
+      const parsed = otherSchema.safeParse(postponeOther);
+      if (!parsed.success || parsed.data.length === 0) {
+        toast({
+          title: "Please tell us more",
+          description: "Enter a short answer for Other.",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
     const holdingAnswer =
       holdingUp === "Other" ? `Other: ${otherSchema.parse(holdingUpOther)}` : holdingUp!;
-    const postponeAnswer =
-      postpone === "Other" ? `Other: ${otherSchema.parse(postponeOther)}` : postpone!;
-    if (postpone === "Other" && otherSchema.parse(postponeOther).length === 0) {
-      toast({
-        title: "Please tell us more",
-        description: "Enter a short answer for Other.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const postponeAnswer = postpone
+      .map((option) => (option === "Other" ? `Other: ${otherSchema.parse(postponeOther)}` : option))
+      .join(", ");
     await finish([
       { question: INTERESTED, answer: "Yes" },
       { question: HOLDING_UP, answer: holdingAnswer },
