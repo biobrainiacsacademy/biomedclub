@@ -67,7 +67,7 @@ const NextSession = () => {
           <span className="block text-xs text-accent font-semibold mb-1">Can&apos;t make it?</span>
           <button
             onClick={() => setShowFeedback(true)}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors"
+            className="w-full inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground font-semibold py-2.5 px-6 rounded-lg hover:bg-accent/90 transition-all duration-300 text-sm shadow-lg hover:shadow-xl hover:scale-[1.02]"
           >
             <MessageSquare className="w-4 h-4" />
             Feedback Form

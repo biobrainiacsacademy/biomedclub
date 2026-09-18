@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { isBot } from "@/lib/validation";
@@ -10,18 +10,15 @@ const INTERESTED = "Are you interested in attending the Guest Speaker Q&A?";
 const HOLDING_UP = "What is the main reason you are unable to attend?";
 const POSTPONE = "If we moved the event, which option would work best for you?";
 
-const holdingUpOptions = [
-  "Scheduling conflict",
-  "I need a reminder closer to the date",
-  "The Zoom format does not work for me",
-  "I am not sure what the event is about",
-];
+const holdingUpOptions = ["Scheduling conflict", "It is just this week, I am busy"];
 
 const postponeOptions = [
-  "Later the same day",
-  "A different day that same week",
-  "After a school break",
-  "A weekend evening",
+  "Saturday morning",
+  "Saturday afternoon",
+  "Saturday evening",
+  "Sunday morning",
+  "Sunday afternoon (around the same time)",
+  "Sunday evening",
 ];
 
 const otherSchema = z.string().trim().max(500);
@@ -198,7 +195,16 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
 
         {step === 1 && (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">{HOLDING_UP}</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setStep(0)}
+                aria-label="Back"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h3 className="text-lg font-semibold text-foreground">{HOLDING_UP}</h3>
+            </div>
             <div className="space-y-2">
               {[...holdingUpOptions, "Other"].map((option) => (
                 <label key={option} className={optionClass(holdingUp === option)}>
@@ -236,7 +242,16 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
 
         {step === 2 && (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">{POSTPONE}</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setStep(1)}
+                aria-label="Back"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h3 className="text-lg font-semibold text-foreground">{POSTPONE}</h3>
+            </div>
             <div className="space-y-2">
               {[...postponeOptions, "Other"].map((option) => (
                 <label key={option} className={optionClass(postpone === option)}>
