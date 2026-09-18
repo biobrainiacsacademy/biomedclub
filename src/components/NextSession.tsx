@@ -63,9 +63,20 @@ const NextSession = () => {
           <UserPlus className="w-4 h-4" />
           Register Now
         </button>
+        <div className="text-center pt-1">
+          <span className="block text-xs text-accent font-semibold mb-1">Can&apos;t make it?</span>
+          <button
+            onClick={() => setShowFeedback(true)}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Feedback Form
+          </button>
+        </div>
       </div>
 
       <ClubDayJoinForm isOpen={showJoin} onClose={() => setShowJoin(false)} />
+      <SpeakerFeedbackForm isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
     </section>
   );
 };
