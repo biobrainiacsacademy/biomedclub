@@ -1,7 +1,8 @@
-import { Calendar, Clock, Video, UserPlus } from "lucide-react";
+import { Calendar, Clock, Video, UserPlus, MessageSquare } from "lucide-react";
 import { useRef, useState } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
+import SpeakerFeedbackForm from "@/components/SpeakerFeedbackForm";
 import paetoAsset from "@/assets/paeto-speaker-2026.jpg.asset.json";
 import paetoBackupAsset from "@/assets/paeto-mobile.jpg.asset.json";
 
@@ -11,6 +12,7 @@ const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
   const [showJoin, setShowJoin] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return (
     <section className="py-8 px-4">
@@ -61,9 +63,20 @@ const NextSession = () => {
           <UserPlus className="w-4 h-4" />
           Register Now
         </button>
+        <div className="text-center pt-1">
+          <span className="block text-xs text-accent font-semibold mb-1">Can&apos;t make it?</span>
+          <button
+            onClick={() => setShowFeedback(true)}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Feedback Form
+          </button>
+        </div>
       </div>
 
       <ClubDayJoinForm isOpen={showJoin} onClose={() => setShowJoin(false)} />
+      <SpeakerFeedbackForm isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
     </section>
   );
 };
