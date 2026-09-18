@@ -12,6 +12,7 @@ const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
   const [showJoin, setShowJoin] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return (
     <section className="py-8 px-4">
