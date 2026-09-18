@@ -195,7 +195,16 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
 
         {step === 1 && (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">{HOLDING_UP}</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setStep(0)}
+                aria-label="Back"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h3 className="text-lg font-semibold text-foreground">{HOLDING_UP}</h3>
+            </div>
             <div className="space-y-2">
               {[...holdingUpOptions, "Other"].map((option) => (
                 <label key={option} className={optionClass(holdingUp === option)}>
@@ -233,7 +242,16 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
 
         {step === 2 && (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">{POSTPONE}</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setStep(1)}
+                aria-label="Back"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h3 className="text-lg font-semibold text-foreground">{POSTPONE}</h3>
+            </div>
             <div className="space-y-2">
               {[...postponeOptions, "Other"].map((option) => (
                 <label key={option} className={optionClass(postpone === option)}>
