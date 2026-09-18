@@ -8,9 +8,9 @@ import { z } from "zod";
 
 const INTERESTED = "Are you interested in attending the Guest Speaker Q&A?";
 const HOLDING_UP = "What is the main reason you are unable to attend?";
-const POSTPONE = "If we moved the event, which option would work best for you?";
+const POSTPONE = "If we moved the event, which options would work for you? Select all that apply.";
 
-const holdingUpOptions = ["Scheduling conflict", "It is just this week, I am busy"];
+const holdingUpOptions = ["Scheduling conflict", "Unavailable this week only"];
 
 const postponeOptions = [
   "Saturday morning",
@@ -34,7 +34,7 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
   const [interested, setInterested] = useState<string | null>(null);
   const [holdingUp, setHoldingUp] = useState<string | null>(null);
   const [holdingUpOther, setHoldingUpOther] = useState("");
-  const [postpone, setPostpone] = useState<string | null>(null);
+  const [postpone, setPostpone] = useState<string[]>([]);
   const [postponeOther, setPostponeOther] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
