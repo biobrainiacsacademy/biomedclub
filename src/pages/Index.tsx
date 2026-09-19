@@ -29,10 +29,8 @@ const Index = () => {
           <Hero />
         </FadeIn>
         
-        <FadeIn delay={100}>
-          <div className="section-divider" />
-          <NextSession />
-        </FadeIn>
+        <div className="section-divider" />
+        <NextSession />
         
         
         
