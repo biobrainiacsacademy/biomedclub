@@ -32,12 +32,18 @@ interface LabVoteFormProps {
 
 const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
   const { toast } = useToast();
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const toggleLab = (name: string) => {
+    setSelected((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
+    );
+  };
+
   const reset = () => {
-    setSelected(null);
+    setSelected([]);
     setHoneypot("");
   };
 
@@ -47,7 +53,7 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
   };
 
   const handleSubmit = async () => {
-    if (!selected || isSubmitting) return;
+    if (selected.length === 0 || isSubmitting) return;
     if (isBot(honeypot)) {
       toast({ title: "Thanks for voting!" });
       handleClose();
@@ -55,10 +61,12 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
     }
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("poll_responses").insert({
-        question: QUESTION,
-        answer: selected,
-      });
+      const { error } = await supabase.from("poll_responses").insert(
+        selected.map((lab) => ({
+          question: QUESTION,
+          answer: lab,
+        }))
+      );
       if (error) throw error;
       toast({ title: "Thanks for voting!" });
       handleClose();
@@ -92,7 +100,7 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
 
         <h2 className="text-2xl font-bold text-foreground mb-2 pr-10">Vote for Our First Lab</h2>
         <p className="text-sm text-muted-foreground mb-6">
-          Pick the lab you would like to do to start the year.
+          Pick any labs you would like to do to start the year. You can choose more than one.
         </p>
 
         <input
@@ -108,14 +116,13 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
 
         <div className="space-y-3">
           {labs.map((lab) => (
-            <label key={lab.name} className={`block ${optionClass(selected === lab.name)}`}>
+            <label key={lab.name} className={`block ${optionClass(selected.includes(lab.name))}`}>
               <div className="flex items-start gap-3">
                 <input
-                  type="radio"
-                  name="lab-vote"
+                  type="checkbox"
                   value={lab.name}
-                  checked={selected === lab.name}
-                  onChange={() => setSelected(lab.name)}
+                  checked={selected.includes(lab.name)}
+                  onChange={() => toggleLab(lab.name)}
                   className="w-4 h-4 mt-0.5 text-primary border-border focus:ring-primary"
                 />
                 <div>
@@ -131,7 +138,7 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
 
         <button
           onClick={handleSubmit}
-          disabled={!selected || isSubmitting}
+          disabled={selected.length === 0 || isSubmitting}
           className="w-full bg-primary text-primary-foreground font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50 text-sm mt-6"
         >
           {isSubmitting ? "Submitting..." : "Submit Vote"}
