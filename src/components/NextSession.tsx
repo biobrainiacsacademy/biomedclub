@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Vote } from "lucide-react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import LabVoteForm from "@/components/LabVoteForm";
@@ -6,6 +6,8 @@ import LabVoteForm from "@/components/LabVoteForm";
 const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
+  const [showVote, setShowVote] = useState(false);
+
 
   return (
     <section className="py-8 px-4">
