@@ -100,7 +100,7 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
 
         <h2 className="text-2xl font-bold text-foreground mb-2 pr-10">Vote for Our First Lab</h2>
         <p className="text-sm text-muted-foreground mb-6">
-          Pick the lab you would like to do to start the year.
+          Pick any labs you would like to do to start the year. You can choose more than one.
         </p>
 
         <input
@@ -116,14 +116,13 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
 
         <div className="space-y-3">
           {labs.map((lab) => (
-            <label key={lab.name} className={`block ${optionClass(selected === lab.name)}`}>
+            <label key={lab.name} className={`block ${optionClass(selected.includes(lab.name))}`}>
               <div className="flex items-start gap-3">
                 <input
-                  type="radio"
-                  name="lab-vote"
+                  type="checkbox"
                   value={lab.name}
-                  checked={selected === lab.name}
-                  onChange={() => setSelected(lab.name)}
+                  checked={selected.includes(lab.name)}
+                  onChange={() => toggleLab(lab.name)}
                   className="w-4 h-4 mt-0.5 text-primary border-border focus:ring-primary"
                 />
                 <div>
@@ -139,7 +138,7 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
 
         <button
           onClick={handleSubmit}
-          disabled={!selected || isSubmitting}
+          disabled={selected.length === 0 || isSubmitting}
           className="w-full bg-primary text-primary-foreground font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-all duration-300 disabled:opacity-50 text-sm mt-6"
         >
           {isSubmitting ? "Submitting..." : "Submit Vote"}
