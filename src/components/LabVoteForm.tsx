@@ -32,12 +32,18 @@ interface LabVoteFormProps {
 
 const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
   const { toast } = useToast();
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const toggleLab = (name: string) => {
+    setSelected((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
+    );
+  };
+
   const reset = () => {
-    setSelected(null);
+    setSelected([]);
     setHoneypot("");
   };
 
@@ -47,7 +53,7 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
   };
 
   const handleSubmit = async () => {
-    if (!selected || isSubmitting) return;
+    if (selected.length === 0 || isSubmitting) return;
     if (isBot(honeypot)) {
       toast({ title: "Thanks for voting!" });
       handleClose();
@@ -55,10 +61,12 @@ const LabVoteForm = ({ isOpen, onClose }: LabVoteFormProps) => {
     }
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("poll_responses").insert({
-        question: QUESTION,
-        answer: selected,
-      });
+      const { error } = await supabase.from("poll_responses").insert(
+        selected.map((lab) => ({
+          question: QUESTION,
+          answer: lab,
+        }))
+      );
       if (error) throw error;
       toast({ title: "Thanks for voting!" });
       handleClose();
