@@ -1,24 +1,19 @@
-import { Calendar, Clock, Video, UserPlus, MessageSquare } from "lucide-react";
 import { useRef, useState } from "react";
+import { Vote } from "lucide-react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
-import ClubDayJoinForm from "@/components/ClubDayJoinForm";
-import SpeakerFeedbackForm from "@/components/SpeakerFeedbackForm";
-import paetoAsset from "@/assets/paeto-speaker-2026.jpg.asset.json";
-import paetoBackupAsset from "@/assets/paeto-mobile.jpg.asset.json";
-
-const LIVE_SITE = "https://biobrainiacs.org";
+import LabVoteForm from "@/components/LabVoteForm";
 
 const NextSession = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(cardRef as React.RefObject<HTMLElement>);
-  const [showJoin, setShowJoin] = useState(false);
-  const [showFeedback, setShowFeedback] = useState(false);
+  const [showVote, setShowVote] = useState(false);
+
 
   return (
     <section className="py-8 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
-        <span className="text-primary">Next</span>
-        <span className="text-foreground"> Event</span>
+        <span className="text-primary">Vote</span>
+        <span className="text-foreground"> for Our First Lab</span>
       </h2>
 
       <div
@@ -29,54 +24,19 @@ const NextSession = () => {
           transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div className="flex items-center gap-4">
-          <img
-            src={`${LIVE_SITE}${paetoAsset.url}`}
-            alt="Paeto Wangweera, guest speaker"
-            className="w-16 h-16 rounded-full object-cover object-top ring-2 ring-primary/40 shadow-lg opacity-95"
-            loading="eager"
-            decoding="sync"
-            onError={(event) => {
-              if (event.currentTarget.src.endsWith(paetoBackupAsset.url)) return;
-              event.currentTarget.src = `${LIVE_SITE}${paetoBackupAsset.url}`;
-            }}
-          />
-          <h3 className="text-sm font-semibold text-foreground leading-snug">
-            Guest Speaker Q&amp;A: Paeto Wangweera
-          </h3>
-        </div>
-        <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
-          <span className="flex items-center gap-2">
-            <Calendar className="w-3 h-3 text-accent" /> Sunday, September 20th
-          </span>
-          <span className="flex items-center gap-2">
-            <Clock className="w-3 h-3 text-accent" /> 2:00 PM
-          </span>
-          <span className="flex items-center gap-2">
-            <Video className="w-3 h-3 text-accent" /> Via Zoom
-          </span>
-        </div>
+        <h3 className="text-sm font-semibold text-foreground leading-snug text-center">
+          Help us choose the lab that kicks off the year!
+        </h3>
         <button
-          onClick={() => setShowJoin(true)}
+          onClick={() => setShowVote(true)}
           className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 text-sm shadow-lg hover:shadow-xl hover:scale-[1.02]"
         >
-          <UserPlus className="w-4 h-4" />
-          Register Now
+          <Vote className="w-4 h-4" />
+          Vote Now
         </button>
-        <div className="text-center pt-1">
-          <span className="block text-xs text-accent font-semibold mb-1">Can&apos;t make it?</span>
-          <button
-            onClick={() => setShowFeedback(true)}
-            className="w-full inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground font-semibold py-2.5 px-6 rounded-lg hover:bg-accent/90 transition-all duration-300 text-sm shadow-lg hover:shadow-xl hover:scale-[1.02]"
-          >
-            <MessageSquare className="w-4 h-4" />
-            Feedback Form
-          </button>
-        </div>
       </div>
 
-      <ClubDayJoinForm isOpen={showJoin} onClose={() => setShowJoin(false)} />
-      <SpeakerFeedbackForm isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
+      <LabVoteForm isOpen={showVote} onClose={() => setShowVote(false)} />
     </section>
   );
 };
