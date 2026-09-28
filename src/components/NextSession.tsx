@@ -12,8 +12,8 @@ const NextSession = () => {
   return (
     <section className="py-8 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
-        <span className="text-primary vote-title-glow">Vote</span>
-        <span className="text-foreground vote-title-glow"> for Our First Lab</span>
+        <span className="text-primary vote-title-glow">Coming</span>
+        <span className="text-foreground vote-title-glow"> Up</span>
       </h2>
 
       <div
@@ -25,7 +25,7 @@ const NextSession = () => {
         }}
       >
         <h3 className="text-sm font-semibold text-foreground leading-snug text-center">
-          Help us choose the lab that kicks off the year!
+          Help us choose what kicks off the year!
         </h3>
         <button
           onClick={() => setShowVote(true)}
