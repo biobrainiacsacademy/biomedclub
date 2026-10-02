@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { CalendarDays, Clock, Video } from "lucide-react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
+import { MagneticButton } from "@/lib/motion";
 import ClubDayJoinForm from "@/components/ClubDayJoinForm";
 import SpeakerFeedbackForm from "@/components/SpeakerFeedbackForm";
 import paetoPhoto from "@/assets/paeto-mobile.jpg";
