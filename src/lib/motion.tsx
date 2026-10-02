@@ -196,7 +196,7 @@ export const ScrollProgress = () => {
 
 /** Giant outlined text that slides horizontally as you scroll (illoca style). */
 export const ScrollMarquee = ({ text, direction = 1 }: { text: string; direction?: 1 | -1 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], direction === 1 ? ["10%", "-40%"] : ["-40%", "10%"]);
@@ -214,8 +214,8 @@ export const ScrollMarquee = ({ text, direction = 1 }: { text: string; direction
 };
 
 /** Section rises, unscales and un-rounds as it enters, like a stacked card deck. */
-export const ScrollStage = ({ children }: { children: React.ReactNode }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+export const ScrollStage = ({ children }: { children: ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 35%"] });
   const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
