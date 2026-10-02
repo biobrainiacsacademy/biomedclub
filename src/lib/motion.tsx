@@ -193,3 +193,41 @@ export const ScrollProgress = () => {
     />
   );
 };
+
+/** Giant outlined text that slides horizontally as you scroll (illoca style). */
+export const ScrollMarquee = ({ text, direction = 1 }: { text: string; direction?: 1 | -1 }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const x = useTransform(scrollYProgress, [0, 1], direction === 1 ? ["10%", "-40%"] : ["-40%", "10%"]);
+  const line = Array(4).fill(text).join("  •  ");
+  return (
+    <div ref={ref} aria-hidden className="overflow-hidden py-4 select-none pointer-events-none">
+      <motion.div
+        style={reduce ? undefined : { x }}
+        className="whitespace-nowrap font-black uppercase tracking-tight text-[14vw] md:text-[9vw] leading-none text-transparent [-webkit-text-stroke:1px_hsl(var(--primary)/0.35)]"
+      >
+        {line}
+      </motion.div>
+    </div>
+  );
+};
+
+/** Section rises, unscales and un-rounds as it enters, like a stacked card deck. */
+export const ScrollStage = ({ children }: { children: ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 35%"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [80, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [0.3, 1]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [8, 0]);
+  if (reduce) return <div>{children}</div>;
+  return (
+    <div ref={ref} style={{ perspective: 1200 }}>
+      <motion.div style={{ scale, y, opacity, rotateX, transformOrigin: "50% 0%" }} className="will-change-transform">
+        {children}
+      </motion.div>
+    </div>
+  );
+};

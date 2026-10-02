@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Hero from "@/components/Hero";
 import FadeIn from "@/components/FadeIn";
 import FloatingParticles from "@/components/FloatingParticles";
-import { ScrollProgress } from "@/lib/motion";
+import { ScrollProgress, ScrollMarquee, ScrollStage } from "@/lib/motion";
 
 import NextSession from "@/components/NextSession";
 
@@ -34,30 +34,32 @@ const Index = () => {
         
         
         
-        <FadeIn delay={0}>
+        <ScrollStage>
           <div className="section-divider" />
           <OurImpact />
-        </FadeIn>
+        </ScrollStage>
         
-        <FadeIn delay={0}>
+        <ScrollStage>
           <div className="section-divider" />
           <Achievement />
-        </FadeIn>
+        </ScrollStage>
         
-        <FadeIn delay={0}>
+        <ScrollMarquee text="Learn Biology" />
+        <ScrollStage>
           <div className="section-divider" />
           <PreviouslyTaught />
-        </FadeIn>
+        </ScrollStage>
         
-        <FadeIn delay={0}>
+        <ScrollStage>
           <div className="section-divider" />
           <StudentReviews onRateClick={() => setShowRateUs(true)} />
-        </FadeIn>
+        </ScrollStage>
         
-        <FadeIn delay={0}>
+        <ScrollMarquee text="BioBrainiacs Academy" direction={-1} />
+        <ScrollStage>
           <div className="section-divider" />
           <ConnectWithUs />
-        </FadeIn>
+        </ScrollStage>
       </main>
       
       <FadeIn>
