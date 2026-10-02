@@ -14,69 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      author_applications: {
-        Row: {
-          comments: string | null
-          created_at: string
-          email: string
-          grade: string
-          high_school: string
-          how_heard: string
-          id: string
-          introduction: string
-          name: string
-        }
-        Insert: {
-          comments?: string | null
-          created_at?: string
-          email: string
-          grade: string
-          high_school: string
-          how_heard: string
-          id?: string
-          introduction: string
-          name: string
-        }
-        Update: {
-          comments?: string | null
-          created_at?: string
-          email?: string
-          grade?: string
-          high_school?: string
-          how_heard?: string
-          id?: string
-          introduction?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      club_day_signups: {
-        Row: {
-          created_at: string
-          first_name: string
-          grade: string
-          id: string
-          last_name: string
-          school_id: string
-        }
-        Insert: {
-          created_at?: string
-          first_name: string
-          grade: string
-          id?: string
-          last_name: string
-          school_id: string
-        }
-        Update: {
-          created_at?: string
-          first_name?: string
-          grade?: string
-          id?: string
-          last_name?: string
-          school_id?: string
-        }
-        Relationships: []
-      }
       feedback_responses: {
         Row: {
           additional_feedback: string | null
@@ -107,72 +44,6 @@ export type Database = {
           id?: string
           reschedule_preference?: string | null
           topics_interest?: string | null
-        }
-        Relationships: []
-      }
-      memberships: {
-        Row: {
-          created_at: string
-          first_name: string
-          grade: string
-          id: string
-          last_name: string
-          school_email: string
-        }
-        Insert: {
-          created_at?: string
-          first_name: string
-          grade: string
-          id?: string
-          last_name: string
-          school_email: string
-        }
-        Update: {
-          created_at?: string
-          first_name?: string
-          grade?: string
-          id?: string
-          last_name?: string
-          school_email?: string
-        }
-        Relationships: []
-      }
-      newsletter_subscribers: {
-        Row: {
-          created_at: string
-          email: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          id?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          id?: string
-        }
-        Relationships: []
-      }
-      poll_responses: {
-        Row: {
-          answer: string
-          created_at: string
-          id: string
-          question: string
-        }
-        Insert: {
-          answer: string
-          created_at?: string
-          id?: string
-          question: string
-        }
-        Update: {
-          answer?: string
-          created_at?: string
-          id?: string
-          question?: string
         }
         Relationships: []
       }
@@ -323,27 +194,6 @@ export type Database = {
         }
         Relationships: []
       }
-      user_roles: {
-        Row: {
-          created_at: string
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
@@ -359,19 +209,12 @@ export type Database = {
           username: string
         }[]
       }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
       is_valid_email: { Args: { _email: string }; Returns: boolean }
       like_qa_question: { Args: { _id: string }; Returns: number }
       unlike_qa_question: { Args: { _id: string }; Returns: number }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -498,8 +341,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["admin", "moderator", "user"],
-    },
+    Enums: {},
   },
 } as const

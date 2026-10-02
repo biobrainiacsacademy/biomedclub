@@ -1,0 +1,13 @@
+DROP POLICY IF EXISTS "Admins can read registrations" ON public.registrations;
+DROP POLICY IF EXISTS "Admins can read feedback" ON public.feedback_responses;
+DROP POLICY IF EXISTS "Admins can delete questions" ON public.qa_questions;
+DROP POLICY IF EXISTS "Admins can read quiz activity" ON public.quiz_activity;
+DROP POLICY IF EXISTS "Admins can read reviews" ON public.reviews;
+DROP TABLE IF EXISTS public.author_applications;
+DROP TABLE IF EXISTS public.club_day_signups;
+DROP TABLE IF EXISTS public.memberships;
+DROP TABLE IF EXISTS public.newsletter_subscribers;
+DROP TABLE IF EXISTS public.poll_responses;
+DROP FUNCTION IF EXISTS public.has_role(uuid, public.app_role);
+DROP TABLE IF EXISTS public.user_roles;
+DROP TYPE IF EXISTS public.app_role;
