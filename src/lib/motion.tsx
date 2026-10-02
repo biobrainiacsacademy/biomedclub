@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring, useReducedMotion, useMotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion, useMotionValue, type TargetAndTransition } from "framer-motion";
 import { useRef, type ReactNode, type RefObject } from "react";
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
@@ -20,7 +20,7 @@ interface RevealProps {
   as?: "div" | "section" | "span";
 }
 
-const hiddenState = (variant: RevealVariant, distance: number): Record<string, unknown> => {
+const hiddenState = (variant: RevealVariant, distance: number): TargetAndTransition => {
   switch (variant) {
     case "down": return { opacity: 0, y: -distance };
     case "left": return { opacity: 0, x: distance };
