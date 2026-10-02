@@ -43,7 +43,11 @@ export const Reveal = ({
   once = true,
 }: RevealProps) => {
   const reduce = useReducedMotion();
-  const visible = { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)", clipPath: "inset(0% 0% 0% 0% round 24px)" };
+  // Only the clip variant clips; other variants must not, or small wrappers
+  // round off the corners of their content (e.g. social link labels).
+  const visible = variant === "clip"
+    ? { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)", clipPath: "inset(0% 0% 0% 0% round 0px)" }
+    : { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" };
 
   return (
     <motion.div
@@ -205,7 +209,7 @@ export const ScrollMarquee = ({ text, direction = 1 }: { text: string; direction
     <div ref={ref} aria-hidden className="overflow-hidden py-4 select-none pointer-events-none">
       <motion.div
         style={reduce ? undefined : { x }}
-        className="whitespace-nowrap font-black uppercase tracking-tight text-[14vw] md:text-[9vw] leading-none text-transparent [-webkit-text-stroke:1px_hsl(var(--primary)/0.35)]"
+        className="whitespace-nowrap font-black uppercase tracking-tight text-[11vw] md:text-[7vw] leading-none text-transparent [-webkit-text-stroke:1px_hsl(var(--primary)/0.35)]"
       >
         {line}
       </motion.div>
