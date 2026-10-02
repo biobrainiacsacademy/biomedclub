@@ -202,8 +202,8 @@ export const ScrollProgress = () => {
 export const ScrollMarquee = ({ text, direction = 1 }: { text: string; direction?: 1 | -1 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
-  const x = useTransform(scrollYProgress, [0, 0.5, 1], direction === 1 ? ["0%", "10%", "0%"] : ["0%", "-10%", "0%"]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const x = useTransform(scrollYProgress, [0, 1], direction === 1 ? ["12%", "-12%"] : ["-12%", "12%"]);
   const line = Array(4).fill(text).join("  •  ");
   return (
     <div ref={ref} aria-hidden className="overflow-hidden py-4 select-none pointer-events-none flex justify-center">
