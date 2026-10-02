@@ -209,7 +209,7 @@ export const ScrollMarquee = ({ text, direction = 1 }: { text: string; direction
     <div ref={ref} aria-hidden className="overflow-hidden py-4 select-none pointer-events-none">
       <motion.div
         style={reduce ? undefined : { x }}
-        className="whitespace-nowrap font-black uppercase tracking-tight text-[11vw] md:text-[7vw] leading-none text-transparent [-webkit-text-stroke:1px_hsl(var(--primary)/0.35)]"
+        className="whitespace-nowrap font-black uppercase tracking-tight text-[8.5vw] md:text-[5.5vw] leading-none text-transparent [-webkit-text-stroke:1px_hsl(var(--primary)/0.35)]"
       >
         {line}
       </motion.div>
