@@ -97,7 +97,7 @@ const ClubDayJoinForm = ({ isOpen, onClose }: ClubDayJoinFormProps) => {
           Register: Guest Speaker Q&amp;A
         </h2>
         <p className="text-sm text-muted-foreground mb-6">
-          Paeto Wangweera. Sunday, September 20th at 2:00 PM, via Zoom.
+          Paeto Wangweera. Sunday, October 4th at 3:00 PM, via Zoom.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
