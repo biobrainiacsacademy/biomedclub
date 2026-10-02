@@ -70,7 +70,7 @@ const NextSession = () => {
             </p>
             <button
               onClick={() => setShowFeedback(true)}
-              className="w-full inline-flex items-center justify-center gap-2 bg-primary/60 text-primary-foreground font-semibold py-2 px-6 rounded-lg border border-border hover:bg-primary/70 transition-all duration-300 text-sm hover:scale-[1.02]"
+              className="w-full inline-flex items-center justify-center gap-2 bg-primary/70 text-primary-foreground font-semibold py-2 px-6 rounded-lg border border-border hover:bg-primary/80 transition-all duration-300 text-sm hover:scale-[1.02]"
             >
               Feedback Form
             </button>
