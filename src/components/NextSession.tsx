@@ -58,12 +58,14 @@ const NextSession = () => {
             </div>
           </div>
 
-          <button
-            onClick={() => setShowRegister(true)}
-            className="vote-glow w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 text-sm hover:scale-[1.02]"
-          >
-            Register Now
-          </button>
+          <MagneticButton strength={0.2} className="w-full">
+            <button
+              onClick={() => setShowRegister(true)}
+              className="vote-glow w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-2.5 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 text-sm hover:scale-[1.02]"
+            >
+              Register Now
+            </button>
+          </MagneticButton>
 
           <div className="qa-glow-subtle rounded-lg px-3 py-2 text-center">
             <p className="text-xs text-muted-foreground mb-1">
