@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Hero from "@/components/Hero";
 import FadeIn from "@/components/FadeIn";
 import FloatingParticles from "@/components/FloatingParticles";
+import { ScrollProgress } from "@/lib/motion";
 
 import NextSession from "@/components/NextSession";
 
@@ -22,12 +23,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative">
+      <ScrollProgress />
       <FloatingParticles />
       
       <main className="max-w-7xl mx-auto relative z-10">
-        <FadeIn delay={0}>
-          <Hero />
-        </FadeIn>
+        <Hero />
         
         <div className="section-divider" />
         <NextSession />
