@@ -222,7 +222,7 @@ const SpeakerFeedbackForm = ({ isOpen, onClose }: SpeakerFeedbackFormProps) => {
         {step === 2 && (
           <div className="space-y-4">
             <p className="text-sm text-foreground text-center">
-              If we moved the event, which options would work for you? Select
+              For future events, which options would work for you? Select
               all that apply.
             </p>
             <div className="space-y-2">
