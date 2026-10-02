@@ -169,8 +169,8 @@ export const MagneticButton = ({ children, strength = 0.25, className }: Magneti
       ref={ref}
       className={`inline-block ${className ?? ""}`}
       style={{ x: sx, y: sy }}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
+      onPointerMove={handleMove}
+      onPointerLeave={handleLeave}
     >
       {children}
     </motion.div>
