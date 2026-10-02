@@ -1,5 +1,6 @@
 import { Users, BookOpen, Eye } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { Reveal } from "@/lib/motion";
 
 const stats = [{
   icon: Users,
@@ -100,7 +101,9 @@ const OurImpact = () => {
 
   return (
     <section ref={sectionRef} className="py-8 px-4">
-      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground">Our Impact So Far</h2>
+      <Reveal variant="blur" distance={20}>
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground">Our Impact So Far</h2>
+      </Reveal>
       <div className="flex justify-center gap-4 md:gap-6">
         {stats.map((stat, index) => (
           <StatCard key={index} stat={stat} isVisible={isVisible} index={index} />
