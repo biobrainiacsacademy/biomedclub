@@ -152,7 +152,7 @@ export const MagneticButton = ({ children, strength = 0.25, className }: Magneti
   const sx = useSpring(x, { stiffness: 180, damping: 18, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 180, damping: 18, mass: 0.4 });
 
-  const handleMove = (e: React.MouseEvent) => {
+  const handleMove = (e: React.PointerEvent) => {
     if (reduce || !ref.current || e.pointerType === "touch") return;
     const rect = ref.current.getBoundingClientRect();
     x.set((e.clientX - (rect.left + rect.width / 2)) * strength);
