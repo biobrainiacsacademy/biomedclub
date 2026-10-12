@@ -15,7 +15,7 @@ type Lesson = {
 const lessons: Lesson[] = [
   {
     title: "Latest Lesson (Key Moments)",
-    date: "10/12",
+    date: "10/4",
     thumbnail: "https://i.ytimg.com/vi/Cq3B1aKqWCw/hqdefault.jpg",
     url: "https://www.youtube.com/watch?v=Cq3B1aKqWCw",
     revealAt: "2026-10-12T10:05:00Z",
