@@ -80,7 +80,7 @@ const PreviouslyTaught = () => {
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 via-background to-accent/20 text-center px-4">
                       <Lock className="w-8 h-8 text-primary mb-2" />
                       <p className="text-xs text-muted-foreground">
-                        Unlocks at 8:00 AM ET
+                        Unlocks at 6:05 AM ET
                       </p>
                     </div>
                   ) : (
