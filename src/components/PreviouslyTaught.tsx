@@ -14,6 +14,13 @@ type Lesson = {
 
 const lessons: Lesson[] = [
   {
+    title: "Latest Lesson (Key Moments)",
+    date: "10/12",
+    thumbnail: "https://i.ytimg.com/vi/Cq3B1aKqWCw/hqdefault.jpg",
+    url: "https://www.youtube.com/watch?v=Cq3B1aKqWCw",
+    revealAt: "2026-10-12T10:05:00Z",
+  },
+  {
     title: "The Future of Medicine: 2050 (Key Moments)",
     date: "8/22",
     thumbnail: "https://i.ytimg.com/vi/QUbmiBLY9pw/hqdefault.jpg",
@@ -24,12 +31,6 @@ const lessons: Lesson[] = [
     date: "8/15",
     thumbnail: "https://i.ytimg.com/vi_webp/grNMQxXClQA/maxresdefault.webp",
     url: "https://www.youtube.com/watch?v=grNMQxXClQA",
-  },
-  {
-    title: "Inside Clinical Trials: How Medicines Become Safe (Key Moments)",
-    date: "8/1",
-    thumbnail: "https://i.ytimg.com/vi_webp/ULNtz5JgGms/maxresdefault.webp",
-    url: "https://www.youtube.com/watch?v=ULNtz5JgGms",
   },
 ];
 
