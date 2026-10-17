@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
     <loc>https://biobrainiacs.org/</loc>
   </url>
-
-<url>
-    <loc>https://https://www.biobrainiacs.org/bioglance/</loc>
+  <url>
+    <loc>https://biobrainiacs.org/quiz</loc>
   </url>
-
-<url>
-    <loc>https://https://www.biobrainiacs.org/authors/</loc>
+  <url>
+    <loc>https://biobrainiacs.org/privacy</loc>
   </url>
-  
+  <url>
+    <loc>https://biobrainiacs.org/terms</loc>
+  </url>
 </urlset>
