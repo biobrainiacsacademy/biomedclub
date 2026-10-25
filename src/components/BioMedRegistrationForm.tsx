@@ -75,7 +75,7 @@ const BioMedRegistrationForm = ({ isOpen, onClose }: { isOpen: boolean; onClose:
             <input name="website" value={honeypot} onChange={e => setHoneypot(e.target.value)} className="absolute h-0 w-0 overflow-hidden opacity-0" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label htmlFor="biomed-first-name" className="text-sm font-medium">First Name (preferred) <span className="text-destructive">*</span></label>
+                <label htmlFor="biomed-first-name" className="text-sm font-medium">First Name <span className="text-destructive">*</span></label>
                 <Input id="biomed-first-name" autoComplete="given-name" required maxLength={100} value={data.firstName} disabled={submitting} onChange={e => setData({ ...data, firstName: e.target.value })} className="bg-muted" />
               </div>
               <div className="space-y-1.5">
