@@ -15,7 +15,7 @@ const Privacy = () => (
           Back to home
         </Link>
         <h1 className="text-3xl font-bold text-foreground">Privacy Policy</h1>
-        <p className="text-sm text-muted-foreground">Last updated: September 11, 2026</p>
+        <p className="text-sm text-muted-foreground">Last updated: October 25, 2026</p>
       </div>
 
       <p className="text-muted-foreground text-sm leading-relaxed">
@@ -29,7 +29,8 @@ const Privacy = () => (
         <ul className="list-disc pl-5 space-y-1">
           <li>
             Event registration and notify me forms: first and last name, email address, school
-            name, grade level, and any optional questions or comments you write.
+            name, grade level, and any optional questions or comments you write. In person BioMed
+            Club registration collects first and last name and School ID, without an email address.
           </li>
           <li>Newsletter signup: your email address.</li>
           <li>Reviews and feedback: your rating, optional name, and the comments you write.</li>

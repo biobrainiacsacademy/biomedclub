@@ -126,6 +126,7 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          event_name: string | null
           first_name: string
           grade: string
           how_heard: string | null
@@ -135,23 +136,27 @@ export type Database = {
           parent_name: string | null
           questions: string | null
           school: string
+          school_id: string | null
         }
         Insert: {
           created_at?: string
-          email: string
+          email?: string
+          event_name?: string | null
           first_name: string
-          grade: string
+          grade?: string
           how_heard?: string | null
           id?: string
           last_name: string
           parent_email?: string | null
           parent_name?: string | null
           questions?: string | null
-          school: string
+          school?: string
+          school_id?: string | null
         }
         Update: {
           created_at?: string
           email?: string
+          event_name?: string | null
           first_name?: string
           grade?: string
           how_heard?: string | null
@@ -161,6 +166,7 @@ export type Database = {
           parent_name?: string | null
           questions?: string | null
           school?: string
+          school_id?: string | null
         }
         Relationships: []
       }
@@ -211,6 +217,10 @@ export type Database = {
       }
       is_valid_email: { Args: { _email: string }; Returns: boolean }
       like_qa_question: { Args: { _id: string }; Returns: number }
+      register_biomed_meeting: {
+        Args: { _first_name: string; _last_name: string; _school_id: string }
+        Returns: string
+      }
       unlike_qa_question: { Args: { _id: string }; Returns: number }
     }
     Enums: {
