@@ -218,7 +218,12 @@ export type Database = {
       is_valid_email: { Args: { _email: string }; Returns: boolean }
       like_qa_question: { Args: { _id: string }; Returns: number }
       register_biomed_meeting: {
-        Args: { _first_name: string; _last_name: string; _school_id: string }
+        Args: {
+          _comments?: string
+          _first_name: string
+          _last_name: string
+          _school_id: string
+        }
         Returns: string
       }
       unlike_qa_question: { Args: { _id: string }; Returns: number }

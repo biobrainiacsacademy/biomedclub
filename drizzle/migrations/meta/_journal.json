@@ -8,6 +8,13 @@
       "when": 1792967923041,
       "tag": "0000_add_biomed_meeting_registration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792968971513,
+      "tag": "0001_biomed_registration_comments",
+      "breakpoints": true
     }
   ]
 }
