@@ -90,7 +90,7 @@ const BioMedRegistrationForm = ({ isOpen, onClose }: { isOpen: boolean; onClose:
               <Input id="biomed-school-id" required maxLength={40} pattern="[A-Za-z0-9]+" autoComplete="off" value={data.schoolId} disabled={submitting} onChange={e => setData({ ...data, schoolId: e.target.value })} className="bg-muted" />
             </div>
             <div className="space-y-1.5">
-              <label htmlFor="biomed-comments" className="text-sm font-medium">Any comments or concerns? <span className="font-normal text-muted-foreground">(not required)</span></label>
+              <label htmlFor="biomed-comments" className="text-sm font-medium">Any comments or concerns?</label>
               <Textarea id="biomed-comments" rows={3} maxLength={1000} placeholder="Anything you would like us to know" value={data.comments} disabled={submitting} onChange={e => setData({ ...data, comments: e.target.value })} className="bg-muted resize-none" />
             </div>
             {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
