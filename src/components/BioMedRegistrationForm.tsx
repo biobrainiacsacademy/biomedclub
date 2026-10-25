@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { biomedMeeting, biomedRegistrationSchema } from "@/lib/biomedRegistration";
 import { isBot } from "@/lib/validation";
 
-const emptyForm = { firstName: "", lastName: "", schoolId: "" };
+const emptyForm = { firstName: "", lastName: "", schoolId: "", comments: "" };
 
 const BioMedRegistrationForm = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [data, setData] = useState(emptyForm);
@@ -42,6 +43,7 @@ const BioMedRegistrationForm = ({ isOpen, onClose }: { isOpen: boolean; onClose:
         _first_name: result.data.firstName,
         _last_name: result.data.lastName,
         _school_id: result.data.schoolId,
+        _comments: result.data.comments?.trim() || undefined,
       });
       if (saveError) throw saveError;
       setSubmitted(true);
@@ -86,6 +88,10 @@ const BioMedRegistrationForm = ({ isOpen, onClose }: { isOpen: boolean; onClose:
             <div className="space-y-1.5">
               <label htmlFor="biomed-school-id" className="text-sm font-medium">School ID <span className="text-destructive">*</span></label>
               <Input id="biomed-school-id" required maxLength={40} pattern="[A-Za-z0-9]+" autoComplete="off" value={data.schoolId} disabled={submitting} onChange={e => setData({ ...data, schoolId: e.target.value })} className="bg-muted" />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="biomed-comments" className="text-sm font-medium">Any comments or concerns? <span className="font-normal text-muted-foreground">(not required)</span></label>
+              <Textarea id="biomed-comments" rows={3} maxLength={1000} placeholder="Anything you would like us to know" value={data.comments} disabled={submitting} onChange={e => setData({ ...data, comments: e.target.value })} className="bg-muted resize-none" />
             </div>
             {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
             <Button type="submit" disabled={submitting} className="w-full font-semibold" size="lg">
