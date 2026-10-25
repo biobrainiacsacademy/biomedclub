@@ -32,7 +32,7 @@ const NextSession = () => {
             {details.map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-center gap-3 rounded-xl border border-border/60 bg-background/40 px-4 py-3 backdrop-blur-sm">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
-                  <Icon className="h-4.5 w-4.5" />
+                  <Icon className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
                   <p className="text-[11px] uppercase tracking-widest text-muted-foreground">{label}</p>
