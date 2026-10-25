@@ -5,6 +5,7 @@ export const biomedRegistrationSchema = z.object({
   lastName: z.string().trim().min(1, "Last name is required").max(100),
   schoolId: z.string().trim().min(1, "School ID is required").max(40)
     .regex(/^[A-Za-z0-9]+$/, "School ID must contain only letters and numbers"),
+  comments: z.string().trim().max(1000, "Please keep comments under 1000 characters").optional().or(z.literal("")),
 });
 
 export const biomedMeeting = {
