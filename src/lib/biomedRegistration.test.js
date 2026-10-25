@@ -15,6 +15,13 @@ describe("BioMed registration", () => {
   test("accepts registration without email", () => {
     expect(biomedRegistrationSchema.safeParse(valid).success).toBe(true);
   });
+  test("accepts optional comments", () => {
+    expect(biomedRegistrationSchema.safeParse({ ...valid, comments: "I am in a lunch duty class" }).success).toBe(true);
+    expect(biomedRegistrationSchema.safeParse({ ...valid, comments: "" }).success).toBe(true);
+  });
+  test("rejects comments longer than 1000 characters", () => {
+    expect(biomedRegistrationSchema.safeParse({ ...valid, comments: "a".repeat(1001) }).success).toBe(false);
+  });
   test("rejects unsafe or excessive School ID input", () => {
     expect(biomedRegistrationSchema.safeParse({ ...valid, schoolId: "<script>" }).success).toBe(false);
     expect(biomedRegistrationSchema.safeParse({ ...valid, schoolId: "1".repeat(41) }).success).toBe(false);
