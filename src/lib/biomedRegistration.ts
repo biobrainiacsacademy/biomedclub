@@ -9,7 +9,7 @@ export const biomedRegistrationSchema = z.object({
 });
 
 export const biomedMeeting = {
-  date: "Monday, October 26, 2026",
+  date: "Monday, November 9, 2026",
   time: "At lunch",
   room: "Room 246",
   hallway: "Engineering/CS hallway",

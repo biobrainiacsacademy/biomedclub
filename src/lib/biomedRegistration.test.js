@@ -27,7 +27,7 @@ describe("BioMed registration", () => {
     expect(biomedRegistrationSchema.safeParse({ ...valid, schoolId: "1".repeat(41) }).success).toBe(false);
   });
   test("meeting is tomorrow at lunch in Room 246", () => {
-    expect(biomedMeeting.date).toBe("Monday, October 26, 2026");
+    expect(biomedMeeting.date).toBe("Monday, November 9, 2026");
     expect(biomedMeeting.time).toBe("At lunch");
     expect(biomedMeeting.room).toBe("Room 246");
     expect(biomedMeeting.hallway).toBe("Engineering/CS hallway");
