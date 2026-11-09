@@ -50,15 +50,15 @@ const JoinPopup = () => {
 
   return (
     <Dialog open={open} onOpenChange={value => { if (!value) close(); }}>
-      <DialogContent className="w-[calc(100%-2rem)] max-w-md max-h-[90dvh] overflow-y-auto rounded-lg border-primary/30 bg-background p-6 sm:p-8 glow-gold motion-reduce:animate-none">
-        <div className="flex justify-center pt-2">
-          <img src={logo} alt="BioBrainiacs Academy" className="h-20 w-20 object-contain" />
+      <DialogContent overlayClassName="bg-background/50 backdrop-blur-sm" className="w-[calc(100%-3rem)] max-w-sm max-h-[85dvh] overflow-y-auto rounded-lg border-primary/30 bg-background p-5 sm:p-6 gap-3 glow-gold motion-reduce:animate-none">
+        <div className="flex justify-center">
+          <img src={logo} alt="BioBrainiacs Academy" className="h-14 w-14 object-contain" />
         </div>
-        <DialogHeader className="space-y-3 text-center sm:text-center">
-          <DialogTitle className="text-2xl sm:text-3xl leading-tight tracking-normal text-primary">
+        <DialogHeader className="space-y-2 text-center sm:text-center">
+          <DialogTitle className="text-xl sm:text-2xl leading-tight tracking-normal text-primary">
             {joined ? "Thank you for joining!" : "Join BioBrainiacs Now"}
           </DialogTitle>
-          <DialogDescription className="text-base leading-relaxed">
+          <DialogDescription className="text-sm leading-relaxed">
             {joined ? "You are on the list for free virtual lessons and club updates." : "Explore biomedical science with us. Join our virtual lessons for free biomedical education."}
           </DialogDescription>
         </DialogHeader>
@@ -68,21 +68,21 @@ const JoinPopup = () => {
             <Button className="w-full font-semibold" onClick={close}>Done</Button>
           </div>
         ) : (
-          <form onSubmit={submit} className="space-y-4 pt-2">
+          <form onSubmit={submit} className="space-y-3 pt-1">
             <input name="website" value={honeypot} onChange={event => setHoneypot(event.target.value)} className="absolute h-0 w-0 overflow-hidden opacity-0" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div className="space-y-2">
               <label htmlFor="join-personal-email" className="text-sm font-medium">Personal Email <span className="text-destructive">*</span></label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" aria-hidden="true" />
-                <Input id="join-personal-email" type="email" autoComplete="email" required maxLength={255} value={email} onChange={event => setEmail(event.target.value)} disabled={submitting} className="h-12 bg-muted pl-10" aria-describedby={error ? "join-error" : undefined} aria-invalid={Boolean(error)} />
+                <Input id="join-personal-email" type="email" autoComplete="email" required maxLength={255} value={email} onChange={event => setEmail(event.target.value)} disabled={submitting} className="h-11 bg-muted pl-10" aria-describedby={error ? "join-error" : undefined} aria-invalid={Boolean(error)} />
               </div>
             </div>
             {error && <p id="join-error" role="alert" className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" disabled={submitting} className="w-full h-12 font-semibold glow-gold">
+            <Button type="submit" disabled={submitting} className="w-full h-11 font-semibold glow-gold">
               {submitting ? <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" /> : <ArrowRight className="h-4 w-4" />}
               {submitting ? "Joining..." : "Join for Free"}
             </Button>
-            <p className="text-xs text-muted-foreground leading-relaxed text-center">
+            <p className="text-xs text-muted-foreground leading-normal text-center">
               By joining, you agree to receive lesson and club updates and accept our{" "}
               <Link to="/terms" target="_blank" className="text-accent hover:underline">Terms of Service</Link> and{" "}
               <Link to="/privacy" target="_blank" className="text-accent hover:underline">Privacy Policy</Link>. You can unsubscribe at any time. Students under 18 should have a parent or guardian review these.
