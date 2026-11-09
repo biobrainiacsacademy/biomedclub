@@ -13,12 +13,11 @@ import PreviouslyTaught from "@/components/PreviouslyTaught";
 import StudentReviews from "@/components/StudentReviews";
 
 import ConnectWithUs from "@/components/ConnectWithUs";
-import NotifyMeForm from "@/components/NotifyMeForm";
+import JoinPopup from "@/components/JoinPopup";
 import RateUsForm from "@/components/RateUsForm";
 import biobrainiacsLogo from "@/assets/biobrainiacs-logo-new.png";
 
 const Index = () => {
-  const [showNotifyMe, setShowNotifyMe] = useState(false);
   const [showRateUs, setShowRateUs] = useState(false);
 
   return (
@@ -77,10 +76,7 @@ const Index = () => {
         </footer>
       </FadeIn>
       
-      <NotifyMeForm 
-        isOpen={showNotifyMe} 
-        onClose={() => setShowNotifyMe(false)} 
-      />
+      <JoinPopup />
       
       <RateUsForm 
         isOpen={showRateUs} 

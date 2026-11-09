@@ -22,6 +22,13 @@
       "when": 1793966198367,
       "tag": "0002_biomed_meeting_november_9",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794192904822,
+      "tag": "0003_join_biobrainiacs_email",
+      "breakpoints": true
     }
   ]
 }

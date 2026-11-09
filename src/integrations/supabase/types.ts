@@ -216,6 +216,7 @@ export type Database = {
         }[]
       }
       is_valid_email: { Args: { _email: string }; Returns: boolean }
+      join_biobrainiacs: { Args: { _email: string }; Returns: undefined }
       like_qa_question: { Args: { _id: string }; Returns: number }
       register_biomed_meeting: {
         Args: {
