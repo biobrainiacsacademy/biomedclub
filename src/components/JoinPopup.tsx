@@ -59,7 +59,7 @@ const JoinPopup = () => {
             {joined ? "Thank you for joining!" : "Join BioBrainiacs Now"}
           </DialogTitle>
           <DialogDescription className="text-base leading-relaxed">
-            {joined ? "You are on the list for free lessons and club updates." : "Explore biomedical science with us. Join our lessons for free biomedical education."}
+            {joined ? "You are on the list for free virtual lessons and club updates." : "Explore biomedical science with us. Join our virtual lessons for free biomedical education."}
           </DialogDescription>
         </DialogHeader>
         {joined ? (
