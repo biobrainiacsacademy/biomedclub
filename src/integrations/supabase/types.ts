@@ -205,6 +205,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_qa_questions: {
+        Args: never
+        Returns: {
+          created_at: string
+          id: string
+          likes: number
+          question: string
+        }[]
+      }
       get_quiz_leaderboard: {
         Args: never
         Returns: {

@@ -29,11 +29,7 @@ const QAQuestions = () => {
   const [liked, setLiked] = useState<string[]>(getLiked());
 
   const load = async () => {
-    const { data, error } = await (supabase as any)
-      .from("qa_questions")
-      .select("*")
-      .order("likes", { ascending: false })
-      .order("created_at", { ascending: true });
+    const { data, error } = await (supabase as any).rpc("get_qa_questions");
     if (!error && data) setQuestions(data as QAQuestion[]);
     setLoading(false);
   };
